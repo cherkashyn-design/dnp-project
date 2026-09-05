@@ -2,7 +2,9 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import { Lottie, LottieSubscription } from "lottie-react";
 
 import arrowUpRightIcon from "./assets/Icons/link-icon.svg";
+import arrowRightIcon from "./assets/Icons/arrow-right-icon.svg";
 import backIcon from "./assets/Icons/back-icon.svg";
+import copyIcon from "./assets/Icons/copy-icon.svg";
 import quoteIcon from "./assets/Icons/quote-icon.svg";
 import dnpLogo from "./assets/Global/dnp-logo.png";
 import drumkitPreview from "../portfolio/Drumkit-UI/lottie/Preview.jpg";
@@ -39,9 +41,6 @@ import drumkitSlide9Appointment from "../portfolio/Drumkit-UI/lottie/Slide-9-App
 import drumkitSlide9Freight from "../portfolio/Drumkit-UI/lottie/Slide-9-Digital-Freight-Matching.json";
 import drumkitSlide9SmartAutoreplies from "../portfolio/Drumkit-UI/lottie/Slide-9-Smart-Autoreplies.json";
 import drumkitSlide9Track from "../portfolio/Drumkit-UI/lottie/Slide-9-Track-and-Trace.json";
-import notionProjectDrumkit from "../portfolio/Drumkit-UI/lottie/Preview.jpg";
-import notionProjectSalesDriver from "../portfolio/SalesDriver/notion-preview.jpg";
-import notionProjectYummo from "../portfolio/Yummo/notion-preview.jpg";
 import salesDriverPreview from "../portfolio/SalesDriver/Preview.jpg";
 import salesDriverNavPreview from "../portfolio/SalesDriver/Previews/Preview-Preview.jpg";
 import salesDriverNavSlide1 from "../portfolio/SalesDriver/Previews/Slide-1-Preview.jpg";
@@ -96,22 +95,6 @@ import yummoSlide9P2 from "../portfolio/Yummo/Slide-9/p2.jpg";
 import yummoSlide10 from "../portfolio/Yummo/Slide-10.jpg";
 import yummoSlide11 from "../portfolio/Yummo/Slide-11.jpg";
 
-const portfolioAssets = import.meta.glob(
-  [
-    "../portfolio/SalesDriver/*.{png,jpg,jpeg,mp4}",
-    "../portfolio/Yummo-App/*.{png,jpg,jpeg,mp4}",
-    "../portfolio/Yummo-Landing/*.{png,jpg,jpeg,mp4}",
-  ],
-  {
-    eager: true,
-    import: "default",
-  },
-);
-
-function portfolioAsset(path) {
-  return portfolioAssets[`../portfolio/${path}`];
-}
-
 const email = "contact@donotpress.com";
 const drumkitFavicon = "https://www.google.com/s2/favicons?domain=drumkit.ai&sz=32";
 const yummoFavicon = "https://www.google.com/s2/favicons?domain=yummoapp.com&sz=32";
@@ -157,19 +140,19 @@ const drumkitNavigationItems = [
 const cases = [
   {
     name: "Yummo - Food guide for moms",
-    image: notionProjectYummo,
+    image: yummoPreview,
     tags: ["Branding", "Landing", "App"],
     href: "/cases/yummo-food-guide-for-moms",
   },
   {
     name: "Sales Driver - Ads Tool",
-    image: notionProjectSalesDriver,
+    image: salesDriverPreview,
     tags: ["Branding", "Landing", "Deck"],
     href: "/cases/sales-driver-ads-tool",
   },
   {
     name: "Drumkit - Logistic SaaS",
-    image: notionProjectDrumkit,
+    image: drumkitPreview,
     tags: ["Web UI / SaaS", "Landing"],
     href: "/cases/drumkit-logistic-saas",
   },
@@ -935,9 +918,27 @@ function getMediaRowId(section, rowIndex) {
 }
 
 function CaseHeader({ navigationItems }) {
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const updateScrollState = () => {
+      setHasScrolled((window.scrollY || document.documentElement.scrollTop) > 2);
+    };
+
+    updateScrollState();
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    window.addEventListener("resize", updateScrollState);
+
+    return () => {
+      window.removeEventListener("scroll", updateScrollState);
+      window.removeEventListener("resize", updateScrollState);
+    };
+  }, []);
+
   return (
     <>
-      <header className="case-header">
+      <header className={["case-header", hasScrolled ? "is-scrolled" : ""].filter(Boolean).join(" ")}>
+        <div className="case-header-fade" aria-hidden="true" />
         <div className="case-header-left">
           <a className="back-link" href="/">
             <img className="back-icon" src={backIcon} alt="" aria-hidden="true" />
@@ -1362,20 +1363,13 @@ function InfoPanel() {
         </div>
       </section>
 
-      <section className="cta" aria-label="Start a project">
-        <p>If you're launching — let’s do it right:</p>
-        <div className="cta-actions">
-          <a className="button button-primary" href={`mailto:${email}?subject=Start%20a%20Project`}>
-            Start a Project
-          </a>
-          <button className="button button-email" type="button" onClick={copyEmail}>
-            <span>{email}</span>
-            <span className="copy-icon" aria-hidden="true">
-              <span />
-              <span />
-            </span>
-          </button>
-        </div>
+      <section className="cta" aria-label="Contact">
+        <button className="button button-email" type="button" onClick={copyEmail}>
+          <span>{email}</span>
+          <span className="copy-icon" aria-hidden="true">
+            <img src={copyIcon} alt="" />
+          </span>
+        </button>
       </section>
     </aside>
   );
@@ -1399,10 +1393,12 @@ function ProjectCard({ project }) {
     <>
       <div className="project-image-wrap">
         <img className="project-image" src={project.image} alt={`${project.name} preview`} />
-        <span className="project-view-pill">View Project</span>
       </div>
       <div className="project-info">
-        <h2>{project.name}</h2>
+        <div className="project-title-row">
+          <img className="project-hover-arrow" src={arrowRightIcon} alt="" aria-hidden="true" />
+          <h2>{project.name}</h2>
+        </div>
         <ul aria-label={`${project.name} tags`}>
           {project.tags.map((tag) => (
             <li key={tag}>{tag}</li>
@@ -1458,7 +1454,7 @@ function useScrollZoomMedia() {
       animationFrame = null;
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
       const mediaElements = document.querySelectorAll(
-        ".project-image, .case-hero-image-frame img, .case-media > img, .case-media > video",
+        ".case-hero-image-frame img, .case-media > img, .case-media > video",
       );
 
       mediaElements.forEach((element) => {
@@ -1642,7 +1638,6 @@ function useRevealAnimations() {
           ".intro h1",
           ".intro-copy p",
           ".services li:not(.service-divider)",
-          ".cta p",
           ".project-info h2",
           ".case-hero-info h1",
           ".info-block p",

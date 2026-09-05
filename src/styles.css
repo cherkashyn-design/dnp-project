@@ -154,36 +154,17 @@ img {
   border-radius: 20px;
   overflow: hidden;
   position: relative;
-  transition: opacity 180ms ease;
   width: 100%;
 }
 
 .project-image {
+  display: block;
   height: 100%;
   object-fit: cover;
+  transform: scale(1);
+  transition: transform 640ms cubic-bezier(0.16, 1, 0.3, 1);
   width: 100%;
-}
-
-.project-view-pill {
-  backdrop-filter: blur(6px);
-  background: var(--foreground-primary);
-  border: 1px solid var(--stroke-additional-alt);
-  border-radius: 12px;
-  color: var(--text-primary-alt);
-  font-size: 16px;
-  left: 50%;
-  line-height: 1.4;
-  opacity: 0;
-  padding: 10px 16px;
-  pointer-events: none;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%) scale(0.96);
-  transition:
-    opacity 180ms ease,
-    transform 180ms ease;
-  white-space: nowrap;
-  z-index: 1;
+  will-change: transform;
 }
 
 .project-info {
@@ -191,7 +172,30 @@ img {
   display: flex;
   gap: 36px;
   padding: 0 8px 8px;
-  transition: opacity 180ms ease;
+}
+
+.project-title-row {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  gap: 0;
+  min-width: 0;
+}
+
+.project-hover-arrow {
+  display: block;
+  flex: 0 0 auto;
+  height: 20px;
+  margin-right: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateX(-4px);
+  transition:
+    margin-right 440ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 360ms ease,
+    transform 440ms cubic-bezier(0.16, 1, 0.3, 1),
+    width 440ms cubic-bezier(0.16, 1, 0.3, 1);
+  width: 0;
 }
 
 .project-card:hover,
@@ -199,22 +203,17 @@ img {
   cursor: pointer;
 }
 
-.project-card:hover .project-image-wrap,
-.project-card:focus-within .project-image-wrap,
-.project-card:hover .project-info,
-.project-card:focus-within .project-info {
-  opacity: 0.7;
+.project-card:hover .project-image,
+.project-card:focus-within .project-image {
+  transform: scale(1.05);
 }
 
-.project-card:hover .project-view-pill,
-.project-card:focus-within .project-view-pill {
+.project-card:hover .project-hover-arrow,
+.project-card:focus-within .project-hover-arrow {
+  margin-right: 12px;
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.project-card:active .project-image-wrap,
-.project-card:active .project-info {
-  opacity: 0.7;
+  transform: translateX(0);
+  width: 20px;
 }
 
 .project-card-link:focus-visible {
@@ -379,84 +378,71 @@ img {
 .cta {
   display: flex;
   flex-direction: column;
-  gap: 24px;
   margin-top: auto;
   padding: 32px;
 }
 
-.cta p {
-  font-size: 16px;
-  line-height: 1.4;
-  margin: 0;
-  white-space: nowrap;
-}
-
-.cta-actions {
-  align-items: center;
-  display: flex;
-  gap: 6px;
-  width: 100%;
-}
-
 .button {
   align-items: center;
+  border: 0;
   border-radius: 20px;
+  cursor: pointer;
   display: inline-flex;
+  font: inherit;
   height: 56px;
   justify-content: center;
   min-width: 0;
   white-space: nowrap;
 }
 
-.button-primary {
+.button-email {
   background: var(--foreground-primary);
   color: var(--text-primary-alt);
-  flex: 0 0 auto;
-  font-weight: 500;
-  padding: 12px 24px;
-}
-
-.button-email {
-  background: var(--foreground-secondary);
-  border: 1px solid var(--stroke-secondary);
-  color: var(--text-primary);
-  flex: 1 1 auto;
   gap: 10px;
   justify-content: space-between;
-  padding: 4px 4px 4px 22px;
+  padding: 4px;
+  width: 100%;
 }
 
 .button-email > span:first-child {
   overflow: hidden;
+  padding-inline: 18px;
+  text-align: left;
   text-overflow: ellipsis;
 }
 
 .copy-icon {
   align-items: center;
-  background: var(--foreground-additional);
+  background: var(--foreground-additional-alt);
   border-radius: 16px;
   display: inline-flex;
+  flex: 0 0 48px;
   height: 48px;
   justify-content: center;
-  position: relative;
   width: 48px;
 }
 
-.copy-icon span {
-  border: 1.8px solid var(--text-primary);
-  border-radius: 2px;
-  height: 18px;
-  position: absolute;
-  width: 14px;
+.copy-icon img {
+  display: block;
+  height: 20px;
+  width: 20px;
 }
 
-.copy-icon span:first-child {
-  transform: translate(-3px, 3px);
+.button-email:hover {
+  background: var(--foreground-additional-alt);
 }
 
-.copy-icon span:last-child {
-  background: var(--foreground-additional);
-  transform: translate(3px, -3px);
+.button-email:hover .copy-icon {
+  background: var(--foreground-primary);
+}
+
+.button-email:active {
+  background: var(--foreground-primary);
+}
+
+.button-email:focus-visible {
+  outline: 2px solid #7d79ff;
+  outline-offset: 2px;
 }
 
 .cases-fade {
@@ -518,11 +504,35 @@ img {
   z-index: 10;
 }
 
+.case-header-fade {
+  background: linear-gradient(
+    180deg,
+    rgba(var(--fade-bg-rgb), 0.5) 0%,
+    rgba(var(--fade-bg-rgb), 0.5) 55%,
+    rgba(var(--fade-bg-rgb), 0) 100%
+  );
+  height: calc(100% + 70px);
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: opacity 180ms ease;
+  z-index: 0;
+}
+
+.case-header.is-scrolled .case-header-fade {
+  opacity: 1;
+}
+
 .case-header-left,
 .case-header-right {
   align-items: center;
   display: flex;
   min-height: 112px;
+  position: relative;
+  z-index: 1;
 }
 
 .case-header-left {
@@ -1028,7 +1038,6 @@ img {
   width: 100%;
 }
 
-.project-image,
 .case-hero-image-frame img,
 .case-media > img,
 .case-media > video {
@@ -1291,14 +1300,17 @@ img {
   border-radius: 20px;
   overflow: hidden;
   position: relative;
-  transition: opacity 180ms ease;
   width: 100%;
 }
 
 .other-projects-section .project-image {
+  display: block;
   height: 100%;
   object-fit: cover;
+  transform: scale(1);
+  transition: transform 640ms cubic-bezier(0.16, 1, 0.3, 1);
   width: 100%;
+  will-change: transform;
 }
 
 .other-projects-section .project-info {
@@ -1306,7 +1318,6 @@ img {
   display: flex;
   gap: 36px;
   padding: 0 8px 8px;
-  transition: opacity 180ms ease;
 }
 
 .other-projects-section .project-info h2 {
@@ -1343,39 +1354,15 @@ img {
   white-space: nowrap;
 }
 
-.other-projects-section .project-view-pill {
-  backdrop-filter: blur(6px);
-  background: var(--foreground-primary);
-  border: 1px solid var(--stroke-additional-alt);
-  border-radius: 12px;
-  color: var(--text-primary-alt);
-  font-size: 16px;
-  left: 50%;
-  line-height: 1.4;
-  opacity: 0;
-  padding: 10px 16px;
-  pointer-events: none;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%) scale(0.96);
-  transition:
-    opacity 180ms ease,
-    transform 180ms ease;
-  white-space: nowrap;
-  z-index: 1;
+.other-projects-section .project-card:hover .project-image,
+.other-projects-section .project-card:focus-within .project-image {
+  transform: scale(1.05);
 }
 
-.other-projects-section .project-card:hover .project-image-wrap,
-.other-projects-section .project-card:focus-within .project-image-wrap,
-.other-projects-section .project-card:hover .project-info,
-.other-projects-section .project-card:focus-within .project-info {
-  opacity: 0.7;
-}
-
-.other-projects-section .project-card:hover .project-view-pill,
-.other-projects-section .project-card:focus-within .project-view-pill {
+.other-projects-section .project-card:hover .project-hover-arrow,
+.other-projects-section .project-card:focus-within .project-hover-arrow {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translateX(0);
 }
 
 .other-projects-section .project-card-link:focus-visible {
@@ -1440,15 +1427,6 @@ img {
 
   .intro h1 {
     font-size: clamp(64px, 6.8vw, 82px);
-  }
-
-  .cta-actions {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .button {
-    width: 100%;
   }
 
   .button-email {
@@ -1748,10 +1726,6 @@ img {
 
   .intro h1 {
     font-size: clamp(56px, 17vw, 64px);
-  }
-
-  .cta p {
-    white-space: normal;
   }
 
   .site-footer nav,
