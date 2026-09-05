@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 
 import arrowRightIcon from "./assets/Icons/arrow-right-icon.svg";
-import drumkitPreview from "../portfolio/Drumkit-UI/lottie/Preview.card.jpg";
-import drumkitPreviewLq from "../portfolio/Drumkit-UI/lottie/Preview.card.lq.jpg";
-import salesDriverPreview from "../portfolio/SalesDriver/Preview.card.jpg";
-import salesDriverPreviewLq from "../portfolio/SalesDriver/Preview.card.lq.jpg";
-import yummoPreview from "../portfolio/Yummo/Preview.card.jpg";
-import yummoPreviewLq from "../portfolio/Yummo/Preview.card.lq.jpg";
+import drumkitPreview from "../portfolio/Drumkit-UI/lottie/Preview.jpg";
+import drumkitPreviewLq from "../portfolio/Drumkit-UI/lottie/Preview.lq.jpg";
+import salesDriverPreview from "../portfolio/SalesDriver/Preview.jpg";
+import salesDriverPreviewLq from "../portfolio/SalesDriver/Preview.lq.jpg";
+import yummoPreview from "../portfolio/Yummo/Preview.jpg";
+import yummoPreviewLq from "../portfolio/Yummo/Preview.lq.jpg";
 
 const lqByFullUrl = new Map();
 
@@ -55,16 +55,52 @@ export function ProgressiveImage({
   decoding = "async",
   loading,
   fetchPriority,
+  rootMargin = "800px 0px",
   ...props
 }) {
   const lqSrc = lqSrcProp ?? getLqSrc(src);
+  const rootRef = useRef(null);
   const fullRef = useRef(null);
-  const [loaded, setLoaded] = useState(!lqSrc);
+  const loadEager = loading === "eager" || fetchPriority === "high";
+  const [activeSrc, setActiveSrc] = useState(loadEager ? src : undefined);
+  const [loaded, setLoaded] = useState(Boolean(loadEager && !lqSrc));
 
   useEffect(() => {
-    setLoaded(!lqSrc);
+    setActiveSrc(loadEager ? src : undefined);
+    setLoaded(Boolean(loadEager && !lqSrc));
+  }, [src, lqSrc, loadEager]);
 
-    if (!lqSrc) {
+  useEffect(() => {
+    if (loadEager || activeSrc === src) {
+      return undefined;
+    }
+
+    const node = rootRef.current;
+    if (!node) {
+      return undefined;
+    }
+
+    if (typeof IntersectionObserver === "undefined") {
+      setActiveSrc(src);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setActiveSrc(src);
+          observer.disconnect();
+        }
+      },
+      { rootMargin, threshold: 0.01 },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [src, loadEager, activeSrc, rootMargin]);
+
+  useEffect(() => {
+    if (!activeSrc) {
       return undefined;
     }
 
@@ -74,27 +110,32 @@ export function ProgressiveImage({
     }
 
     return undefined;
-  }, [src, lqSrc]);
+  }, [activeSrc, lqSrc]);
 
   return (
     <span
+      ref={rootRef}
       className={["progressive-image", loaded ? "is-loaded" : "", className].filter(Boolean).join(" ")}
       style={style}
     >
       {lqSrc ? (
         <img className="progressive-image-lq" src={lqSrc} alt="" aria-hidden="true" decoding="async" />
       ) : null}
-      <img
-        ref={fullRef}
-        className="progressive-image-full"
-        src={src}
-        alt={alt}
-        decoding={decoding}
-        loading={loading}
-        fetchPriority={fetchPriority}
-        onLoad={() => setLoaded(true)}
-        {...props}
-      />
+      {activeSrc ? (
+        <img
+          ref={fullRef}
+          className="progressive-image-full"
+          src={activeSrc}
+          alt={alt}
+          decoding={decoding}
+          loading={loadEager ? "eager" : "lazy"}
+          fetchPriority={fetchPriority}
+          onLoad={() => setLoaded(true)}
+          {...props}
+        />
+      ) : (
+        <span className="progressive-image-full progressive-image-spacer" aria-hidden="true" />
+      )}
     </span>
   );
 }

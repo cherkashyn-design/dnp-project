@@ -444,7 +444,12 @@ function DrumkitCasePage() {
       <section className="case-hero" id="case-hero">
         <div className="case-hero-media">
           <div className="case-hero-image-frame">
-            <ProgressiveImage src={drumkitPreview} alt="Drumkit landing page on a laptop" />
+            <ProgressiveImage
+              src={drumkitPreview}
+              alt="Drumkit landing page on a laptop"
+              loading="eager"
+              fetchPriority="high"
+            />
           </div>
         </div>
         <div className="case-hero-info">
@@ -665,7 +670,12 @@ function PortfolioCasePage({ project }) {
       <section className="case-hero" id="case-hero">
         <div className="case-hero-media">
           <div className="case-hero-image-frame">
-            <ProgressiveImage src={project.heroImage} alt={project.heroAlt} />
+            <ProgressiveImage
+              src={project.heroImage}
+              alt={project.heroAlt}
+              loading="eager"
+              fetchPriority="high"
+            />
           </div>
         </div>
         <div className="case-hero-info">

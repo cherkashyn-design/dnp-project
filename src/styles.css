@@ -195,6 +195,13 @@ img {
   z-index: 1;
 }
 
+.progressive-image-spacer {
+  display: block;
+  height: 100%;
+  min-height: 1px;
+  width: 100%;
+}
+
 .progressive-image.is-loaded .progressive-image-full,
 .progressive-image:not(:has(.progressive-image-lq)) .progressive-image-full {
   opacity: 1;
@@ -921,8 +928,26 @@ img {
 .case-section {
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 8px;
   padding: 80px 32px;
+}
+
+.case-section > h2:not(.other-projects-title),
+.case-section > .section-heading-row {
+  margin-bottom: 40px;
+}
+
+.case-section > .case-stats,
+.case-section > .feature-section {
+  margin-bottom: 40px;
+  margin-top: 40px;
+}
+
+.case-section > h2:not(.other-projects-title) + .case-stats,
+.case-section > h2:not(.other-projects-title) + .feature-section,
+.case-section > .section-heading-row + .case-stats,
+.case-section > .section-heading-row + .feature-section {
+  margin-top: 0;
 }
 
 .overview-grid {
@@ -990,6 +1015,11 @@ img {
   gap: 16px;
   margin: 0;
   scroll-margin-top: 112px;
+}
+
+.case-media-block:has(> figcaption),
+.media-grid:has(figcaption) {
+  margin-bottom: 24px;
 }
 
 .case-media {
@@ -1105,7 +1135,7 @@ img {
 
 .media-grid {
   display: grid;
-  gap: 48px;
+  gap: 8px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   scroll-margin-top: 112px;
 }
@@ -1680,9 +1710,32 @@ img {
   }
 
   .case-section {
-    gap: 32px;
+    gap: 8px;
     min-width: 0;
     padding: 64px 16px;
+  }
+
+  .case-section > h2:not(.other-projects-title),
+  .case-section > .section-heading-row {
+    margin-bottom: 24px;
+  }
+
+  .case-section > .case-stats,
+  .case-section > .feature-section {
+    margin-bottom: 24px;
+    margin-top: 24px;
+  }
+
+  .case-section > h2:not(.other-projects-title) + .case-stats,
+  .case-section > h2:not(.other-projects-title) + .feature-section,
+  .case-section > .section-heading-row + .case-stats,
+  .case-section > .section-heading-row + .feature-section {
+    margin-top: 0;
+  }
+
+  .case-media-block:has(> figcaption),
+  .media-grid:has(figcaption) {
+    margin-bottom: 16px;
   }
 
   .other-projects-section {
