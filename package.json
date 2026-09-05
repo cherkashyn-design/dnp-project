@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate:lq": "python3 scripts/generate-lq-images.py"
   },
   "dependencies": {
     "lottie-react": "^3.1.1",

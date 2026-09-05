@@ -95,6 +95,34 @@ import yummoSlide9P2 from "../portfolio/Yummo/Slide-9/p2.jpg";
 import yummoSlide10 from "../portfolio/Yummo/Slide-10.jpg";
 import yummoSlide11 from "../portfolio/Yummo/Slide-11.jpg";
 
+const portfolioRasterImages = import.meta.glob("../portfolio/**/*.{jpg,jpeg,png}", {
+  eager: true,
+  import: "default",
+});
+
+const lqByFullUrl = (() => {
+  const map = new Map();
+
+  for (const [path, url] of Object.entries(portfolioRasterImages)) {
+    if (/\.lq\.(jpe?g|png)$/i.test(path)) {
+      continue;
+    }
+
+    const lqPath = path.replace(/\.(jpe?g|png)$/i, ".lq.jpg");
+    const lqUrl = portfolioRasterImages[lqPath];
+
+    if (lqUrl) {
+      map.set(url, lqUrl);
+    }
+  }
+
+  return map;
+})();
+
+function getLqSrc(src) {
+  return lqByFullUrl.get(src);
+}
+
 const email = "contact@donotpress.com";
 const drumkitFavicon = "https://www.google.com/s2/favicons?domain=drumkit.ai&sz=32";
 const yummoFavicon = "https://www.google.com/s2/favicons?domain=yummoapp.com&sz=32";
@@ -504,7 +532,7 @@ function DrumkitCasePage() {
       <section className="case-hero" id="case-hero">
         <div className="case-hero-media">
           <div className="case-hero-image-frame">
-            <img src={drumkitPreview} alt="Drumkit landing page on a laptop" />
+            <ProgressiveImage src={drumkitPreview} alt="Drumkit landing page on a laptop" />
           </div>
         </div>
         <div className="case-hero-info">
@@ -727,7 +755,7 @@ function PortfolioCasePage({ project }) {
       <section className="case-hero" id="case-hero">
         <div className="case-hero-media">
           <div className="case-hero-image-frame">
-            <img src={project.heroImage} alt={project.heroAlt} />
+            <ProgressiveImage src={project.heroImage} alt={project.heroAlt} />
           </div>
         </div>
         <div className="case-hero-info">
@@ -999,7 +1027,52 @@ function ThumbnailTrack({ baseOffset, navigationItems }) {
 }
 
 function NavThumbMedia({ src }) {
-  return src.endsWith(".mp4") ? <video src={src} muted playsInline /> : <img src={src} alt="" />;
+  return src.endsWith(".mp4") ? (
+    <video src={src} muted playsInline />
+  ) : (
+    <ProgressiveImage src={src} alt="" />
+  );
+}
+
+function ProgressiveImage({ src, alt = "", className = "", style, decoding = "async", ...props }) {
+  const lqSrc = getLqSrc(src);
+  const fullRef = useRef(null);
+  const [loaded, setLoaded] = useState(!lqSrc);
+
+  useEffect(() => {
+    setLoaded(!lqSrc);
+
+    if (!lqSrc) {
+      return undefined;
+    }
+
+    const image = fullRef.current;
+    if (image?.complete && image.naturalWidth > 0) {
+      setLoaded(true);
+    }
+
+    return undefined;
+  }, [src, lqSrc]);
+
+  return (
+    <span
+      className={["progressive-image", loaded ? "is-loaded" : "", className].filter(Boolean).join(" ")}
+      style={style}
+    >
+      {lqSrc ? (
+        <img className="progressive-image-lq" src={lqSrc} alt="" aria-hidden="true" decoding="async" />
+      ) : null}
+      <img
+        ref={fullRef}
+        className="progressive-image-full"
+        src={src}
+        alt={alt}
+        decoding={decoding}
+        onLoad={() => setLoaded(true)}
+        {...props}
+      />
+    </span>
+  );
 }
 
 function InfoBlock({ eyebrow, body }) {
@@ -1028,7 +1101,7 @@ function MediaBlock({ id, type, src, poster, caption, variant, mockup }) {
         ) : type === "video" ? (
           <video src={src} poster={poster} autoPlay muted loop playsInline />
         ) : (
-          <img src={src} alt="" />
+          <ProgressiveImage src={src} alt="" />
         )}
       </div>
       {caption ? <figcaption>{caption}</figcaption> : null}
@@ -1175,7 +1248,7 @@ function FeatureSection({ id, title, mediaSrc, lottieData, items }) {
         </div>
       ) : mediaSrc ? (
         <div className="case-media feature-media">
-          <img src={mediaSrc} alt="" />
+          <ProgressiveImage src={mediaSrc} alt="" />
         </div>
       ) : null}
       <div className="feature-grid">
@@ -1220,12 +1293,12 @@ function SidebarMarquee({ id, background, cards, caption }) {
   return (
     <figure className="case-media-block" id={id}>
       <div className="case-media case-media-marquee">
-        <img className="marquee-bg" src={background} alt="" />
+        <ProgressiveImage className="marquee-bg" src={background} alt="" />
         <div className="marquee-viewport">
           <div className="marquee-track">
             {loopCards.map((card, index) => (
               <div className="marquee-card" key={`${card}-${index}`}>
-                <img src={card} alt="" />
+                <ProgressiveImage src={card} alt="" />
               </div>
             ))}
           </div>
@@ -1392,7 +1465,7 @@ function ProjectCard({ project }) {
   const content = (
     <>
       <div className="project-image-wrap">
-        <img className="project-image" src={project.image} alt={`${project.name} preview`} />
+        <ProgressiveImage className="project-image" src={project.image} alt={`${project.name} preview`} />
       </div>
       <div className="project-info">
         <div className="project-title-row">
@@ -1454,7 +1527,7 @@ function useScrollZoomMedia() {
       animationFrame = null;
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
       const mediaElements = document.querySelectorAll(
-        ".case-hero-image-frame img, .case-media > img, .case-media > video",
+        ".case-hero-image-frame .progressive-image, .case-media > .progressive-image, .case-media > video",
       );
 
       mediaElements.forEach((element) => {

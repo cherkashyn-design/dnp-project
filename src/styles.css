@@ -160,11 +160,44 @@ img {
 .project-image {
   display: block;
   height: 100%;
-  object-fit: cover;
   transform: scale(1);
   transition: transform 640ms cubic-bezier(0.16, 1, 0.3, 1);
   width: 100%;
   will-change: transform;
+}
+
+.progressive-image {
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressive-image-lq,
+.progressive-image-full {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.progressive-image-lq {
+  filter: blur(16px);
+  inset: 0;
+  position: absolute;
+  transform: scale(1.1);
+  z-index: 0;
+}
+
+.progressive-image-full {
+  opacity: 0;
+  position: relative;
+  transition: opacity 480ms ease;
+  z-index: 1;
+}
+
+.progressive-image.is-loaded .progressive-image-full,
+.progressive-image:not(:has(.progressive-image-lq)) .progressive-image-full {
+  opacity: 1;
 }
 
 .project-info {
@@ -692,10 +725,17 @@ img {
 }
 
 .case-nav-thumb img,
-.case-nav-thumb video {
+.case-nav-thumb video,
+.case-nav-thumb .progressive-image,
+.case-nav-thumb .progressive-image-lq,
+.case-nav-thumb .progressive-image-full {
   height: 100%;
   object-fit: cover;
   width: 100%;
+}
+
+.case-nav-thumb .progressive-image {
+  display: block;
 }
 
 .case-nav-thumb-combined {
@@ -704,7 +744,8 @@ img {
 }
 
 .case-nav-thumb-combined img,
-.case-nav-thumb-combined video {
+.case-nav-thumb-combined video,
+.case-nav-thumb-combined .progressive-image {
   border-radius: 2px;
   flex: 1 1 0;
   min-width: 0;
@@ -731,10 +772,15 @@ img {
   width: 100%;
 }
 
+.case-hero-image-frame .progressive-image,
 .case-hero-image-frame img {
   height: 100%;
-  object-fit: cover;
   width: 100%;
+}
+
+.case-hero-image-frame .progressive-image-lq,
+.case-hero-image-frame .progressive-image-full {
+  object-fit: cover;
 }
 
 .case-hero-info {
@@ -972,7 +1018,8 @@ img {
 }
 
 .case-media img,
-.case-media video {
+.case-media video,
+.case-media > .progressive-image {
   height: 100%;
   object-fit: cover;
   width: 100%;
@@ -1038,8 +1085,8 @@ img {
   width: 100%;
 }
 
-.case-hero-image-frame img,
-.case-media > img,
+.case-hero-image-frame .progressive-image,
+.case-media > .progressive-image,
 .case-media > video {
   transform: scale(1.2);
   transform-origin: center;
@@ -1193,11 +1240,33 @@ img {
 .marquee-bg {
   height: 100%;
   left: 0;
-  object-fit: cover;
   position: absolute;
   top: 0;
   transform: none;
   width: 100%;
+}
+
+.marquee-bg .progressive-image-lq,
+.marquee-bg .progressive-image-full,
+.marquee-card .progressive-image,
+.marquee-card .progressive-image-lq,
+.marquee-card .progressive-image-full,
+.marquee-card img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  transform: none;
+  width: auto;
+}
+
+.marquee-card .progressive-image {
+  height: 100%;
+  width: auto;
+}
+
+.marquee-card .progressive-image-lq,
+.marquee-card .progressive-image-full {
+  width: auto;
 }
 
 .marquee-viewport {
@@ -1306,7 +1375,6 @@ img {
 .other-projects-section .project-image {
   display: block;
   height: 100%;
-  object-fit: cover;
   transform: scale(1);
   transition: transform 640ms cubic-bezier(0.16, 1, 0.3, 1);
   width: 100%;
