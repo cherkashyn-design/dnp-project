@@ -14,7 +14,8 @@ def main() -> None:
     targets = [
         path
         for path in ROOT.rglob("*")
-        if path.suffix.lower() in {".jpg", ".jpeg", ".png"} and ".lq." not in path.name.lower()
+        if path.suffix.lower() in {".jpg", ".jpeg", ".png"}
+        and ".lq." not in path.name.lower()
     ]
 
     print(f"Generating LQ for {len(targets)} images...")
