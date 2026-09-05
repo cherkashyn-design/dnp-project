@@ -69,10 +69,12 @@ const CaseList = forwardRef(function CaseList(_props, ref) {
 function SiteFooter() {
   return (
     <footer className="site-footer">
+      {/* Legal links — restore when Terms / Privacy pages are ready
       <nav aria-label="Legal links">
         <a href="/terms">Terms of Use</a>
         <a href="/privacy">Privacy Policy</a>
       </nav>
+      */}
       <p>
         <span>© 2026</span>
         <span className="footer-dot" aria-hidden="true" />
