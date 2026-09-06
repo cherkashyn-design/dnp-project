@@ -1023,25 +1023,27 @@ function MockupPlayer({
   cameraZoom,
 }) {
   const [ready, setReady] = useState(false);
-  const [renderScale, setRenderScale] = useState(1);
+  // Retina upscale (mount player larger, CSS-scale down). Disabled for now — keep for later.
+  // const [renderScale, setRenderScale] = useState(1);
+  const renderScale = 1;
 
-  useEffect(() => {
-    const updateRenderScale = () => {
-      const dpr = window.devicePixelRatio || 1;
-      // Upscale so the canvas buffer is closer to physical pixels, then CSS-scale back.
-      // Cap at 2× — 3× blows up WebGL memory on phones and can kill Safari.
-      setRenderScale(dpr >= 1.5 ? 2 : 1);
-    };
-
-    updateRenderScale();
-    window.addEventListener("resize", updateRenderScale);
-    window.visualViewport?.addEventListener("resize", updateRenderScale);
-
-    return () => {
-      window.removeEventListener("resize", updateRenderScale);
-      window.visualViewport?.removeEventListener("resize", updateRenderScale);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const updateRenderScale = () => {
+  //     const dpr = window.devicePixelRatio || 1;
+  //     // Upscale so the canvas buffer is closer to physical pixels, then CSS-scale back.
+  //     // Cap at 2× — 3× blows up WebGL memory on phones and can kill Safari.
+  //     setRenderScale(dpr >= 1.5 ? 2 : 1);
+  //   };
+  //
+  //   updateRenderScale();
+  //   window.addEventListener("resize", updateRenderScale);
+  //   window.visualViewport?.addEventListener("resize", updateRenderScale);
+  //
+  //   return () => {
+  //     window.removeEventListener("resize", updateRenderScale);
+  //     window.visualViewport?.removeEventListener("resize", updateRenderScale);
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (ready) return undefined;

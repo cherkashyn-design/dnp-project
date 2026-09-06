@@ -46,6 +46,9 @@ export const cases = [
   },
 ];
 
+/* Progressive LQ + deferred full-image load. Flip to true to re-enable. */
+const ENABLE_PROGRESSIVE_LOADING = false;
+
 export function ProgressiveImage({
   src,
   lqSrc: lqSrcProp,
@@ -58,10 +61,11 @@ export function ProgressiveImage({
   rootMargin = "800px 0px",
   ...props
 }) {
-  const lqSrc = lqSrcProp ?? getLqSrc(src);
+  const lqSrc = ENABLE_PROGRESSIVE_LOADING ? (lqSrcProp ?? getLqSrc(src)) : undefined;
   const rootRef = useRef(null);
   const fullRef = useRef(null);
-  const loadEager = loading === "eager" || fetchPriority === "high";
+  const loadEager =
+    !ENABLE_PROGRESSIVE_LOADING || loading === "eager" || fetchPriority === "high";
   const [activeSrc, setActiveSrc] = useState(loadEager ? src : undefined);
   const [loaded, setLoaded] = useState(Boolean(loadEager && !lqSrc));
 
