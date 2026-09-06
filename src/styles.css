@@ -1113,11 +1113,19 @@ img {
 }
 
 .mockup-player-shell {
+  --mockup-render-scale: 1;
   position: relative;
   aspect-ratio: var(--mockup-aspect, 16 / 9);
   display: block;
   overflow: hidden;
   width: 100%;
+}
+
+.mockup-player-frame {
+  height: calc(100% * var(--mockup-render-scale));
+  transform: scale(calc(1 / var(--mockup-render-scale)));
+  transform-origin: top left;
+  width: calc(100% * var(--mockup-render-scale));
 }
 
 .mockup-player-skeleton {
@@ -1167,6 +1175,12 @@ img {
 }
 
 .case-media mockup-player {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.mockup-player-frame mockup-player {
   display: block;
   height: 100%;
   width: 100%;

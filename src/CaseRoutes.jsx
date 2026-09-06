@@ -537,6 +537,8 @@ function DrumkitCasePage() {
             mockupId: "5a26d7db-4784-4595-8db1-f16a744ec2b3",
             width: "100%",
             aspectRatio: "4 / 3",
+            trigger: "load",
+            triggerLoop: false,
             cursorRange: "17-56-14-55",
             clickRange: "12-12-11-11",
             cameraZoom: "30",
@@ -1021,6 +1023,25 @@ function MockupPlayer({
   cameraZoom,
 }) {
   const [ready, setReady] = useState(false);
+  const [renderScale, setRenderScale] = useState(1);
+
+  useEffect(() => {
+    const updateRenderScale = () => {
+      const dpr = window.devicePixelRatio || 1;
+      // Upscale so the canvas buffer is closer to physical pixels, then CSS-scale back.
+      // Cap at 2× — 3× blows up WebGL memory on phones and can kill Safari.
+      setRenderScale(dpr >= 1.5 ? 2 : 1);
+    };
+
+    updateRenderScale();
+    window.addEventListener("resize", updateRenderScale);
+    window.visualViewport?.addEventListener("resize", updateRenderScale);
+
+    return () => {
+      window.removeEventListener("resize", updateRenderScale);
+      window.visualViewport?.removeEventListener("resize", updateRenderScale);
+    };
+  }, []);
 
   useEffect(() => {
     if (ready) return undefined;
@@ -1086,34 +1107,39 @@ function MockupPlayer({
   return (
     <div
       className={["mockup-player-shell", ready ? "is-ready" : ""].filter(Boolean).join(" ")}
-      style={{ "--mockup-aspect": aspectRatio }}
+      style={{
+        "--mockup-aspect": aspectRatio,
+        "--mockup-render-scale": String(renderScale),
+      }}
     >
       <div className="mockup-player-skeleton" aria-hidden={ready}>
         <span className="mockup-player-skeleton-shine" />
       </div>
-      <mockup-player
-        mockup-id={mockupId}
-        width={width}
-        aspect-ratio={aspectRatio}
-        trigger={trigger}
-        trigger-loop={
-          triggerLoop === true ? "true" : triggerLoop === false ? "false" : undefined
-        }
-        cursor-range={cursorRange}
-        click-range={clickRange}
-        zoom-mode={zoomMode}
-        zoom-amount={zoomAmount}
-        zoom-duration={zoomDuration}
-        cursor-affect-page={
-          cursorAffectPage === false
-            ? "false"
-            : cursorAffectPage === true
-              ? "true"
-              : undefined
-        }
-        background-color={backgroundColor}
-        camera-zoom={cameraZoom}
-      />
+      <div className="mockup-player-frame">
+        <mockup-player
+          mockup-id={mockupId}
+          width={width}
+          aspect-ratio={aspectRatio}
+          trigger={trigger}
+          trigger-loop={
+            triggerLoop === true ? "true" : triggerLoop === false ? "false" : undefined
+          }
+          cursor-range={cursorRange}
+          click-range={clickRange}
+          zoom-mode={zoomMode}
+          zoom-amount={zoomAmount}
+          zoom-duration={zoomDuration}
+          cursor-affect-page={
+            cursorAffectPage === false
+              ? "false"
+              : cursorAffectPage === true
+                ? "true"
+                : undefined
+          }
+          background-color={backgroundColor}
+          camera-zoom={cameraZoom}
+        />
+      </div>
     </div>
   );
 }
