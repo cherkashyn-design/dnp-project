@@ -1,19 +1,74 @@
 import { forwardRef, useEffect, useRef, useState } from "react";
 
+import checkIcon from "./assets/Icons/check-icon.svg";
 import copyIcon from "./assets/Icons/copy-icon.svg";
 import dnpLogo from "./assets/Global/dnp-logo.png";
 import { ProjectCard, cases, email, useRevealAnimations } from "./shared.jsx";
 
-async function copyEmail() {
+const COPIED_VISIBLE_MS = 2000;
+const COPIED_ANIMATION_MS = 320;
+
+async function copyEmailToClipboard() {
   if (!navigator.clipboard) {
     window.location.href = `mailto:${email}`;
-    return;
+    return false;
   }
 
   await navigator.clipboard.writeText(email);
+  return true;
 }
 
-function InfoPanel() {
+function EmailButton({ onCopied }) {
+  const handleClick = async () => {
+    const copied = await copyEmailToClipboard();
+    if (copied) {
+      onCopied?.();
+    }
+  };
+
+  return (
+    <button className="button button-email" type="button" onClick={handleClick}>
+      <span>{email}</span>
+      <span className="copy-icon" aria-hidden="true">
+        <img src={copyIcon} alt="" />
+      </span>
+    </button>
+  );
+}
+
+function CopiedToast({ open }) {
+  const [mounted, setMounted] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      setMounted(true);
+      const showFrame = window.requestAnimationFrame(() => {
+        setVisible(true);
+      });
+      return () => window.cancelAnimationFrame(showFrame);
+    }
+
+    setVisible(false);
+    const hideTimer = window.setTimeout(() => setMounted(false), COPIED_ANIMATION_MS);
+    return () => window.clearTimeout(hideTimer);
+  }, [open]);
+
+  if (!mounted) {
+    return null;
+  }
+
+  return (
+    <div className="copied-toast" aria-live="polite" aria-atomic="true">
+      <div className={["copied-toast-pill", visible ? "is-visible" : ""].filter(Boolean).join(" ")}>
+        <img className="copied-toast-icon" src={checkIcon} alt="" aria-hidden="true" />
+        <span>Copied</span>
+      </div>
+    </div>
+  );
+}
+
+function InfoPanel({ onCopied }) {
   return (
     <aside className="info-panel" aria-labelledby="homepage-title">
       <header className="info-header">
@@ -41,13 +96,8 @@ function InfoPanel() {
         </div>
       </section>
 
-      <section className="cta" aria-label="Contact">
-        <button className="button button-email" type="button" onClick={copyEmail}>
-          <span>{email}</span>
-          <span className="copy-icon" aria-hidden="true">
-            <img src={copyIcon} alt="" />
-          </span>
-        </button>
+      <section className="cta cta-desktop" aria-label="Contact">
+        <EmailButton onCopied={onCopied} />
       </section>
     </aside>
   );
@@ -84,15 +134,45 @@ function SiteFooter() {
   );
 }
 
+function HomeMobileHeader({ isScrolled }) {
+  return (
+    <header className={["home-mobile-header", isScrolled ? "is-scrolled" : ""].filter(Boolean).join(" ")}>
+      <div className="home-mobile-header-fade" aria-hidden="true" />
+      <a className="logo" href="/" aria-label="DoNotPress home">
+        <img src={dnpLogo} alt="DoNotPress" />
+      </a>
+    </header>
+  );
+}
+
+function HomeMobileCta({ onCopied }) {
+  return (
+    <div className="home-mobile-cta">
+      <EmailButton onCopied={onCopied} />
+    </div>
+  );
+}
+
 export default function HomePage() {
   const casesRef = useRef(null);
+  const copiedTimerRef = useRef(null);
+  const [copiedOpen, setCopiedOpen] = useState(false);
   const [scrollState, setScrollState] = useState({
+    hasScrolled: false,
     hasScrolledCases: false,
     isAtEnd: false,
     isCasesActive: false,
   });
 
   useRevealAnimations();
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimerRef.current !== null) {
+        window.clearTimeout(copiedTimerRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const updateFadeState = () => {
@@ -109,6 +189,7 @@ export default function HomePage() {
       const isDesktop = window.matchMedia("(min-width: 800px)").matches;
 
       setScrollState({
+        hasScrolled: scrollTop > 2,
         hasScrolledCases: isDesktop ? scrollTop > 2 : scrollTop > casesTop - 2,
         isAtEnd: scrollTop + viewportHeight >= documentHeight - 4,
         isCasesActive: isDesktop || (scrollTop + viewportHeight > casesTop && scrollTop < casesBottom),
@@ -125,6 +206,18 @@ export default function HomePage() {
     };
   }, []);
 
+  const showCopiedToast = () => {
+    if (copiedTimerRef.current !== null) {
+      window.clearTimeout(copiedTimerRef.current);
+    }
+
+    setCopiedOpen(true);
+    copiedTimerRef.current = window.setTimeout(() => {
+      setCopiedOpen(false);
+      copiedTimerRef.current = null;
+    }, COPIED_VISIBLE_MS);
+  };
+
   return (
     <main
       className={[
@@ -136,8 +229,11 @@ export default function HomePage() {
         .filter(Boolean)
         .join(" ")}
     >
+      <CopiedToast open={copiedOpen} />
+      <HomeMobileHeader isScrolled={scrollState.hasScrolled} />
       <CaseList ref={casesRef} />
-      <InfoPanel />
+      <InfoPanel onCopied={showCopiedToast} />
+      <HomeMobileCta onCopied={showCopiedToast} />
       <div className="cases-fade cases-fade-top" aria-hidden="true" />
       <div className="cases-fade cases-fade-bottom" aria-hidden="true" />
     </main>

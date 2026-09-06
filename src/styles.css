@@ -33,6 +33,7 @@ html {
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.4;
+  overflow-x: clip;
   scroll-behavior: smooth;
   text-rendering: geometricPrecision;
 }
@@ -40,6 +41,7 @@ html {
 body {
   margin: 0;
   min-width: 320px;
+  overflow-x: clip;
 }
 
 body,
@@ -102,6 +104,11 @@ img {
     transform: none;
     transition: none;
   }
+}
+
+.home-mobile-header,
+.home-mobile-cta {
+  display: none;
 }
 
 .home-page {
@@ -445,6 +452,8 @@ img {
 }
 
 .button-email > span:first-child {
+  flex: 1 1 auto;
+  min-width: 0;
   overflow: hidden;
   padding-inline: 18px;
   text-align: left;
@@ -483,6 +492,54 @@ img {
 .button-email:focus-visible {
   outline: 2px solid #7d79ff;
   outline-offset: 2px;
+}
+
+.copied-toast {
+  display: flex;
+  justify-content: center;
+  left: 0;
+  padding: 16px;
+  pointer-events: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 40;
+}
+
+.copied-toast-pill {
+  align-items: center;
+  background: var(--foreground-primary);
+  border-radius: 20px;
+  color: var(--text-primary-alt);
+  display: inline-flex;
+  font-size: 16px;
+  gap: 8px;
+  line-height: 1.4;
+  opacity: 0;
+  padding: 12px 20px;
+  transform: translateY(-12px);
+  transition:
+    opacity 320ms ease,
+    transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.copied-toast-pill.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.copied-toast-icon {
+  display: block;
+  flex: 0 0 20px;
+  height: 20px;
+  width: 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copied-toast-pill {
+    transform: none;
+    transition: opacity 160ms ease;
+  }
 }
 
 .cases-fade {
@@ -1226,12 +1283,22 @@ img {
 .lottie-player {
   display: block;
   height: auto;
+  position: relative;
   width: 100%;
 }
 
-.lottie-player > div {
+.lottie-player-placeholder {
+  background: var(--foreground-additional);
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+}
+
+.lottie-player > div,
+.lottie-player canvas {
   display: block;
   height: 100%;
+  max-width: 100%;
   width: 100%;
 }
 
@@ -1259,6 +1326,16 @@ img {
 
 .lottie-card .lottie-player {
   height: 100%;
+}
+
+@keyframes lottie-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .case-media-marquee {
@@ -1544,22 +1621,72 @@ img {
   }
 
   .home-page {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    overflow-x: clip;
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .home-mobile-header {
+    align-items: center;
+    display: flex;
+    gap: 16px;
+    min-height: 80px;
+    order: 1;
+    padding: 16px;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 20;
+  }
+
+  .home-mobile-header-fade {
+    background: linear-gradient(
+      180deg,
+      rgba(var(--fade-bg-rgb), 0.5) 0%,
+      rgba(var(--fade-bg-rgb), 0.5) 55%,
+      rgba(var(--fade-bg-rgb), 0) 100%
+    );
+    height: calc(100% + 48px);
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: opacity 180ms ease;
+    z-index: 0;
+  }
+
+  .home-mobile-header.is-scrolled .home-mobile-header-fade {
+    opacity: 1;
+  }
+
+  .home-mobile-header .logo {
+    position: relative;
+    z-index: 1;
   }
 
   .info-panel {
+    display: flex;
     flex-basis: auto;
-    min-height: 100svh;
+    flex-direction: column;
+    min-height: 0;
+    order: 2;
     position: relative;
+    top: auto;
     width: 100%;
   }
 
-  .info-header {
-    min-height: 112px;
+  .info-header,
+  .cta-desktop {
+    display: none;
   }
 
   .intro {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
+    gap: 32px;
+    padding: 32px 16px;
   }
 
   .intro h1 {
@@ -1567,12 +1694,63 @@ img {
     letter-spacing: -0.02em;
   }
 
-  .cta {
-    margin-top: 0;
+  .cases-column {
+    min-width: 0;
+    order: 3;
+    overflow-x: clip;
+    padding: 0 16px 16px;
+    width: 100%;
   }
 
-  .cases-column {
+  .home-mobile-cta {
+    bottom: 0;
+    box-sizing: border-box;
+    display: flex;
+    left: 0;
     padding: 16px;
+    padding-bottom: max(16px, env(safe-area-inset-bottom, 0px));
+    position: fixed;
+    right: 0;
+    width: 100%;
+    z-index: 30;
+  }
+
+  .home-mobile-cta .button-email {
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .project-info {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 8px;
+  }
+
+  .project-title-row {
+    width: 100%;
+  }
+
+  .project-info h2 {
+    font-size: 18px;
+    overflow: visible;
+    text-overflow: unset;
+    white-space: normal;
+    width: 100%;
+  }
+
+  .project-info ul {
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 100%;
+  }
+
+  .project-info li {
+    font-size: 12px;
+    line-height: 1.3;
+    padding: 6px 12px;
   }
 
   .cases-fade {
@@ -1582,9 +1760,11 @@ img {
 
   .cases-fade-top {
     height: 48px;
+    top: 80px;
   }
 
   .cases-fade-bottom {
+    bottom: calc(88px + env(safe-area-inset-bottom, 0px));
     height: 72px;
   }
 
@@ -1593,27 +1773,18 @@ img {
     opacity: 0;
   }
 
-  .project-info {
-    gap: 16px;
-    padding: 0 8px;
-  }
-
-  .project-info h2 {
-    font-size: 18px;
-  }
-
-  .project-info ul {
-    gap: 6px;
-  }
-
-  .project-info li {
-    font-size: 12px;
-    line-height: 1.3;
-    padding: 6px 12px;
-  }
-
   .lottie-quad-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lottie-player.is-mounted {
+    animation: lottie-fade-in 200ms ease both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lottie-player.is-mounted {
+      animation: none;
+    }
   }
 
   .case-header {
@@ -1838,13 +2009,6 @@ img {
 }
 
 @media (max-width: 420px) {
-  .info-header,
-  .intro,
-  .cta {
-    padding-left: 32px;
-    padding-right: 32px;
-  }
-
   .intro h1 {
     font-size: clamp(56px, 17vw, 64px);
   }

@@ -28,10 +28,6 @@ import drumkitNavSlide9 from "../portfolio/Drumkit-UI/lottie/Previews/Slide-9-Pr
 import drumkitSlide2 from "../portfolio/Drumkit-UI/lottie/Slide-2.jpg";
 import drumkitSlide3P1 from "../portfolio/Drumkit-UI/lottie/Slide-3/p1.jpg";
 import drumkitSlide3P2 from "../portfolio/Drumkit-UI/lottie/Slide-3/p2.jpg";
-import drumkitSlide4QuickQuote from "../portfolio/Drumkit-UI/lottie/Slide-4-Quick-Quote.json";
-import drumkitSlide4Sidebar from "../portfolio/Drumkit-UI/lottie/Slide-4-Integrated-Sidebar.json";
-import drumkitSlide4LoadBuilding from "../portfolio/Drumkit-UI/lottie/Slide-4-Load-building.json";
-import drumkitSlide4SmartAutoreplies from "../portfolio/Drumkit-UI/lottie/Slide-4-Smart-Autoreplies.json";
 import drumkitSlide5Background from "../portfolio/Drumkit-UI/lottie/Slide-5/Background.jpg";
 import drumkitSlide5Carrier from "../portfolio/Drumkit-UI/lottie/Slide-5/Content/Carrier.svg";
 import drumkitSlide5Quote from "../portfolio/Drumkit-UI/lottie/Slide-5/Content/Quote.svg";
@@ -41,13 +37,6 @@ import drumkitSlide5Autoreplies from "../portfolio/Drumkit-UI/lottie/Slide-5/Con
 import drumkitSlide5Quote1 from "../portfolio/Drumkit-UI/lottie/Slide-5/Content/Quote-1.svg";
 import drumkitSlide5Autoreplies3 from "../portfolio/Drumkit-UI/lottie/Slide-5/Content/Autoreplies-3.svg";
 import drumkitSlide5Quote3 from "../portfolio/Drumkit-UI/lottie/Slide-5/Content/Quote-3.svg";
-import drumkitSlide6 from "../portfolio/Drumkit-UI/lottie/Slide-6-Automate-data-entry.json";
-import drumkitSlide7 from "../portfolio/Drumkit-UI/lottie/Slide-7-Simplify-SOPs.json";
-import drumkitSlide8 from "../portfolio/Drumkit-UI/lottie/Slide-8-Analyze-metrics.json";
-import drumkitSlide9Appointment from "../portfolio/Drumkit-UI/lottie/Slide-9-Appointment.json";
-import drumkitSlide9Freight from "../portfolio/Drumkit-UI/lottie/Slide-9-Digital-Freight-Matching.json";
-import drumkitSlide9SmartAutoreplies from "../portfolio/Drumkit-UI/lottie/Slide-9-Smart-Autoreplies.json";
-import drumkitSlide9Track from "../portfolio/Drumkit-UI/lottie/Slide-9-Track-and-Trace.json";
 import salesDriverPreview from "../portfolio/SalesDriver/Preview.jpg";
 import salesDriverNavPreview from "../portfolio/SalesDriver/Previews/Preview-Preview.jpg";
 import salesDriverNavSlide1 from "../portfolio/SalesDriver/Previews/Slide-1-Preview.jpg";
@@ -104,18 +93,46 @@ const drumkitFavicon = "https://www.google.com/s2/favicons?domain=drumkit.ai&sz=
 const yummoFavicon = "https://www.google.com/s2/favicons?domain=yummoapp.com&sz=32";
 
 const drumkitSlide4Animations = [
-  { data: drumkitSlide4QuickQuote, label: "Quick Quote" },
-  { data: drumkitSlide4Sidebar, label: "Integrated Sidebar" },
-  { data: drumkitSlide4LoadBuilding, label: "Load building" },
-  { data: drumkitSlide4SmartAutoreplies, label: "Smart Autoreplies" },
+  {
+    label: "Quick Quote",
+    load: () => import("../portfolio/Drumkit-UI/lottie/Slide-4-Quick-Quote.json"),
+  },
+  {
+    label: "Integrated Sidebar",
+    load: () => import("../portfolio/Drumkit-UI/lottie/Slide-4-Integrated-Sidebar.json"),
+  },
+  {
+    label: "Load building",
+    load: () => import("../portfolio/Drumkit-UI/lottie/Slide-4-Load-building.json"),
+  },
+  {
+    label: "Smart Autoreplies",
+    load: () => import("../portfolio/Drumkit-UI/lottie/Slide-4-Smart-Autoreplies.json"),
+  },
 ];
 
 const drumkitSlide9Animations = [
-  { data: drumkitSlide9Appointment, label: "Appointment" },
-  { data: drumkitSlide9Freight, label: "Digital Freight Matching" },
-  { data: drumkitSlide9SmartAutoreplies, label: "Smart Autoreplies" },
-  { data: drumkitSlide9Track, label: "Track and Trace" },
+  {
+    label: "Appointment",
+    load: () => import("../portfolio/Drumkit-UI/lottie/Slide-9-Appointment.json"),
+  },
+  {
+    label: "Digital Freight Matching",
+    load: () => import("../portfolio/Drumkit-UI/lottie/Slide-9-Digital-Freight-Matching.json"),
+  },
+  {
+    label: "Smart Autoreplies",
+    load: () => import("../portfolio/Drumkit-UI/lottie/Slide-9-Smart-Autoreplies.json"),
+  },
+  {
+    label: "Track and Trace",
+    load: () => import("../portfolio/Drumkit-UI/lottie/Slide-9-Track-and-Trace.json"),
+  },
 ];
+
+const loadDrumkitSlide6 = () => import("../portfolio/Drumkit-UI/lottie/Slide-6-Automate-data-entry.json");
+const loadDrumkitSlide7 = () => import("../portfolio/Drumkit-UI/lottie/Slide-7-Simplify-SOPs.json");
+const loadDrumkitSlide8 = () => import("../portfolio/Drumkit-UI/lottie/Slide-8-Analyze-metrics.json");
 
 const drumkitSlide5Cards = [
   drumkitSlide5Carrier,
@@ -579,7 +596,7 @@ function DrumkitCasePage() {
         <FeatureSection
           id="case-feature-load-mail"
           title="Load and mail integration"
-          lottieData={drumkitSlide6}
+          loadLottie={loadDrumkitSlide6}
           items={[
             ["Problem", "All departments and clients has their own solutions to track loads. That’s creating mistakes and misunderstandings."],
             ["Solution", "Automatically tracks all your services (Aljex, Tai, AscendTMS and other). Collecting data and update it in sidebar."],
@@ -599,7 +616,7 @@ function DrumkitCasePage() {
         <FeatureSection
           id="case-feature-sops"
           title="Simplify SOPs"
-          lottieData={drumkitSlide7}
+          loadLottie={loadDrumkitSlide7}
           items={[
             ["Problem", "Logistic companies has a lot of clients and drivers and spent a lot of time to manage their process and slots."],
             ["Solution", "Automatically send updates and slot options to the clients during the process instead of manual work."],
@@ -618,7 +635,7 @@ function DrumkitCasePage() {
         <FeatureSection
           id="case-feature-dashboard"
           title="Management dashboard"
-          lottieData={drumkitSlide8}
+          loadLottie={loadDrumkitSlide8}
           items={[
             ["Problem", "Due to a lot of product there no way to track managers effectivency"],
             ["Solution", "Merge all the data in one place. Show it as dashboard"],
@@ -1117,13 +1134,13 @@ function StatsSection({ eyebrow, stats, className = "" }) {
   );
 }
 
-function FeatureSection({ id, title, mediaSrc, lottieData, items }) {
+function FeatureSection({ id, title, mediaSrc, loadLottie, items }) {
   return (
     <section className="feature-section" id={id}>
       <h3>{title}</h3>
-      {lottieData ? (
+      {loadLottie ? (
         <div className="case-media feature-media case-media-lottie">
-          <LottiePlayer animationData={lottieData} playMode="visible" />
+          <LottiePlayer loadAnimation={loadLottie} playMode="visible" />
         </div>
       ) : mediaSrc ? (
         <div className="case-media feature-media">
@@ -1140,26 +1157,82 @@ function FeatureSection({ id, title, mediaSrc, lottieData, items }) {
 }
 
 function LottieQuadBlock({ id, animations, caption }) {
+  const cardRefs = useRef([]);
+  const [activeLabel, setActiveLabel] = useState(animations[0]?.label ?? null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 799px)");
+    const update = () => setIsMobile(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) {
+      return undefined;
+    }
+
+    const nodes = cardRefs.current.filter(Boolean);
+    if (nodes.length === 0) {
+      return undefined;
+    }
+
+    const ratios = new Map();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const label = entry.target.getAttribute("data-lottie-label");
+          if (!label) {
+            return;
+          }
+          ratios.set(label, entry.isIntersecting ? entry.intersectionRatio : 0);
+        });
+
+        let bestLabel = animations[0]?.label ?? null;
+        let bestRatio = -1;
+        animations.forEach((animation) => {
+          const ratio = ratios.get(animation.label) ?? 0;
+          if (ratio > bestRatio) {
+            bestRatio = ratio;
+            bestLabel = animation.label;
+          }
+        });
+
+        if (bestRatio > 0 && bestLabel) {
+          setActiveLabel((current) => (current === bestLabel ? current : bestLabel));
+        }
+      },
+      { threshold: [0, 0.1, 0.25, 0.5, 0.75, 1] },
+    );
+
+    nodes.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
+  }, [animations, isMobile]);
+
   return (
     <figure className="case-media-block" id={id}>
       <div className="lottie-quad-grid" role="list">
-        {animations.map((animation) => {
-          const width = animation.data?.w;
-          const height = animation.data?.h;
-          const aspectRatio = width && height ? `${width} / ${height}` : undefined;
-
-          return (
-            <div
-              className="lottie-card"
-              key={animation.label}
-              role="listitem"
-              aria-label={animation.label}
-              style={aspectRatio ? { aspectRatio } : undefined}
-            >
-              <LottiePlayer animationData={animation.data} playMode="hover" />
-            </div>
-          );
-        })}
+        {animations.map((animation, index) => (
+          <div
+            className="lottie-card"
+            key={animation.label}
+            role="listitem"
+            aria-label={animation.label}
+            data-lottie-label={animation.label}
+            ref={(node) => {
+              cardRefs.current[index] = node;
+            }}
+          >
+            <LottiePlayer
+              loadAnimation={animation.load}
+              playMode={isMobile ? "visible" : "hover"}
+              enabled={!isMobile || activeLabel === animation.label}
+            />
+          </div>
+        ))}
       </div>
       {caption ? <figcaption>{caption}</figcaption> : null}
     </figure>
@@ -1188,14 +1261,15 @@ function SidebarMarquee({ id, background, cards, caption }) {
   );
 }
 
-function LottiePlayer({ animationData, playMode = "visible" }) {
+function LottiePlayer({ loadAnimation, playMode = "visible", enabled = true }) {
   const containerRef = useRef(null);
   const lottieRef = useRef(null);
   const playingThroughRef = useRef(false);
-  const [inView, setInView] = useState(false);
+  const [nearView, setNearView] = useState(false);
   const [hoverCapable, setHoverCapable] = useState(false);
+  const [animationData, setAnimationData] = useState(null);
   const aspectRatio =
-    animationData?.w && animationData?.h ? `${animationData.w} / ${animationData.h}` : undefined;
+    animationData?.w && animationData?.h ? `${animationData.w} / ${animationData.h}` : "9 / 16";
 
   useEffect(() => {
     const hoverQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -1223,35 +1297,47 @@ function LottiePlayer({ animationData, playMode = "visible" }) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setInView(entry.isIntersecting);
+        setNearView(entry.isIntersecting);
       },
-      { threshold: 0.2 },
+      { rootMargin: "200px 0px", threshold: 0 },
     );
 
     observer.observe(element);
-
     return () => observer.disconnect();
   }, []);
 
-  const isHoverMode = playMode === "hover" && hoverCapable;
-
   useEffect(() => {
-    const animation = lottieRef.current;
-    if (!animation || isHoverMode) {
-      return;
+    if (!enabled || !nearView || !loadAnimation) {
+      setAnimationData(null);
+      return undefined;
     }
 
-    if (inView) {
-      animation.play();
-      return;
-    }
+    let cancelled = false;
 
-    animation.pause();
-  }, [inView, isHoverMode]);
+    loadAnimation()
+      .then((module) => {
+        if (!cancelled) {
+          setAnimationData(module.default ?? module);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setAnimationData(null);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [enabled, nearView, loadAnimation]);
+
+  const isHoverMode = playMode === "hover" && hoverCapable;
+  const shouldMount = Boolean(enabled && nearView && animationData);
+  const shouldAutoplay = shouldMount && !isHoverMode;
 
   const playHoverCycle = () => {
     const animation = lottieRef.current;
-    if (!animation || !inView || playingThroughRef.current) {
+    if (!animation || playingThroughRef.current) {
       return;
     }
 
@@ -1262,27 +1348,37 @@ function LottiePlayer({ animationData, playMode = "visible" }) {
 
   return (
     <div
-      className="lottie-player"
+      className={["lottie-player", shouldMount ? "is-mounted" : ""].filter(Boolean).join(" ")}
       ref={containerRef}
-      style={aspectRatio ? { aspectRatio } : undefined}
+      style={{ aspectRatio }}
       onMouseEnter={() => {
         if (isHoverMode) {
           playHoverCycle();
         }
       }}
     >
-      <Lottie
-        lottieRef={lottieRef}
-        src={animationData}
-        loop={!isHoverMode}
-        autoplay={false}
-        style={{ width: "100%", height: "100%" }}
-        subscriptions={{
-          [LottieSubscription.complete]: () => {
-            playingThroughRef.current = false;
-          },
-        }}
-      />
+      {shouldMount ? (
+        <Lottie
+          key={`${isHoverMode ? "hover" : "auto"}-${enabled}`}
+          lottieRef={lottieRef}
+          src={animationData}
+          loop={!isHoverMode}
+          autoplay={shouldAutoplay}
+          style={{ width: "100%", height: "100%" }}
+          subscriptions={{
+            [LottieSubscription.ready]: () => {
+              if (shouldAutoplay) {
+                lottieRef.current?.play();
+              }
+            },
+            [LottieSubscription.complete]: () => {
+              playingThroughRef.current = false;
+            },
+          }}
+        />
+      ) : (
+        <div className="lottie-player-placeholder" aria-hidden="true" />
+      )}
     </div>
   );
 }
