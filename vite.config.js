@@ -11,12 +11,12 @@ export default defineConfig({
           const sourcePath = assetInfo.originalFileNames?.[0] ?? assetInfo.name ?? "";
           const portfolioMatch = sourcePath.match(/portfolio\/([^/]+)\//);
 
-          if (sourcePath.includes("src/assets/Global/")) {
-            return "assets/Global/[name]-[hash][extname]";
+          if (sourcePath.includes("src/assets/brand/")) {
+            return "assets/brand/[name]-[hash][extname]";
           }
 
-          if (sourcePath.includes("src/assets/Icons/")) {
-            return "assets/Icons/[name]-[hash][extname]";
+          if (sourcePath.includes("src/assets/icons/")) {
+            return "assets/icons/[name]-[hash][extname]";
           }
 
           if (portfolioMatch) {

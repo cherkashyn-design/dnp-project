@@ -1,6 +1,6 @@
-import { registerLqMap } from "./shared.jsx";
+import { registerLqMap } from "../components/media/ProgressiveImage.jsx";
 
-const portfolioRasterImages = import.meta.glob("../portfolio/**/*.{jpg,jpeg,png}", {
+const portfolioRasterImages = import.meta.glob("../../portfolio/**/*.{jpg,jpeg,png}", {
   eager: true,
   import: "default",
 });
