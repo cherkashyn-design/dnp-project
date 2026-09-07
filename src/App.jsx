@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 import HomePage from "./HomePage.jsx";
 
@@ -9,13 +10,18 @@ function CaseRouteFallback() {
 }
 
 export default function App() {
-  if (window.location.pathname.startsWith("/cases/")) {
-    return (
-      <Suspense fallback={<CaseRouteFallback />}>
-        <CaseRoutes />
-      </Suspense>
-    );
-  }
+  const page = window.location.pathname.startsWith("/cases/") ? (
+    <Suspense fallback={<CaseRouteFallback />}>
+      <CaseRoutes />
+    </Suspense>
+  ) : (
+    <HomePage />
+  );
 
-  return <HomePage />;
+  return (
+    <>
+      {page}
+      <Analytics />
+    </>
+  );
 }

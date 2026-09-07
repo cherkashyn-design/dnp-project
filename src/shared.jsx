@@ -46,7 +46,7 @@ export const cases = [
   },
 ];
 
-/* Progressive LQ + deferred full-image load. Flip to true to re-enable. */
+/* Progressive LQ + deferred full-image load. Flip to false to disable. */
 const ENABLE_PROGRESSIVE_LOADING = true;
 
 export function ProgressiveImage({
@@ -59,6 +59,10 @@ export function ProgressiveImage({
   loading,
   fetchPriority,
   rootMargin = "800px 0px",
+  /** When true, fill a sized parent instead of reserving aspect-ratio locally. */
+  fill = false,
+  /** Used when fill is false to reserve layout space before the image loads. */
+  aspectRatio = "4 / 3",
   ...props
 }) {
   const lqSrc = ENABLE_PROGRESSIVE_LOADING ? (lqSrcProp ?? getLqSrc(src)) : undefined;
@@ -119,9 +123,20 @@ export function ProgressiveImage({
   return (
     <span
       ref={rootRef}
-      className={["progressive-image", loaded ? "is-loaded" : "", className].filter(Boolean).join(" ")}
-      style={style}
+      className={[
+        "progressive-image",
+        fill ? "is-fill" : "",
+        loaded ? "is-loaded" : "",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      style={{
+        ...style,
+        ...(!fill && aspectRatio ? { aspectRatio } : null),
+      }}
     >
+      <span className="progressive-image-placeholder" aria-hidden="true" />
       {lqSrc ? (
         <img className="progressive-image-lq" src={lqSrc} alt="" aria-hidden="true" decoding="async" />
       ) : null}
@@ -137,9 +152,7 @@ export function ProgressiveImage({
           onLoad={() => setLoaded(true)}
           {...props}
         />
-      ) : (
-        <span className="progressive-image-full progressive-image-spacer" aria-hidden="true" />
-      )}
+      ) : null}
     </span>
   );
 }
@@ -153,6 +166,7 @@ export function ProjectCard({ project, priority = false }) {
           src={project.image}
           lqSrc={project.lqImage}
           alt={`${project.name} preview`}
+          fill
           loading={priority ? "eager" : "lazy"}
           fetchPriority={priority ? "high" : "auto"}
         />
@@ -197,6 +211,12 @@ export function useScrollZoomMedia() {
 
       mediaElements.forEach((element) => {
         const rect = element.getBoundingClientRect();
+        // Skip off-screen media — writing transforms on every image during Lottie-heavy
+        // sections was contributing to scroll jank.
+        if (rect.bottom < -160 || rect.top > viewportHeight + 160) {
+          return;
+        }
+
         const scrollDistance = viewportHeight + rect.height;
         const progress = Math.min(Math.max((viewportHeight - rect.top) / scrollDistance, 0), 1);
         const easedProgress = 1 - (1 - progress) ** 2;

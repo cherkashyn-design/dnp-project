@@ -464,6 +464,7 @@ function DrumkitCasePage() {
             <ProgressiveImage
               src={drumkitPreview}
               alt="Drumkit landing page on a laptop"
+              fill
               loading="eager"
               fetchPriority="high"
             />
@@ -692,6 +693,7 @@ function PortfolioCasePage({ project }) {
             <ProgressiveImage
               src={project.heroImage}
               alt={project.heroAlt}
+              fill
               loading="eager"
               fetchPriority="high"
             />
@@ -969,7 +971,7 @@ function NavThumbMedia({ src }) {
   return src.endsWith(".mp4") ? (
     <video src={src} muted playsInline />
   ) : (
-    <ProgressiveImage src={src} alt="" />
+    <ProgressiveImage src={src} alt="" fill />
   );
 }
 
@@ -999,7 +1001,7 @@ function MediaBlock({ id, type, src, poster, caption, variant, mockup }) {
         ) : type === "video" ? (
           <video src={src} poster={poster} autoPlay muted loop playsInline />
         ) : (
-          <ProgressiveImage src={src} alt="" />
+          <ProgressiveImage src={src} alt="" fill />
         )}
       </div>
       {caption ? <figcaption>{caption}</figcaption> : null}
@@ -1165,11 +1167,15 @@ function FeatureSection({ id, title, mediaSrc, loadLottie, items }) {
       <h3>{title}</h3>
       {loadLottie ? (
         <div className="case-media feature-media case-media-lottie">
-          <LottiePlayer loadAnimation={loadLottie} playMode="visible" />
+          <LottiePlayer
+            loadAnimation={loadLottie}
+            playMode="visible"
+            aspectRatio="664 / 476"
+          />
         </div>
       ) : mediaSrc ? (
         <div className="case-media feature-media">
-          <ProgressiveImage src={mediaSrc} alt="" />
+          <ProgressiveImage src={mediaSrc} alt="" fill />
         </div>
       ) : null}
       <div className="feature-grid">
@@ -1187,7 +1193,8 @@ function LottieQuadBlock({ id, animations, caption }) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const query = window.matchMedia("(max-width: 799px)");
+    // Single-active Lottie only on small phones; tablets/desktop keep all four mounted.
+    const query = window.matchMedia("(max-width: 500px)");
     const update = () => setIsMobile(query.matches);
     update();
     query.addEventListener("change", update);
@@ -1255,6 +1262,7 @@ function LottieQuadBlock({ id, animations, caption }) {
               loadAnimation={animation.load}
               playMode={isMobile ? "visible" : "hover"}
               enabled={!isMobile || activeLabel === animation.label}
+              aspectRatio="336 / 538"
             />
           </div>
         ))}
@@ -1270,12 +1278,12 @@ function SidebarMarquee({ id, background, cards, caption }) {
   return (
     <figure className="case-media-block" id={id}>
       <div className="case-media case-media-marquee">
-        <ProgressiveImage className="marquee-bg" src={background} alt="" />
+        <ProgressiveImage className="marquee-bg" src={background} alt="" fill />
         <div className="marquee-viewport">
           <div className="marquee-track">
             {loopCards.map((card, index) => (
               <div className="marquee-card" key={`${card}-${index}`}>
-                <ProgressiveImage src={card} alt="" />
+                <ProgressiveImage src={card} alt="" fill />
               </div>
             ))}
           </div>
@@ -1286,19 +1294,53 @@ function SidebarMarquee({ id, background, cards, caption }) {
   );
 }
 
-function LottiePlayer({ loadAnimation, playMode = "visible", enabled = true }) {
+const lottieDataCache = new Map();
+
+function loadLottieCached(loadAnimation) {
+  if (!loadAnimation) {
+    return Promise.reject(new Error("Missing Lottie loader"));
+  }
+
+  if (lottieDataCache.has(loadAnimation)) {
+    return lottieDataCache.get(loadAnimation);
+  }
+
+  const pending = loadAnimation()
+    .then((module) => module.default ?? module)
+    .then((data) => {
+      lottieDataCache.set(loadAnimation, Promise.resolve(data));
+      return data;
+    })
+    .catch((error) => {
+      lottieDataCache.delete(loadAnimation);
+      throw error;
+    });
+
+  lottieDataCache.set(loadAnimation, pending);
+  return pending;
+}
+
+function LottiePlayer({
+  loadAnimation,
+  playMode = "visible",
+  enabled = true,
+  aspectRatio: aspectRatioProp = "336 / 538",
+}) {
   const containerRef = useRef(null);
   const lottieRef = useRef(null);
   const playingThroughRef = useRef(false);
-  const [nearView, setNearView] = useState(false);
+  const scrollIdleTimerRef = useRef(null);
+  const inViewRef = useRef(false);
+  const isScrollingRef = useRef(false);
+  const isHoverModeRef = useRef(false);
+  const [inLoadRange, setInLoadRange] = useState(false);
+  const [inView, setInView] = useState(false);
   const [hoverCapable, setHoverCapable] = useState(false);
   const [animationData, setAnimationData] = useState(null);
-  const aspectRatio =
-    animationData?.w && animationData?.h ? `${animationData.w} / ${animationData.h}` : "9 / 16";
 
   useEffect(() => {
     const hoverQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const widthQuery = window.matchMedia("(min-width: 800px)");
+    const widthQuery = window.matchMedia("(min-width: 501px)");
 
     const updateHoverCapable = () => {
       setHoverCapable(hoverQuery.matches && widthQuery.matches);
@@ -1314,35 +1356,105 @@ function LottiePlayer({ loadAnimation, playMode = "visible", enabled = true }) {
     };
   }, []);
 
+  const isHoverMode = playMode === "hover" && hoverCapable;
+  isHoverModeRef.current = isHoverMode;
+
   useEffect(() => {
     const element = containerRef.current;
     if (!element) {
       return undefined;
     }
 
-    const observer = new IntersectionObserver(
+    const loadObserver = new IntersectionObserver(
       ([entry]) => {
-        setNearView(entry.isIntersecting);
+        setInLoadRange(entry.isIntersecting);
       },
-      { rootMargin: "200px 0px", threshold: 0 },
+      { rootMargin: "400px 0px", threshold: 0 },
     );
 
-    observer.observe(element);
-    return () => observer.disconnect();
+    const viewObserver = new IntersectionObserver(
+      ([entry]) => {
+        const visible = entry.isIntersecting;
+        inViewRef.current = visible;
+        setInView(visible);
+
+        const animation = lottieRef.current;
+        if (!animation || isHoverModeRef.current) {
+          return;
+        }
+
+        if (visible && !isScrollingRef.current) {
+          animation.play();
+        } else {
+          animation.pause();
+        }
+      },
+      { rootMargin: "0px", threshold: 0.2 },
+    );
+
+    loadObserver.observe(element);
+    viewObserver.observe(element);
+
+    return () => {
+      loadObserver.disconnect();
+      viewObserver.disconnect();
+    };
   }, []);
 
   useEffect(() => {
-    if (!enabled || !nearView || !loadAnimation) {
-      setAnimationData(null);
+    const syncPlayback = () => {
+      const animation = lottieRef.current;
+      if (!animation || isHoverModeRef.current) {
+        return;
+      }
+
+      if (inViewRef.current && !isScrollingRef.current) {
+        animation.play();
+      } else {
+        animation.pause();
+      }
+    };
+
+    const onScroll = () => {
+      if (!isScrollingRef.current) {
+        isScrollingRef.current = true;
+        lottieRef.current?.pause();
+      }
+
+      if (scrollIdleTimerRef.current !== null) {
+        window.clearTimeout(scrollIdleTimerRef.current);
+      }
+
+      scrollIdleTimerRef.current = window.setTimeout(() => {
+        isScrollingRef.current = false;
+        scrollIdleTimerRef.current = null;
+        syncPlayback();
+      }, 140);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (scrollIdleTimerRef.current !== null) {
+        window.clearTimeout(scrollIdleTimerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!enabled || !inLoadRange || !loadAnimation) {
+      if (!enabled) {
+        setAnimationData(null);
+      }
       return undefined;
     }
 
     let cancelled = false;
 
-    loadAnimation()
-      .then((module) => {
+    loadLottieCached(loadAnimation)
+      .then((data) => {
         if (!cancelled) {
-          setAnimationData(module.default ?? module);
+          setAnimationData(data);
         }
       })
       .catch(() => {
@@ -1354,15 +1466,14 @@ function LottiePlayer({ loadAnimation, playMode = "visible", enabled = true }) {
     return () => {
       cancelled = true;
     };
-  }, [enabled, nearView, loadAnimation]);
+  }, [enabled, inLoadRange, loadAnimation]);
 
-  const isHoverMode = playMode === "hover" && hoverCapable;
-  const shouldMount = Boolean(enabled && nearView && animationData);
-  const shouldAutoplay = shouldMount && !isHoverMode;
+  const shouldMount = Boolean(enabled && animationData && inLoadRange);
+  const shouldAutoplay = shouldMount && !isHoverMode && inView;
 
   const playHoverCycle = () => {
     const animation = lottieRef.current;
-    if (!animation || playingThroughRef.current) {
+    if (!animation || playingThroughRef.current || isScrollingRef.current) {
       return;
     }
 
@@ -1375,7 +1486,7 @@ function LottiePlayer({ loadAnimation, playMode = "visible", enabled = true }) {
     <div
       className={["lottie-player", shouldMount ? "is-mounted" : ""].filter(Boolean).join(" ")}
       ref={containerRef}
-      style={{ aspectRatio }}
+      style={{ aspectRatio: aspectRatioProp }}
       onMouseEnter={() => {
         if (isHoverMode) {
           playHoverCycle();
@@ -1392,8 +1503,10 @@ function LottiePlayer({ loadAnimation, playMode = "visible", enabled = true }) {
           style={{ width: "100%", height: "100%" }}
           subscriptions={{
             [LottieSubscription.ready]: () => {
-              if (shouldAutoplay) {
+              if (shouldAutoplay && !isScrollingRef.current) {
                 lottieRef.current?.play();
+              } else if (!isHoverMode) {
+                lottieRef.current?.pause();
               }
             },
             [LottieSubscription.complete]: () => {

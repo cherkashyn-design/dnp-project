@@ -174,39 +174,47 @@ img {
 }
 
 .progressive-image {
+  background: var(--foreground-additional);
   display: block;
   overflow: hidden;
   position: relative;
+  width: 100%;
+}
+
+.progressive-image.is-fill {
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.progressive-image-placeholder {
+  background: var(--foreground-additional);
+  inset: 0;
+  position: absolute;
+  z-index: 0;
 }
 
 .progressive-image-lq,
 .progressive-image-full {
   display: block;
   height: 100%;
+  inset: 0;
   object-fit: cover;
+  position: absolute;
   width: 100%;
 }
 
 .progressive-image-lq {
   filter: blur(16px);
-  inset: 0;
-  position: absolute;
   transform: scale(1.1);
-  z-index: 0;
+  z-index: 1;
 }
 
 .progressive-image-full {
   opacity: 0;
-  position: relative;
   transition: opacity 480ms ease;
-  z-index: 1;
-}
-
-.progressive-image-spacer {
-  display: block;
-  height: 100%;
-  min-height: 1px;
-  width: 100%;
+  z-index: 2;
 }
 
 .progressive-image.is-loaded .progressive-image-full,
@@ -776,6 +784,7 @@ img {
   flex: 0 0 48px;
   height: 36px;
   overflow: hidden;
+  position: relative;
   transition: opacity 140ms ease;
   width: 48px;
 }
@@ -809,10 +818,21 @@ img {
 
 .case-nav-thumb-combined img,
 .case-nav-thumb-combined video,
-.case-nav-thumb-combined .progressive-image {
+.case-nav-thumb-combined .progressive-image,
+.case-nav-thumb-combined .progressive-image.is-fill {
   border-radius: 2px;
   flex: 1 1 0;
+  height: 100%;
+  inset: auto;
   min-width: 0;
+  position: relative;
+  width: auto;
+}
+
+.case-nav-thumb-combined .progressive-image-placeholder,
+.case-nav-thumb-combined .progressive-image-lq,
+.case-nav-thumb-combined .progressive-image-full {
+  border-radius: 2px;
 }
 
 .case-hero {
@@ -829,6 +849,7 @@ img {
 
 .case-hero-image-frame {
   aspect-ratio: 1600 / 1200;
+  background: var(--foreground-additional);
   border-radius: 20px;
   overflow: hidden;
   position: sticky;
@@ -1099,9 +1120,14 @@ img {
 }
 
 .case-media-lottie {
-  aspect-ratio: auto;
+  aspect-ratio: 664 / 476;
+  background: var(--foreground-additional);
   height: auto;
   overflow: hidden;
+}
+
+.case-media-lottie .lottie-player {
+  height: 100%;
 }
 
 .case-media img,
@@ -1377,17 +1403,15 @@ img {
   height: 100%;
   object-fit: cover;
   transform: none;
-  width: auto;
+  width: 100%;
 }
 
-.marquee-card .progressive-image {
+.marquee-bg.progressive-image,
+.marquee-bg.progressive-image.is-fill {
   height: 100%;
-  width: auto;
-}
-
-.marquee-card .progressive-image-lq,
-.marquee-card .progressive-image-full {
-  width: auto;
+  inset: 0;
+  position: absolute;
+  width: 100%;
 }
 
 .marquee-viewport {
@@ -1412,18 +1436,31 @@ img {
 }
 
 .marquee-card {
+  aspect-ratio: 1082 / 1936;
+  background: var(--foreground-additional);
   border-radius: 1.65cqh 1.65cqh 0 0;
   flex: 0 0 auto;
   height: 100%;
   overflow: hidden;
+  position: relative;
   width: auto;
 }
 
+.marquee-card .progressive-image.is-fill {
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.marquee-card .progressive-image-lq,
+.marquee-card .progressive-image-full,
 .marquee-card img {
   display: block;
   height: 100%;
+  object-fit: cover;
   transform: none;
-  width: auto;
+  width: 100%;
 }
 
 @keyframes marquee-x {
