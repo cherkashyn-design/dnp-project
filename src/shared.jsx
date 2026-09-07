@@ -47,7 +47,7 @@ export const cases = [
 ];
 
 /* Progressive LQ + deferred full-image load. Flip to true to re-enable. */
-const ENABLE_PROGRESSIVE_LOADING = false;
+const ENABLE_PROGRESSIVE_LOADING = true;
 
 export function ProgressiveImage({
   src,

@@ -1122,14 +1122,10 @@ img {
 }
 
 .mockup-player-frame {
-  height: 100%;
-  width: 100%;
-  /* Retina CSS-scale wrapper — re-enable with --mockup-render-scale > 1
-  height: calc(100% * var(--mockup-render-scale));
-  transform: scale(calc(1 / var(--mockup-render-scale)));
+  height: calc(100% * var(--mockup-render-scale, 1));
+  transform: scale(calc(1 / var(--mockup-render-scale, 1)));
   transform-origin: top left;
-  width: calc(100% * var(--mockup-render-scale));
-  */
+  width: calc(100% * var(--mockup-render-scale, 1));
 }
 
 .mockup-player-skeleton {
