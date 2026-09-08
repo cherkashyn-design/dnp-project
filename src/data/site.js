@@ -1,8 +1,8 @@
-import drumkitPreview from "../../portfolio/Drumkit-UI/lottie/Preview.jpg";
+import drumkitPreview from "../../portfolio/Drumkit-UI/lottie/Preview.webp";
 import drumkitPreviewLq from "../../portfolio/Drumkit-UI/lottie/Preview.lq.jpg";
-import salesDriverPreview from "../../portfolio/SalesDriver/Preview.jpg";
+import salesDriverPreview from "../../portfolio/SalesDriver/Preview.webp";
 import salesDriverPreviewLq from "../../portfolio/SalesDriver/Preview.lq.jpg";
-import yummoPreview from "../../portfolio/Yummo/Preview.jpg";
+import yummoPreview from "../../portfolio/Yummo/Preview.webp";
 import yummoPreviewLq from "../../portfolio/Yummo/Preview.lq.jpg";
 
 export const email = "contact@donotpress.com";

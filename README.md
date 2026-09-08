@@ -7,9 +7,10 @@ Production deploys from `main` via Vercel (`cherkashyn-design/dnp-project`).
 
 ```bash
 npm install
-npm run dev          # http://localhost:5173
-npm run build        # output → dist/
-npm run generate:lq  # regenerate *.lq.jpg placeholders (Python)
+npm run dev              # http://localhost:5173
+npm run build            # output → dist/
+npm run optimize:images  # JPG/PNG → WebP (Preview max 2048px)
+npm run generate:lq      # regenerate *.lq.jpg placeholders (Python)
 ```
 
 ## Project layout
@@ -44,19 +45,18 @@ const CaseRoutes = lazy(() => import("./pages/cases/index.jsx"));
 
 Lottie JSON is loaded with `import()` per animation (see [`src/data/drumkit.js`](src/data/drumkit.js)), not statically bundled into the main chunk. Results are cached in [`src/lib/lottieCache.js`](src/lib/lottieCache.js) so revisiting a section does not re-fetch/parse.
 
-### 3. Progressive images
+### 3. Progressive images (WebP + LQ)
 
-[`ProgressiveImage`](src/components/media/ProgressiveImage.jsx):
+Portfolio rasters are WebP (case `Preview` capped at 2048px long edge). [`ProgressiveImage`](src/components/media/ProgressiveImage.jsx):
 
 - Shows a tiny `*.lq.jpg` blur placeholder (map built by [`src/lib/portfolioLq.js`](src/lib/portfolioLq.js) via `import.meta.glob`).
 - Defers the full-resolution `src` until near the viewport (`IntersectionObserver`, default `rootMargin: 800px`).
 - Uses a solid placeholder + absolute image layers so layout height is reserved (**no text bounce** while loading).
 - Toggle with `ENABLE_PROGRESSIVE_LOADING` in that file.
 
-Regenerate LQ files:
-
 ```bash
-npm run generate:lq
+npm run optimize:images  # after adding new JPG/PNG exports
+npm run generate:lq      # then refresh LQ placeholders
 ```
 
 ### 4. Homepage image strategy
