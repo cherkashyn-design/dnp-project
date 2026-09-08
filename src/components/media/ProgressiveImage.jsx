@@ -31,11 +31,13 @@ export function ProgressiveImage({
   aspectRatio = "4 / 3",
   ...props
 }) {
-  const lqSrc = ENABLE_PROGRESSIVE_LOADING ? (lqSrcProp ?? getLqSrc(src)) : undefined;
+  const wantsEager = loading === "eager" || fetchPriority === "high";
+  // Skip LQ on eager/hero images — blur under a fading full image doubles soft dark edges.
+  const lqSrc =
+    ENABLE_PROGRESSIVE_LOADING && !wantsEager ? (lqSrcProp ?? getLqSrc(src)) : undefined;
   const rootRef = useRef(null);
   const fullRef = useRef(null);
-  const loadEager =
-    !ENABLE_PROGRESSIVE_LOADING || loading === "eager" || fetchPriority === "high";
+  const loadEager = !ENABLE_PROGRESSIVE_LOADING || wantsEager;
   const [activeSrc, setActiveSrc] = useState(loadEager ? src : undefined);
   const [loaded, setLoaded] = useState(Boolean(loadEager && !lqSrc));
 

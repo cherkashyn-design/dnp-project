@@ -206,8 +206,10 @@ img {
 }
 
 .progressive-image-lq {
-  filter: blur(16px);
-  transform: scale(1.1);
+  filter: blur(12px);
+  opacity: 1;
+  transform: scale(1.05);
+  transition: opacity 480ms ease;
   z-index: 1;
 }
 
@@ -215,6 +217,10 @@ img {
   opacity: 0;
   transition: opacity 480ms ease;
   z-index: 2;
+}
+
+.progressive-image.is-loaded .progressive-image-lq {
+  opacity: 0;
 }
 
 .progressive-image.is-loaded .progressive-image-full,
