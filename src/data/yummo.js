@@ -1,3 +1,4 @@
+import yummoPreview from "../../portfolio/Yummo/Preview.jpg";
 import yummoNavPreview from "../../portfolio/Yummo/Previews/Preview-Preview.jpg";
 import yummoNavSlide1 from "../../portfolio/Yummo/Previews/Slide-1-Preview.jpg";
 import yummoNavSlide2 from "../../portfolio/Yummo/Previews/Slide-2-Preview.jpg";

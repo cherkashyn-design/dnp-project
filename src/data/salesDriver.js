@@ -1,3 +1,4 @@
+import salesDriverPreview from "../../portfolio/SalesDriver/Preview.jpg";
 import salesDriverNavPreview from "../../portfolio/SalesDriver/Previews/Preview-Preview.jpg";
 import salesDriverNavSlide1 from "../../portfolio/SalesDriver/Previews/Slide-1-Preview.jpg";
 import salesDriverNavSlide2 from "../../portfolio/SalesDriver/Previews/Slide-2-Preview.jpg";
