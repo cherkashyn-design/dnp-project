@@ -618,11 +618,10 @@ img {
 .case-header-fade {
   background: linear-gradient(
     180deg,
-    rgba(var(--fade-bg-rgb), 0.5) 0%,
-    rgba(var(--fade-bg-rgb), 0.5) 55%,
+    rgba(var(--fade-bg-rgb), 0.45) 0%,
     rgba(var(--fade-bg-rgb), 0) 100%
   );
-  height: calc(100% + 70px);
+  height: 100%;
   left: 0;
   opacity: 0;
   pointer-events: none;
@@ -1700,11 +1699,10 @@ img {
   .home-mobile-header-fade {
     background: linear-gradient(
       180deg,
-      rgba(var(--fade-bg-rgb), 0.5) 0%,
-      rgba(var(--fade-bg-rgb), 0.5) 55%,
+      rgba(var(--fade-bg-rgb), 0.45) 0%,
       rgba(var(--fade-bg-rgb), 0) 100%
     );
-    height: calc(100% + 48px);
+    height: 100%;
     left: 0;
     opacity: 0;
     pointer-events: none;
