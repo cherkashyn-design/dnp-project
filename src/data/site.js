@@ -11,18 +11,18 @@ export const email = "contact@donotpress.com";
 
 export const cases = [
   {
-    name: "Genie - node based AI editor",
-    image: geniePreview,
-    lqImage: geniePreviewLq,
-    tags: ["SaaS", "App"],
-    href: "/cases/genie-node-based-ai-editor",
-  },
-  {
     name: "Yummo - Food guide for moms",
     image: yummoPreview,
     lqImage: yummoPreviewLq,
     tags: ["Branding", "Landing", "App"],
     href: "/cases/yummo-food-guide-for-moms",
+  },
+  {
+    name: "Genie - node based AI editor",
+    image: geniePreview,
+    lqImage: geniePreviewLq,
+    tags: ["SaaS", "App"],
+    href: "/cases/genie-node-based-ai-editor",
   },
   {
     name: "Sales Driver - Ads Tool",
