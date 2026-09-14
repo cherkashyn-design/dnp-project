@@ -74,7 +74,7 @@ export function LottieQuadBlock({ id, animations, caption }) {
           >
             <LottiePlayer
               loadAnimation={animation.load}
-              playMode={isMobile ? "visible" : "hover"}
+              playMode="visible"
               enabled={!isMobile || activeLabel === animation.label}
               aspectRatio="336 / 538"
             />

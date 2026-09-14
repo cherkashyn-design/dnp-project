@@ -10,6 +10,7 @@ import {
   PortfolioCaseSection,
   createCaseNavigationItems,
 } from "../../components/case/PortfolioCaseSection.jsx";
+import { ProfileTabsBlock } from "../../components/case/ProfileTabsBlock.jsx";
 import { useScrollZoomMedia } from "../../hooks/useScrollZoomMedia.js";
 import { useRevealAnimations } from "../../hooks/useRevealAnimations.js";
 import { useCaseNavScroll } from "../../hooks/useCaseNavScroll.js";
@@ -118,9 +119,19 @@ export default function PortfolioCasePage({ project }) {
         </section>
       ) : null}
 
-      {project.sections.map((section) => (
-        <PortfolioCaseSection key={section.id} section={section} />
-      ))}
+      {project.sections.map((section) =>
+        section.tabs ? (
+          <ProfileTabsBlock
+            key={section.id}
+            id={section.id}
+            title={section.title}
+            description={section.description}
+            tabs={section.tabs}
+          />
+        ) : (
+          <PortfolioCaseSection key={section.id} section={section} />
+        ),
+      )}
 
       {project.summary ? (
         <section className="case-section case-summary" id="case-summary">

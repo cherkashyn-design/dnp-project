@@ -1131,8 +1131,14 @@ img {
   overflow: hidden;
 }
 
-.case-media-lottie .lottie-player {
+.case-media-lottie .lottie-player,
+.case-media-lottie-slot .lottie-player {
   height: 100%;
+  width: 100%;
+}
+
+.case-media-lottie-slot {
+  overflow: hidden;
 }
 
 .case-media img,
@@ -1242,6 +1248,80 @@ img {
   scroll-margin-top: 112px;
 }
 
+.case-section-kicker {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  margin: 24px 0 0;
+}
+
+.case-profile-tabs {
+  gap: 0;
+}
+
+.profile-tabs-layout {
+  align-items: start;
+  display: grid;
+  gap: 32px;
+  grid-template-columns: minmax(240px, 432px) minmax(0, 1fr);
+  width: 100%;
+}
+
+.profile-tabs-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: sticky;
+  top: 128px;
+}
+
+.profile-tabs-copy .section-heading-row {
+  margin-bottom: 0;
+}
+
+.profile-tabs-list {
+  background: var(--foreground-secondary);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+}
+
+.profile-tab {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 12px;
+  color: var(--text-primary);
+  cursor: pointer;
+  font: inherit;
+  font-size: 22px;
+  line-height: 1.4;
+  padding: 8px 12px;
+  text-align: left;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.profile-tab:hover {
+  background: color-mix(in srgb, var(--foreground-additional) 70%, transparent);
+}
+
+.profile-tab.is-active {
+  background: var(--foreground-additional);
+  color: var(--text-secondary);
+}
+
+.profile-tabs-media .case-media {
+  aspect-ratio: 3840 / 2088;
+}
+
+.case-profile-tabs .profile-tabs-media {
+  margin: 0;
+}
+
 .case-stats {
   display: flex;
   flex-direction: column;
@@ -1336,6 +1416,13 @@ img {
   background: var(--foreground-additional);
   height: 100%;
   min-height: 100%;
+  width: 100%;
+}
+
+.lottie-player-poster {
+  display: block;
+  height: 100%;
+  object-fit: cover;
   width: 100%;
 }
 
@@ -2033,6 +2120,22 @@ img {
 
   .case-stats:not(.case-stats-compact) {
     text-align: left;
+  }
+
+  .profile-tabs-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .profile-tabs-copy {
+    position: static;
+  }
+
+  .case-section-kicker {
+    font-size: 32px;
+  }
+
+  .profile-tab {
+    font-size: 18px;
   }
 }
 

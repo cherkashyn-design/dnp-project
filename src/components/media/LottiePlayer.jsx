@@ -2,18 +2,32 @@ import { useEffect, useRef, useState } from "react";
 import { Lottie, LottieSubscription } from "lottie-react";
 import { loadLottieCached } from "../../lib/lottieCache.js";
 
+function isNearViewport(element, marginPx) {
+  const rect = element.getBoundingClientRect();
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+  return rect.bottom >= -marginPx && rect.top <= viewportHeight + marginPx;
+}
+
+function isMostlyVisible(element, ratio) {
+  const rect = element.getBoundingClientRect();
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+  const visibleTop = Math.max(rect.top, 0);
+  const visibleBottom = Math.min(rect.bottom, viewportHeight);
+  const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+  return visibleHeight / Math.max(rect.height, 1) >= ratio;
+}
+
 export function LottiePlayer({
   loadAnimation,
   playMode = "visible",
   enabled = true,
   aspectRatio: aspectRatioProp = "336 / 538",
+  poster,
 }) {
   const containerRef = useRef(null);
   const lottieRef = useRef(null);
   const playingThroughRef = useRef(false);
-  const scrollIdleTimerRef = useRef(null);
   const inViewRef = useRef(false);
-  const isScrollingRef = useRef(false);
   const isHoverModeRef = useRef(false);
   const [inLoadRange, setInLoadRange] = useState(false);
   const [inView, setInView] = useState(false);
@@ -47,11 +61,41 @@ export function LottiePlayer({
       return undefined;
     }
 
+    const LOAD_MARGIN = 400;
+    const VIEW_RATIO = 0.2;
+
+    const syncVisibility = () => {
+      const near = isNearViewport(element, LOAD_MARGIN);
+      // Keep loaded once near — avoids unload/reload thrash while scrolling.
+      if (near) {
+        setInLoadRange(true);
+      }
+
+      const visible = isMostlyVisible(element, VIEW_RATIO);
+      inViewRef.current = visible;
+      setInView(visible);
+
+      const animation = lottieRef.current;
+      if (!animation || isHoverModeRef.current) {
+        return;
+      }
+
+      if (visible) {
+        animation.play();
+      }
+      // Keep playing while scrolling away; only pause when far from viewport.
+      else if (!isNearViewport(element, 0)) {
+        animation.pause();
+      }
+    };
+
     const loadObserver = new IntersectionObserver(
       ([entry]) => {
-        setInLoadRange(entry.isIntersecting);
+        if (entry.isIntersecting) {
+          setInLoadRange(true);
+        }
       },
-      { rootMargin: "400px 0px", threshold: 0 },
+      { rootMargin: `${LOAD_MARGIN}px 0px`, threshold: 0 },
     );
 
     const viewObserver = new IntersectionObserver(
@@ -65,61 +109,25 @@ export function LottiePlayer({
           return;
         }
 
-        if (visible && !isScrollingRef.current) {
+        if (visible) {
           animation.play();
-        } else {
-          animation.pause();
         }
       },
-      { rootMargin: "0px", threshold: 0.2 },
+      { rootMargin: "0px", threshold: VIEW_RATIO },
     );
 
     loadObserver.observe(element);
     viewObserver.observe(element);
+    syncVisibility();
+
+    window.addEventListener("scroll", syncVisibility, { passive: true });
+    window.addEventListener("resize", syncVisibility);
 
     return () => {
       loadObserver.disconnect();
       viewObserver.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
-    const syncPlayback = () => {
-      const animation = lottieRef.current;
-      if (!animation || isHoverModeRef.current) {
-        return;
-      }
-
-      if (inViewRef.current && !isScrollingRef.current) {
-        animation.play();
-      } else {
-        animation.pause();
-      }
-    };
-
-    const onScroll = () => {
-      if (!isScrollingRef.current) {
-        isScrollingRef.current = true;
-        lottieRef.current?.pause();
-      }
-
-      if (scrollIdleTimerRef.current !== null) {
-        window.clearTimeout(scrollIdleTimerRef.current);
-      }
-
-      scrollIdleTimerRef.current = window.setTimeout(() => {
-        isScrollingRef.current = false;
-        scrollIdleTimerRef.current = null;
-        syncPlayback();
-      }, 140);
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (scrollIdleTimerRef.current !== null) {
-        window.clearTimeout(scrollIdleTimerRef.current);
-      }
+      window.removeEventListener("scroll", syncVisibility);
+      window.removeEventListener("resize", syncVisibility);
     };
   }, []);
 
@@ -155,7 +163,7 @@ export function LottiePlayer({
 
   const playHoverCycle = () => {
     const animation = lottieRef.current;
-    if (!animation || playingThroughRef.current || isScrollingRef.current) {
+    if (!animation || playingThroughRef.current) {
       return;
     }
 
@@ -175,6 +183,9 @@ export function LottiePlayer({
         }
       }}
     >
+      {poster && !shouldMount ? (
+        <img className="lottie-player-poster" src={poster} alt="" decoding="async" />
+      ) : null}
       {shouldMount ? (
         <Lottie
           key={`${isHoverMode ? "hover" : "auto"}-${enabled}`}
@@ -185,7 +196,7 @@ export function LottiePlayer({
           style={{ width: "100%", height: "100%" }}
           subscriptions={{
             [LottieSubscription.ready]: () => {
-              if (shouldAutoplay && !isScrollingRef.current) {
+              if (shouldAutoplay || inViewRef.current) {
                 lottieRef.current?.play();
               } else if (!isHoverMode) {
                 lottieRef.current?.pause();
@@ -196,7 +207,7 @@ export function LottiePlayer({
             },
           }}
         />
-      ) : (
+      ) : poster ? null : (
         <div className="lottie-player-placeholder" aria-hidden="true" />
       )}
     </div>

@@ -4,10 +4,19 @@ import salesDriverPreview from "../../portfolio/SalesDriver/Preview.webp";
 import salesDriverPreviewLq from "../../portfolio/SalesDriver/Preview.lq.jpg";
 import yummoPreview from "../../portfolio/Yummo/Preview.webp";
 import yummoPreviewLq from "../../portfolio/Yummo/Preview.lq.jpg";
+import geniePreview from "../../portfolio/Genie/Preview.webp";
+import geniePreviewLq from "../../portfolio/Genie/Preview.lq.jpg";
 
 export const email = "contact@donotpress.com";
 
 export const cases = [
+  {
+    name: "Genie - node based AI editor",
+    image: geniePreview,
+    lqImage: geniePreviewLq,
+    tags: ["SaaS", "App"],
+    href: "/cases/genie-node-based-ai-editor",
+  },
   {
     name: "Yummo - Food guide for moms",
     image: yummoPreview,

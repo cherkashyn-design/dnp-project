@@ -29,6 +29,11 @@ portfolio/         case media (images, Lottie JSON) — kept at repo root
 
 Case pages are code-split: the homepage stays light; `/cases/*` loads asynchronously.
 
+### Adding a new case
+
+Step-by-step for humans and AI agents: **[`docs/ADDING-A-CASE.md`](docs/ADDING-A-CASE.md)**.  
+Cursor also loads [`.cursor/rules/adding-portfolio-cases.mdc`](.cursor/rules/adding-portfolio-cases.mdc) when editing case/data/portfolio files.
+
 ---
 
 ## Page speed
@@ -77,17 +82,16 @@ Primary implementation: [`LottiePlayer`](src/components/media/LottiePlayer.jsx),
 
 - Mounting **all** heavy Lotties at once crashed Safari on iPhone (memory).
 - Wrong reserved aspect ratio (`9 / 16` vs real `664×476`) caused **layout bounce** in feature sections.
-- Lotties **playing during scroll** competed with scroll handlers → laggy scroll on Management dashboard / Simplify SOPs / Summary.
+- Lotties **playing during scroll** can compete with scroll handlers on heavy sections (Management dashboard / Simplify SOPs / Summary). We keep them playing in view by design; optimize assets if jank returns.
 
 ### Solutions
 
 | Concern | Approach |
 | --- | --- |
-| Memory on phones | ≤500px: only **one** quad-card Lottie active at a time (best intersection ratio). >500px: all four mount (hover play when fine pointer available). |
+| Memory on phones | ≤500px: only **one** quad-card Lottie active at a time (best intersection ratio). >500px: all four mount and loop while in view. |
 | Layout stability | Pass explicit `aspectRatio` (`664 / 476` features, `336 / 538` phone cards). CSS also locks `.case-media-lottie`. |
-| Scroll jank | Pause Lotties while scrolling (imperative `pause()` via refs — **no React setState on scroll**). Resume after ~140ms idle if still in view. |
 | Remount cost | Keep JSON in `lottieCache`; load when within `400px` of viewport; unmount player when far / disabled. |
-| Play modes | `visible` = autoplay when in view; `hover` = play once on hover (desktop). |
+| Play modes | Quad + feature Lotties use `visible` = autoplay/loop when in view (keep playing during scroll; pause only when off-screen). |
 
 Feature Lotties live under `portfolio/Drumkit-UI/lottie/` and are wired through `loadDrumkitSlide6/7/8` dynamic imports.
 
