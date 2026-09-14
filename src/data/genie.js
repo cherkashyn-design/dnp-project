@@ -31,9 +31,9 @@ import genieSecurity from "../../portfolio/Genie/Slide-8/Security.webp";
 import genieApiSettings from "../../portfolio/Genie/Slide-8/API-Settings.webp";
 
 export const genieCase = {
-  title: "Genie - node based AI editor",
-  subtitle: "It’s a US startup which is providing full control on AI models with nodes system",
-  heroAlt: "Genie node-based AI editor on a laptop mockup",
+  title: "Genie node based AI editor",
+  subtitle: "A US startup giving full control over AI models with a node system",
+  heroAlt: "Genie node based AI editor on a laptop mockup",
   heroImage: geniePreview,
   tags: ["SaaS", "App"],
   // Nav thumbs: Preview + Slide-1…9 in numeric order.
@@ -50,17 +50,17 @@ export const genieCase = {
     { src: genieNavSlide9, href: "#case-genie-summary", label: "Summary" },
   ],
   overview: [
-    ["[ GOAL ]", "To build better version of ComfyUI"],
+    ["[ GOAL ]", "To build a better version of ComfyUI"],
     [
       "[ SOLUTION ]",
-      "1. Make a web platform – share your files instantly, edit with your teammates, no need to download large models.\n2. Use community content with just one click to open – no manual download or setup required. We share revenue with authors to motivate them.\n3. An AI agent to help build workflows instead of manual work – this keeps the system simple but fully customizable.",
+      "1. Make a web platform where you share files instantly, edit with your teammates, and skip downloading large models.\n2. Open community content in one click, with no manual download or setup. We share revenue with authors to keep them motivated.\n3. An AI agent helps build workflows instead of doing everything by hand, so the system stays simple but fully customizable.",
     ],
   ],
   sections: [
     {
       id: "case-nodes",
       title: "Nodes",
-      description: "Key function of the product is fully editable detailed settings of models.",
+      description: "The core of the product is fully editable, detailed model settings.",
       kicker: "Use basic nodes to generate content",
       mediaRows: [
         [
@@ -69,12 +69,12 @@ export const genieCase = {
             type: "video",
             src: genieSlide1P1,
             poster: genieSlide1P1Poster,
-            caption: "Just enter a prompt and receive result",
+            caption: "Just enter a prompt and get a result",
           },
           {
             id: "case-genie-nodes-1b",
             src: genieSlide1P2,
-            caption: "Use sidepanel for detailed settings",
+            caption: "Use the side panel for detailed settings",
           },
         ],
         [
@@ -89,13 +89,13 @@ export const genieCase = {
     {
       id: "case-genie-ai",
       title: "Genie AI",
-      description: "Use agent to generate complex workflows with a few simple words",
+      description: "Use an agent to generate complex workflows with a few simple words",
       mediaRows: [
         [
           {
             id: "case-genie-ai-1a",
             src: genieSlide3P1,
-            caption: "Put your refs",
+            caption: "Add your references",
           },
           {
             id: "case-genie-ai-1b",
@@ -107,7 +107,7 @@ export const genieCase = {
           {
             id: "case-genie-ai-2",
             src: genieSlide4,
-            caption: "Select the option",
+            caption: "Pick an option",
           },
         ],
       ],
@@ -115,13 +115,13 @@ export const genieCase = {
     {
       id: "case-community",
       title: "Community",
-      description: "Use already created workflows instead manual work",
+      description: "Reuse community workflows instead of building everything from scratch",
       mediaRows: [
         [
           {
             id: "case-genie-community-1a",
             src: genieSlide5P1,
-            caption: "Search in catalogue",
+            caption: "Search the catalogue",
           },
           {
             id: "case-genie-community-1b",
@@ -145,7 +145,7 @@ export const genieCase = {
     {
       id: "case-file-manager",
       title: "File manager",
-      description: "Use already created workflows instead manual work",
+      description: "Keep canvases, projects, and assets organized in one place",
       mediaRows: [
         [
           {
@@ -156,7 +156,7 @@ export const genieCase = {
           {
             id: "case-genie-files-1b",
             src: genieSlide7P2,
-            caption: "Manage files in canvases",
+            caption: "Manage files inside canvases",
           },
         ],
       ],
@@ -164,7 +164,7 @@ export const genieCase = {
     {
       id: "case-profile",
       title: "Profile",
-      description: "Use already created workflows instead manual work",
+      description: "Manage your public presence, billing, and account settings",
       tabs: [
         {
           id: "case-genie-profile-public",
@@ -208,11 +208,11 @@ export const genieCase = {
   summary: {
     title: "Summary",
     description:
-      "We have tested technology and user flows. The product was sold to ComfyUI and currently adapting as ComfyUI Cloud.",
+      "We tested the technology and user flows. The product was sold to ComfyUI and is now being adapted as ComfyUI Cloud.",
     stats: [
-      ["80%", "Build the workflow from nodes success"],
-      ["92%", "Train a LoRA success"],
-      ["40K", "Waitlist sign-ups"],
+      ["80%", "Success building workflows from nodes"],
+      ["92%", "Success training a LoRA"],
+      ["40K", "Waitlist sign ups"],
     ],
     imageId: "case-genie-summary",
     navPreview: genieNavSlide9,
