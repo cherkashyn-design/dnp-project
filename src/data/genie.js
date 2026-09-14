@@ -36,6 +36,7 @@ export const genieCase = {
   heroAlt: "Genie node-based AI editor on a laptop mockup",
   heroImage: geniePreview,
   tags: ["SaaS", "App"],
+  // Nav thumbs: Preview + Slide-1…9 in numeric order.
   navigationItems: [
     { src: genieNavPreview, href: "#case-hero", label: "Hero" },
     { src: genieNavSlide1, href: "#case-nodes-row-1", label: "Nodes basics" },

@@ -618,7 +618,7 @@ img {
 .case-header-fade {
   background: linear-gradient(
     180deg,
-    rgba(var(--fade-bg-rgb), 0.45) 0%,
+    rgba(var(--fade-bg-rgb), 0.225) 0%,
     rgba(var(--fade-bg-rgb), 0) 100%
   );
   height: 100%;
@@ -630,6 +630,20 @@ img {
   top: 0;
   transition: opacity 180ms ease;
   z-index: 0;
+}
+
+.case-header-fade::before {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  content: "";
+  height: 100%;
+  left: 0;
+  mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .case-header.is-scrolled .case-header-fade {
@@ -1786,7 +1800,7 @@ img {
   .home-mobile-header-fade {
     background: linear-gradient(
       180deg,
-      rgba(var(--fade-bg-rgb), 0.45) 0%,
+      rgba(var(--fade-bg-rgb), 0.225) 0%,
       rgba(var(--fade-bg-rgb), 0) 100%
     );
     height: 100%;
@@ -1798,6 +1812,20 @@ img {
     top: 0;
     transition: opacity 180ms ease;
     z-index: 0;
+  }
+
+  .home-mobile-header-fade::before {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    content: "";
+    height: 100%;
+    left: 0;
+    mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 
   .home-mobile-header.is-scrolled .home-mobile-header-fade {
