@@ -15,6 +15,7 @@ import { useCaseNavScroll } from "../../hooks/useCaseNavScroll.js";
 import {
   drumkitFavicon,
   drumkitPreview,
+  drumkitSummaryVideo,
   drumkitSlide2,
   drumkitSlide3P1,
   drumkitSlide3P2,
@@ -113,17 +114,9 @@ export default function DrumkitCasePage() {
         <h2>Website</h2>
         <MediaBlock
           id="case-landing-motion"
-          type="mockup"
-          mockup={{
-            mockupId: "5a26d7db-4784-4595-8db1-f16a744ec2b3",
-            width: "100%",
-            aspectRatio: "4 / 3",
-            trigger: "load",
-            triggerLoop: false,
-            cursorRange: "17-56-14-55",
-            clickRange: "12-12-11-11",
-            cameraZoom: "30",
-          }}
+          type="video"
+          src={drumkitSummaryVideo}
+          poster={drumkitPreview}
           caption="Animated first sections to show product in action"
         />
         <MediaBlock

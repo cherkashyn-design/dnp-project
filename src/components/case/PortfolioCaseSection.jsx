@@ -28,9 +28,13 @@ export function createCaseNavigationItems(project) {
 
   const items = [{ src: project.heroImage, href: "#case-hero", label: "Hero" }, ...mediaItems];
 
-  if (project.summary?.image || project.summary?.mockup) {
+  if (project.summary?.image || project.summary?.mockup || project.summary?.video) {
     items.push({
-      src: project.summary.navPreview || project.summary.image || project.heroImage,
+      src:
+        project.summary.navPreview ||
+        project.summary.poster ||
+        project.summary.image ||
+        project.heroImage,
       href: `#${project.summary.imageId || "case-summary-preview"}`,
       label: project.summary.title || "Summary",
     });

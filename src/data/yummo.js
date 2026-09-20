@@ -1,4 +1,5 @@
 import yummoPreview from "../../portfolio/Yummo/Preview.webp";
+import yummoSummaryVideo from "../../portfolio/Yummo/Summary.webm";
 import yummoNavPreview from "../../portfolio/Yummo/Previews/Preview-Preview.webp";
 import yummoNavSlide1 from "../../portfolio/Yummo/Previews/Slide-1-Preview.webp";
 import yummoNavSlide2 from "../../portfolio/Yummo/Previews/Slide-2-Preview.webp";
@@ -129,15 +130,7 @@ export const yummoCase = {
         ["6000+", "Users at the first week after release"],
       ],
       imageId: "case-yummo-summary",
-      mockup: {
-        mockupId: "cb0bf7e2-dc4f-4a4e-81ec-6ef0f8cb9982",
-        aspectRatio: "16 / 9",
-        trigger: "load",
-        triggerLoop: true,
-        cursorRange: "18-54-18-48",
-        zoomMode: "fov",
-        zoomAmount: "63",
-        zoomDuration: "800",
-      },
+      video: yummoSummaryVideo,
+      poster: yummoPreview,
     },
   };

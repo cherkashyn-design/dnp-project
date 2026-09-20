@@ -1,4 +1,5 @@
 import salesDriverPreview from "../../portfolio/SalesDriver/Preview.webp";
+import salesDriverSummaryVideo from "../../portfolio/SalesDriver/Summary.webm";
 import salesDriverNavPreview from "../../portfolio/SalesDriver/Previews/Preview-Preview.webp";
 import salesDriverNavSlide1 from "../../portfolio/SalesDriver/Previews/Slide-1-Preview.webp";
 import salesDriverNavSlide2 from "../../portfolio/SalesDriver/Previews/Slide-2-Preview.webp";
@@ -173,15 +174,7 @@ export const salesDriverCase = {
         ["+120%", "More leads remember us for a month after first touch"],
       ],
       imageId: "case-salesdriver-summary",
-      mockup: {
-        mockupId: "6c74029d-5a3f-4757-8157-8b0aef91630d",
-        aspectRatio: "16 / 9",
-        trigger: "load",
-        triggerLoop: true,
-        cursorAffectPage: false,
-        cursorRange: "14-100-15-100",
-        clickRange: "25-14-26-14",
-        backgroundColor: "#000000",
-      },
+      video: salesDriverSummaryVideo,
+      poster: salesDriverPreview,
     },
   };

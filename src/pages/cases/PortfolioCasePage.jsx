@@ -140,7 +140,16 @@ export default function PortfolioCasePage({ project }) {
             {project.summary.description ? <p>{project.summary.description}</p> : null}
           </div>
           <StatsSection stats={project.summary.stats} />
-          {project.summary.mockup ? (
+          {project.summary.video ? (
+            <MediaBlock
+              id={project.summary.imageId || "case-summary-preview"}
+              type="video"
+              src={project.summary.video}
+              poster={project.summary.poster}
+              caption={project.summary.caption}
+              variant="wide"
+            />
+          ) : project.summary.mockup ? (
             <MediaBlock
               id={project.summary.imageId || "case-summary-preview"}
               type="mockup"

@@ -1,4 +1,5 @@
 import drumkitPreview from "../../portfolio/Drumkit-UI/lottie/Preview.webp";
+import drumkitSummaryVideo from "../../portfolio/Drumkit-UI/lottie/Summary.webm";
 import drumkitNavPreview from "../../portfolio/Drumkit-UI/lottie/Previews/Preview-Preview.webp";
 import drumkitNavSlide1 from "../../portfolio/Drumkit-UI/lottie/Previews/Slide-1-Preview.webp";
 import drumkitNavSlide2 from "../../portfolio/Drumkit-UI/lottie/Previews/Slide-2-Preview.webp";
@@ -24,7 +25,7 @@ import drumkitSlide5Quote3 from "../../portfolio/Drumkit-UI/lottie/Slide-5/Conte
 
 export const drumkitFavicon = "https://www.google.com/s2/favicons?domain=drumkit.ai&sz=32";
 
-export { drumkitPreview, drumkitSlide2, drumkitSlide3P1, drumkitSlide3P2, drumkitSlide5Background };
+export { drumkitPreview, drumkitSummaryVideo, drumkitSlide2, drumkitSlide3P1, drumkitSlide3P2, drumkitSlide5Background };
 
 export const drumkitSlide4Animations = [
   {

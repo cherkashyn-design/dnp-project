@@ -9,6 +9,7 @@ import genieNavSlide6 from "../../portfolio/Genie/Previews/Slide-6-Preview.webp"
 import genieNavSlide7 from "../../portfolio/Genie/Previews/Slide-7-Preview.webp";
 import genieNavSlide8 from "../../portfolio/Genie/Previews/Slide-8-Preview.webp";
 import genieNavSlide9 from "../../portfolio/Genie/Previews/Slide-9-Preview.webp";
+import genieSummaryVideo from "../../portfolio/Genie/Summary.webm";
 import genieSlide1P1 from "../../portfolio/Genie/Slide-1/p1.webm";
 import genieSlide1P1Poster from "../../portfolio/Genie/Slide-1/p1.webp";
 import genieSlide1P2 from "../../portfolio/Genie/Slide-1/p2.webp";
@@ -216,15 +217,7 @@ export const genieCase = {
     ],
     imageId: "case-genie-summary",
     navPreview: genieNavSlide9,
-    mockup: {
-      mockupId: "dcf5eeed-eb61-47a1-9e8c-dfe202743386",
-      aspectRatio: "4 / 3",
-      trigger: "load",
-      triggerLoop: false,
-      cursorRange: "21-22-23-20",
-      clickRange: "22-15-32-7",
-      cameraZoom: "23",
-      backgroundColor: "#000000",
-    },
+    video: genieSummaryVideo,
+    poster: geniePreview,
   },
 };

@@ -38,6 +38,7 @@ portfolio/CaseName/
 | Nav thumb for slide N | `Previews/Slide-N-Preview.webp` |
 | Paired images | `Slide-N/p1.webp`, `Slide-N/p2.webp` |
 | Tab screens (Genie-style) | `Slide-N/Tab-Name.webp` (stable filenames, no spaces → use hyphens) |
+| Summary 3D / device scene | `Summary.webm` (+ optional poster = `Preview.webp`) |
 
 Prefer **designer-exported** nav thumbs in `Previews/`. If missing, generate small JPEGs (~320px) from slides, then run optimize + LQ.
 
@@ -59,9 +60,9 @@ Create `src/data/caseName.js`. Closest templates:
 
 | Template | Use when |
 | --- | --- |
-| [`genie.js`](../src/data/genie.js) | Sections + optional **tabs** + summary mockup |
-| [`yummo.js`](../src/data/yummo.js) | Standard media rows + looping summary mockup |
-| [`salesDriver.js`](../src/data/salesDriver.js) | Same as Yummo with richer mockup attrs |
+| [`genie.js`](../src/data/genie.js) | Sections + optional **tabs** + summary video |
+| [`yummo.js`](../src/data/yummo.js) | Standard media rows + looping summary video |
+| [`salesDriver.js`](../src/data/salesDriver.js) | Same as Yummo with summary video |
 | [`drumkit.js`](../src/data/drumkit.js) + [`DrumkitCasePage.jsx`](../src/pages/cases/DrumkitCasePage.jsx) | Lottie quads, marquee, custom sections |
 
 ### Shape (generic)
@@ -111,17 +112,10 @@ export const caseNameCase = {
     description: "…",
     stats: [["80%", "Label"], ["40K", "Label"]],
     imageId: "case-summary-id",
-    navPreview: summaryNavThumb, // optional; else hero
-    mockup: {
-      mockupId: "uuid-from-mckp",
-      aspectRatio: "4 / 3",
-      trigger: "load",
-      triggerLoop: false, // play once then static; true to loop
-      cursorRange: "…",
-      clickRange: "…",
-      cameraZoom: "…",
-      backgroundColor: "#000000",
-    },
+    navPreview: summaryNavThumb, // optional; else poster / hero
+    video: summaryWebm, // portfolio/CaseName/Summary.webm
+    poster: heroPreview, // optional poster while loading
+    // Or legacy mckp: mockup: { mockupId, aspectRatio, … }
     // Or static: image: someWebp, caption: "…"
   },
 };
