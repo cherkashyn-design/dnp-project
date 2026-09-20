@@ -1157,10 +1157,55 @@ img {
 
 .case-media img,
 .case-media video,
-.case-media > .progressive-image {
+.case-media > .progressive-image,
+.case-media > .case-video-shell {
   height: 100%;
   object-fit: cover;
   width: 100%;
+}
+
+.case-video-shell {
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+
+.case-video-shell > video {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.case-video-skeleton {
+  background: linear-gradient(135deg, #d8d8d8 0%, #ececec 45%, #d2d2d2 100%);
+  inset: 0;
+  opacity: 1;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity 480ms ease;
+  z-index: 1;
+}
+
+.case-video-skeleton-shine {
+  animation: mockup-skeleton-shine 1.35s ease-in-out infinite;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0) 35%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0) 65%,
+    transparent 100%
+  );
+  display: block;
+  height: 100%;
+  transform: translateX(-120%);
+  width: 55%;
+}
+
+.case-video-shell.is-ready .case-video-skeleton {
+  opacity: 0;
 }
 
 .mockup-player-shell {
@@ -1220,7 +1265,8 @@ img {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mockup-player-skeleton-shine {
+  .mockup-player-skeleton-shine,
+  .case-video-skeleton-shine {
     animation: none;
   }
 }
@@ -1239,7 +1285,8 @@ img {
 
 .case-hero-image-frame .progressive-image,
 .case-media > .progressive-image,
-.case-media > video {
+.case-media > video,
+.case-media > .case-video-shell {
   transform: scale(1.2);
   transform-origin: center;
   transition: transform 220ms ease-out;

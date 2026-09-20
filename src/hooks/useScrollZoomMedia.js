@@ -8,7 +8,7 @@ export function useScrollZoomMedia() {
       animationFrame = null;
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
       const mediaElements = document.querySelectorAll(
-        ".case-hero-image-frame .progressive-image, .case-media > .progressive-image, .case-media > video",
+        ".case-hero-image-frame .progressive-image, .case-media > .progressive-image, .case-media > video, .case-media > .case-video-shell",
       );
 
       mediaElements.forEach((element) => {

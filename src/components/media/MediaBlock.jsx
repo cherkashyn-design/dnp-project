@@ -1,6 +1,7 @@
 import { ProgressiveImage } from "./ProgressiveImage.jsx";
 import { MockupPlayer } from "./MockupPlayer.jsx";
 import { LottiePlayer } from "./LottiePlayer.jsx";
+import { CaseVideo } from "./CaseVideo.jsx";
 
 export function MediaBlock({
   id,
@@ -35,7 +36,7 @@ export function MediaBlock({
             poster={src || poster}
           />
         ) : type === "video" ? (
-          <video src={src} poster={poster} autoPlay muted loop playsInline />
+          <CaseVideo src={src} poster={poster} />
         ) : (
           <ProgressiveImage src={src} alt="" fill />
         )}
