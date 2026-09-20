@@ -4,18 +4,18 @@ export function CaseNavigationSlider({ navigationItems }) {
   return (
     <nav className="case-nav-slider" aria-label="Case page position">
       <div className="case-nav-panel case-nav-panel-left">
-        <ThumbnailTrack baseOffset={118} navigationItems={navigationItems} />
+        <ThumbnailTrack navigationItems={navigationItems} />
       </div>
       <div className="case-nav-panel case-nav-panel-right">
-        <ThumbnailTrack baseOffset={-56} navigationItems={navigationItems} />
+        <ThumbnailTrack navigationItems={navigationItems} />
       </div>
     </nav>
   );
 }
 
-function ThumbnailTrack({ baseOffset, navigationItems }) {
+function ThumbnailTrack({ navigationItems }) {
   return (
-    <div className="case-nav-track" data-base-offset={baseOffset} style={{ transform: `translateX(${baseOffset}px)` }}>
+    <div className="case-nav-track" style={{ transform: "translateX(0px)" }}>
       {navigationItems.map((item, index) => (
         <a
           className={Array.isArray(item.src) ? "case-nav-thumb case-nav-thumb-combined" : "case-nav-thumb"}

@@ -1,5 +1,33 @@
 import { useEffect } from "react";
 
+function getTrackOriginX(panel) {
+  const styles = window.getComputedStyle(panel);
+  const borderLeft = Number.parseFloat(styles.borderLeftWidth) || 0;
+  return panel.getBoundingClientRect().left + borderLeft;
+}
+
+function getThumbCenterX(links, progress) {
+  const last = links.length - 1;
+  if (last < 0) {
+    return 0;
+  }
+
+  if (progress <= 0) {
+    return links[0].offsetLeft + links[0].offsetWidth / 2;
+  }
+
+  if (progress >= last) {
+    return links[last].offsetLeft + links[last].offsetWidth / 2;
+  }
+
+  const index = Math.floor(progress);
+  const nextIndex = Math.min(index + 1, last);
+  const mix = progress - index;
+  const current = links[index].offsetLeft + links[index].offsetWidth / 2;
+  const next = links[nextIndex].offsetLeft + links[nextIndex].offsetWidth / 2;
+  return current + (next - current) * mix;
+}
+
 export function useCaseNavScroll() {
   useEffect(() => {
     let animationFrame = null;
@@ -69,42 +97,35 @@ export function useCaseNavScroll() {
 
     const updateNavPosition = () => {
       animationFrame = null;
-      const tracks = Array.from(document.querySelectorAll(".case-nav-track")).filter(
-        (track) => {
-          const slider = track.closest(".case-nav-slider");
-          return slider && slider.getClientRects().length > 0;
-        },
+      const sliders = Array.from(document.querySelectorAll(".case-nav-slider")).filter(
+        (slider) => slider.getClientRects().length > 0,
       );
-      if (tracks.length === 0) {
-        return;
-      }
 
-      const referenceTrack = tracks[0];
-      const links = Array.from(referenceTrack.querySelectorAll("a.case-nav-thumb"));
-      if (links.length === 0) {
-        return;
-      }
+      sliders.forEach((slider) => {
+        const leftPanel = slider.querySelector(".case-nav-panel-left");
+        const rightPanel = slider.querySelector(".case-nav-panel-right");
+        const leftTrack = leftPanel?.querySelector(".case-nav-track");
+        const rightTrack = rightPanel?.querySelector(".case-nav-track");
+        if (!leftPanel || !rightPanel || !leftTrack || !rightTrack) {
+          return;
+        }
 
-      const slider = referenceTrack.closest(".case-nav-slider");
-      const leftPanel = referenceTrack.parentElement;
-      if (!slider || !leftPanel) {
-        return;
-      }
+        const links = Array.from(leftTrack.querySelectorAll("a.case-nav-thumb"));
+        if (links.length === 0) {
+          return;
+        }
 
-      const progress = getSectionProgress(links);
-      const thumbWidth = links[0].offsetWidth || 48;
-      const gap = Number.parseFloat(window.getComputedStyle(referenceTrack).gap) || 4;
-      const step = thumbWidth + gap;
-      const sliderRect = slider.getBoundingClientRect();
-      const panelRect = leftPanel.getBoundingClientRect();
-      const centerInLeftPanel = sliderRect.left + sliderRect.width / 2 - panelRect.left;
-      const leftBase = Number(referenceTrack.dataset.baseOffset || 0);
-      const sharedDelta =
-        centerInLeftPanel - leftBase - progress * step - thumbWidth / 2;
+        const progress = getSectionProgress(links);
+        const thumbCenter = getThumbCenterX(links, progress);
+        const sliderRect = slider.getBoundingClientRect();
+        const sliderCenter = sliderRect.left + sliderRect.width / 2;
+        const leftOrigin = getTrackOriginX(leftPanel);
+        const rightOrigin = getTrackOriginX(rightPanel);
+        const syncGap = rightOrigin - leftOrigin;
+        const leftTranslate = sliderCenter - leftOrigin - thumbCenter;
 
-      document.querySelectorAll(".case-nav-track").forEach((track) => {
-        const baseOffset = Number(track.dataset.baseOffset || 0);
-        track.style.transform = `translateX(${baseOffset + sharedDelta}px)`;
+        leftTrack.style.transform = `translateX(${leftTranslate}px)`;
+        rightTrack.style.transform = `translateX(${leftTranslate - syncGap}px)`;
       });
     };
 
@@ -123,6 +144,9 @@ export function useCaseNavScroll() {
         ? null
         : new ResizeObserver(() => requestUpdate());
     resizeObserver?.observe(document.documentElement);
+    document.querySelectorAll(".case-nav-slider").forEach((slider) => {
+      resizeObserver?.observe(slider);
+    });
 
     return () => {
       window.removeEventListener("scroll", requestUpdate);

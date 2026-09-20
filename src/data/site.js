@@ -6,6 +6,8 @@ import yummoPreview from "../../portfolio/Yummo/Preview.webp";
 import yummoPreviewLq from "../../portfolio/Yummo/Preview.lq.jpg";
 import geniePreview from "../../portfolio/Genie/Preview.webp";
 import geniePreviewLq from "../../portfolio/Genie/Preview.lq.jpg";
+import hermesPreview from "../../portfolio/Hermes/Preview.webp";
+import hermesPreviewLq from "../../portfolio/Hermes/Preview.lq.jpg";
 
 export const email = "contact@donotpress.com";
 
@@ -16,6 +18,13 @@ export const cases = [
     lqImage: yummoPreviewLq,
     tags: ["Branding", "Landing", "App"],
     href: "/cases/yummo-food-guide-for-moms",
+  },
+  {
+    name: "Hermes Cloud - AI admin panel",
+    image: hermesPreview,
+    lqImage: hermesPreviewLq,
+    tags: ["SaaS", "App"],
+    href: "/cases/hermes-cloud-ai-admin-panel",
   },
   {
     name: "Genie node based AI editor",
