@@ -104,12 +104,8 @@ export const comfyuiCase = {
   ],
   summary: {
     title: "Summary",
-    description: "Nous Portal is published and became a part of Hermes ecosystem.",
-    stats: [
-      ["98%", "More Hermes paid users after publishing"],
-      ["35%", "Users started using multiple agents"],
-      ["120K", "Sign-ups in first month"],
-    ],
+    description:
+      "A cloud ComfyUI for mixed teams: artists ship workflows, marketers run them through a simple chat, and assets stay shared in one place.",
     imageId: "case-comfy-summary",
     navPreview: comfyNavSlide7,
     video: comfySummaryVideo,

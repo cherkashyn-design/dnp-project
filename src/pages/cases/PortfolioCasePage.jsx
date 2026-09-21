@@ -139,7 +139,9 @@ export default function PortfolioCasePage({ project }) {
             <h2>{project.summary.title}</h2>
             {project.summary.description ? <p>{project.summary.description}</p> : null}
           </div>
-          <StatsSection stats={project.summary.stats} />
+          {project.summary.stats?.length ? (
+            <StatsSection stats={project.summary.stats} />
+          ) : null}
           {project.summary.video ? (
             <MediaBlock
               id={project.summary.imageId || "case-summary-preview"}
