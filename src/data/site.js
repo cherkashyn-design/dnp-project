@@ -8,10 +8,19 @@ import geniePreview from "../../portfolio/Genie/Preview.webp";
 import geniePreviewLq from "../../portfolio/Genie/Preview.lq.jpg";
 import hermesPreview from "../../portfolio/Hermes/Preview.webp";
 import hermesPreviewLq from "../../portfolio/Hermes/Preview.lq.jpg";
+import comfyPreview from "../../portfolio/ComfyUI/Preview.webp";
+import comfyPreviewLq from "../../portfolio/ComfyUI/Preview.lq.jpg";
 
 export const email = "contact@donotpress.com";
 
 export const cases = [
+  {
+    name: "ComfyUI - pro AI tool",
+    image: comfyPreview,
+    lqImage: comfyPreviewLq,
+    tags: ["SaaS", "App"],
+    href: "/cases/comfyui-pro-ai-tool",
+  },
   {
     name: "Yummo - Food guide for moms",
     image: yummoPreview,
