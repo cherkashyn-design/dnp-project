@@ -2137,8 +2137,7 @@ img {
   }
 
   .cases-fade-bottom {
-    bottom: 0;
-    height: calc(88px + env(safe-area-inset-bottom, 0px) + 56px);
+    display: none;
   }
 
   .home-page:not(.is-cases-active) .cases-fade,
