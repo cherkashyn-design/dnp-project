@@ -36,9 +36,9 @@ export function MediaBlock({
             poster={src || poster}
           />
         ) : type === "video" ? (
-          <CaseVideo src={src} poster={poster} />
+          <CaseVideo src={src} poster={poster} expandable />
         ) : (
-          <ProgressiveImage src={src} alt="" fill />
+          <ProgressiveImage src={src} alt="" fill expandable />
         )}
       </div>
       {caption ? <figcaption>{caption}</figcaption> : null}

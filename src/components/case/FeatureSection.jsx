@@ -16,7 +16,7 @@ export function FeatureSection({ id, title, mediaSrc, loadLottie, items }) {
         </div>
       ) : mediaSrc ? (
         <div className="case-media feature-media">
-          <ProgressiveImage src={mediaSrc} alt="" fill />
+          <ProgressiveImage src={mediaSrc} alt="" fill expandable />
         </div>
       ) : null}
       <div className="feature-grid">

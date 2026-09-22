@@ -81,7 +81,7 @@ export function ProfileTabsBlock({ id, title, description, tabs }) {
           aria-labelledby={`${activeTab.id}-tab`}
         >
           <div className="case-media case-media-wide">
-            <ProgressiveImage src={activeTab.src} alt={activeTab.label} fill />
+            <ProgressiveImage src={activeTab.src} alt={activeTab.label} fill expandable />
           </div>
           {activeTab.caption ? <figcaption>{activeTab.caption}</figcaption> : null}
         </figure>

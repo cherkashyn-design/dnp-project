@@ -48,6 +48,7 @@ export default function DrumkitCasePage() {
               fill
               loading="eager"
               fetchPriority="high"
+              expandable
             />
           </div>
         </div>

@@ -36,6 +36,7 @@ export default function PortfolioCasePage({ project }) {
               fill
               loading="eager"
               fetchPriority="high"
+              expandable
             />
           </div>
         </div>
