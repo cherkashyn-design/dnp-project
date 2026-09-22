@@ -728,12 +728,11 @@ img {
   display: flex;
   justify-content: center;
   left: 0;
-  padding: 16px;
-  padding-top: max(16px, env(safe-area-inset-top, 0px));
+  padding: 8px 16px 16px;
   pointer-events: none;
   position: fixed;
   right: 0;
-  top: 0;
+  top: 112px;
   z-index: 40;
 }
 
@@ -765,6 +764,12 @@ img {
   flex: 0 0 20px;
   height: 20px;
   width: 20px;
+}
+
+@media (max-width: 799px) {
+  .copied-toast {
+    top: 80px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
