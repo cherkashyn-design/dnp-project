@@ -1,5 +1,6 @@
 import salesDriverPreview from "../../portfolio/SalesDriver/Preview.webp";
 import salesDriverSummaryVideo from "../../portfolio/SalesDriver/Summary.webm";
+import salesDriverSummaryVideoMobile from "../../portfolio/SalesDriver/Summary.mobile.webm";
 import salesDriverNavPreview from "../../portfolio/SalesDriver/Previews/Preview-Preview.webp";
 import salesDriverNavSlide1 from "../../portfolio/SalesDriver/Previews/Slide-1-Preview.webp";
 import salesDriverNavSlide2 from "../../portfolio/SalesDriver/Previews/Slide-2-Preview.webp";
@@ -175,6 +176,7 @@ export const salesDriverCase = {
       ],
       imageId: "case-salesdriver-summary",
       video: salesDriverSummaryVideo,
+      videoMobile: salesDriverSummaryVideoMobile,
       poster: salesDriverPreview,
     },
   };

@@ -9,7 +9,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "generate:lq": "python3 scripts/generate-lq-images.py",
-    "optimize:images": "python3 scripts/optimize-portfolio-images.py"
+    "optimize:images": "python3 scripts/optimize-portfolio-images.py",
+    "optimize:videos": "python3 scripts/optimize-portfolio-videos.py"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

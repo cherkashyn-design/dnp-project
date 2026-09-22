@@ -1405,6 +1405,20 @@ img {
   width: 100%;
 }
 
+.case-video-poster {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+.case-video-shell.has-poster-fallback > video {
+  opacity: 0;
+}
+
 .case-video-skeleton {
   background: linear-gradient(135deg, #d8d8d8 0%, #ececec 45%, #d2d2d2 100%);
   inset: 0;
@@ -1434,6 +1448,10 @@ img {
 
 .case-video-shell.is-ready .case-video-skeleton {
   opacity: 0;
+}
+
+.case-video-shell:not(.is-loading) .case-video-skeleton {
+  display: none;
 }
 
 .progressive-image.is-expandable,

@@ -1,5 +1,6 @@
 import comfyPreview from "../../portfolio/ComfyUI/Preview.webp";
 import comfySummaryVideo from "../../portfolio/ComfyUI/Summary.webm";
+import comfySummaryVideoMobile from "../../portfolio/ComfyUI/Summary.mobile.webm";
 import comfySummaryPoster from "../../portfolio/ComfyUI/Summary.webp";
 import comfyNavPreview from "../../portfolio/ComfyUI/Previews/Preview-Preview.webp";
 import comfyNavSlide1 from "../../portfolio/ComfyUI/Previews/Slide-1-Preview.webp";
@@ -10,15 +11,18 @@ import comfyNavSlide5 from "../../portfolio/ComfyUI/Previews/Slide-5-Preview.web
 import comfyNavSlide6 from "../../portfolio/ComfyUI/Previews/Slide-6-Preview.webp";
 import comfyNavSlide7 from "../../portfolio/ComfyUI/Previews/Slide-7-Preview.webp";
 import comfySlide1P1 from "../../portfolio/ComfyUI/Slide-1/p1.webm";
+import comfySlide1P1Mobile from "../../portfolio/ComfyUI/Slide-1/p1.mobile.webm";
 import comfySlide1P1Poster from "../../portfolio/ComfyUI/Slide-1/p1.webp";
 import comfySlide1P2 from "../../portfolio/ComfyUI/Slide-1/p2.webp";
 import comfySlide2 from "../../portfolio/ComfyUI/Slide-2.webp";
 import comfySlide3 from "../../portfolio/ComfyUI/Slide-3.webm";
+import comfySlide3Mobile from "../../portfolio/ComfyUI/Slide-3.mobile.webm";
 import comfySlide3Poster from "../../portfolio/ComfyUI/Slide-3.webp";
 import comfySlide4P1 from "../../portfolio/ComfyUI/Slide-4/p1.webp";
 import comfySlide4P2 from "../../portfolio/ComfyUI/Slide-4/p2.webp";
 import comfySlide5 from "../../portfolio/ComfyUI/Slide-5.webp";
 import comfySlide6P1 from "../../portfolio/ComfyUI/Slide-6/p1.webm";
+import comfySlide6P1Mobile from "../../portfolio/ComfyUI/Slide-6/p1.mobile.webm";
 import comfySlide6P1Poster from "../../portfolio/ComfyUI/Slide-6/p1.webp";
 import comfySlide6P2 from "../../portfolio/ComfyUI/Slide-6/p2.webp";
 
@@ -57,6 +61,7 @@ export const comfyuiCase = {
             id: "case-comfy-workflows-1a",
             type: "video",
             src: comfySlide1P1,
+            srcMobile: comfySlide1P1Mobile,
             poster: comfySlide1P1Poster,
           },
           { id: "case-comfy-workflows-1b", src: comfySlide1P2 },
@@ -75,6 +80,7 @@ export const comfyuiCase = {
             id: "case-comfy-started-1",
             type: "video",
             src: comfySlide3,
+            srcMobile: comfySlide3Mobile,
             poster: comfySlide3Poster,
           },
         ],
@@ -95,6 +101,7 @@ export const comfyuiCase = {
             id: "case-comfy-assets-2a",
             type: "video",
             src: comfySlide6P1,
+            srcMobile: comfySlide6P1Mobile,
             poster: comfySlide6P1Poster,
           },
           { id: "case-comfy-assets-2b", src: comfySlide6P2 },
@@ -109,6 +116,7 @@ export const comfyuiCase = {
     imageId: "case-comfy-summary",
     navPreview: comfyNavSlide7,
     video: comfySummaryVideo,
+    videoMobile: comfySummaryVideoMobile,
     poster: comfySummaryPoster,
   },
 };

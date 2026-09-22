@@ -7,6 +7,7 @@ export function MediaBlock({
   id,
   type = "image",
   src,
+  srcMobile,
   poster,
   caption,
   variant,
@@ -36,7 +37,7 @@ export function MediaBlock({
             poster={src || poster}
           />
         ) : type === "video" ? (
-          <CaseVideo src={src} poster={poster} expandable />
+          <CaseVideo src={src} srcMobile={srcMobile} poster={poster} expandable />
         ) : (
           <ProgressiveImage src={src} alt="" fill expandable />
         )}

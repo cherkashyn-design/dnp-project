@@ -1,5 +1,6 @@
 import hermesPreview from "../../portfolio/Hermes/Preview.webp";
 import hermesSummaryVideo from "../../portfolio/Hermes/Summary.webm";
+import hermesSummaryVideoMobile from "../../portfolio/Hermes/Summary.mobile.webm";
 import hermesSummaryPoster from "../../portfolio/Hermes/Summary.webp";
 import hermesNavPreview from "../../portfolio/Hermes/Previews/Preview-Preview.webp";
 import hermesNavSlide1 from "../../portfolio/Hermes/Previews/Slide-1-Preview.webp";
@@ -15,13 +16,16 @@ import hermesNavSlide10 from "../../portfolio/Hermes/Previews/Slide-10-Preview.w
 import hermesNavSlide11 from "../../portfolio/Hermes/Previews/Slide-11-Preview.webp";
 import hermesNavSlide12 from "../../portfolio/Hermes/Previews/Slide-12-Preview.webp";
 import hermesSlide1 from "../../portfolio/Hermes/Slide-1.webm";
+import hermesSlide1Mobile from "../../portfolio/Hermes/Slide-1.mobile.webm";
 import hermesSlide1Poster from "../../portfolio/Hermes/Slide-1.webp";
 import hermesSlide2P1 from "../../portfolio/Hermes/Slide-2/p1.webp";
 import hermesSlide2P2 from "../../portfolio/Hermes/Slide-2/p2.webp";
 import hermesSlide3 from "../../portfolio/Hermes/Slide-3.webp";
 import hermesSlide4P1 from "../../portfolio/Hermes/Slide-4/p1.webm";
+import hermesSlide4P1Mobile from "../../portfolio/Hermes/Slide-4/p1.mobile.webm";
 import hermesSlide4P1Poster from "../../portfolio/Hermes/Slide-4/p1.webp";
 import hermesSlide4P2 from "../../portfolio/Hermes/Slide-4/p2.webm";
+import hermesSlide4P2Mobile from "../../portfolio/Hermes/Slide-4/p2.mobile.webm";
 import hermesSlide4P2Poster from "../../portfolio/Hermes/Slide-4/p2.webp";
 import hermesSlide5 from "../../portfolio/Hermes/Slide-5.webp";
 import hermesSlide6 from "../../portfolio/Hermes/Slide-6.webp";
@@ -76,6 +80,7 @@ export const hermesCase = {
             id: "case-hermes-usage-1",
             type: "video",
             src: hermesSlide1,
+            srcMobile: hermesSlide1Mobile,
             poster: hermesSlide1Poster,
           },
         ],
@@ -96,12 +101,14 @@ export const hermesCase = {
             id: "case-hermes-billing-2a",
             type: "video",
             src: hermesSlide4P1,
+            srcMobile: hermesSlide4P1Mobile,
             poster: hermesSlide4P1Poster,
           },
           {
             id: "case-hermes-billing-2b",
             type: "video",
             src: hermesSlide4P2,
+            srcMobile: hermesSlide4P2Mobile,
             poster: hermesSlide4P2Poster,
           },
         ],
@@ -161,6 +168,7 @@ export const hermesCase = {
     imageId: "case-hermes-summary",
     navPreview: hermesNavSlide12,
     video: hermesSummaryVideo,
+    videoMobile: hermesSummaryVideoMobile,
     poster: hermesSummaryPoster,
   },
 };

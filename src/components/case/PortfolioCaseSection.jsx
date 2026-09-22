@@ -60,6 +60,7 @@ export function PortfolioCaseSection({ section }) {
             id={row[0].id}
             type={row[0].type || "image"}
             src={row[0].src}
+            srcMobile={row[0].srcMobile}
             poster={row[0].poster}
             caption={row[0].caption}
             loadAnimation={row[0].loadAnimation}
@@ -74,6 +75,7 @@ export function PortfolioCaseSection({ section }) {
                 id={media.id}
                 type={media.type || "image"}
                 src={media.src}
+                srcMobile={media.srcMobile}
                 poster={media.poster}
                 caption={media.caption}
                 loadAnimation={media.loadAnimation}

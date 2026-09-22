@@ -83,7 +83,7 @@ Primary implementation: [`LottiePlayer`](src/components/media/LottiePlayer.jsx),
 - Mounting **all** heavy Lotties at once crashed Safari on iPhone (memory).
 - Wrong reserved aspect ratio (`9 / 16` vs real `664×476`) caused **layout bounce** in feature sections.
 - Lotties **playing during scroll** can compete with scroll handlers on heavy sections (Management dashboard / Simplify SOPs / Summary). We keep them playing in view by design; optimize assets if jank returns.
-- **Case WebMs** (ComfyUI / Genie / Hermes) hit the same iOS Jetsam class: multiple autoplaying high-res videos with no visibility gate. See [`docs/MOBILE-CASE-VIDEO-PERF-PLAN.md`](docs/MOBILE-CASE-VIDEO-PERF-PLAN.md).
+- **Case WebMs** (ComfyUI / Genie / Hermes) hit the same iOS Jetsam class: multiple autoplaying high-res videos with no visibility gate. Mitigated in [`CaseVideo`](src/components/media/CaseVideo.jsx) + [`caseVideoCoordinator`](src/lib/caseVideoCoordinator.js) (visibility unload, ≤1 active on phones, lightbox pause, reduced-motion) and re-encoded sources via `npm run optimize:videos`. See [`docs/MOBILE-CASE-VIDEO-PERF-PLAN.md`](docs/MOBILE-CASE-VIDEO-PERF-PLAN.md).
 
 ### Solutions
 

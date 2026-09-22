@@ -1,5 +1,6 @@
 import yummoPreview from "../../portfolio/Yummo/Preview.webp";
 import yummoSummaryVideo from "../../portfolio/Yummo/Summary.webm";
+import yummoSummaryVideoMobile from "../../portfolio/Yummo/Summary.mobile.webm";
 import yummoNavPreview from "../../portfolio/Yummo/Previews/Preview-Preview.webp";
 import yummoNavSlide1 from "../../portfolio/Yummo/Previews/Slide-1-Preview.webp";
 import yummoNavSlide2 from "../../portfolio/Yummo/Previews/Slide-2-Preview.webp";
@@ -131,6 +132,7 @@ export const yummoCase = {
       ],
       imageId: "case-yummo-summary",
       video: yummoSummaryVideo,
+      videoMobile: yummoSummaryVideoMobile,
       poster: yummoPreview,
     },
   };

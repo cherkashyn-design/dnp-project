@@ -10,7 +10,9 @@ import genieNavSlide7 from "../../portfolio/Genie/Previews/Slide-7-Preview.webp"
 import genieNavSlide8 from "../../portfolio/Genie/Previews/Slide-8-Preview.webp";
 import genieNavSlide9 from "../../portfolio/Genie/Previews/Slide-9-Preview.webp";
 import genieSummaryVideo from "../../portfolio/Genie/Summary.webm";
+import genieSummaryVideoMobile from "../../portfolio/Genie/Summary.mobile.webm";
 import genieSlide1P1 from "../../portfolio/Genie/Slide-1/p1.webm";
+import genieSlide1P1Mobile from "../../portfolio/Genie/Slide-1/p1.mobile.webm";
 import genieSlide1P1Poster from "../../portfolio/Genie/Slide-1/p1.webp";
 import genieSlide1P2 from "../../portfolio/Genie/Slide-1/p2.webp";
 import genieSlide2 from "../../portfolio/Genie/Slide-2.webp";
@@ -19,8 +21,10 @@ import genieSlide3P2 from "../../portfolio/Genie/Slide-3/p2.webp";
 import genieSlide4 from "../../portfolio/Genie/Slide-4.webp";
 import genieSlide5P1 from "../../portfolio/Genie/Slide-5/p1.webp";
 import genieSlide5P2 from "../../portfolio/Genie/Slide-5/p2.webm";
+import genieSlide5P2Mobile from "../../portfolio/Genie/Slide-5/p2.mobile.webm";
 import genieSlide5P2Poster from "../../portfolio/Genie/Slide-5/p2.webp";
 import genieSlide6 from "../../portfolio/Genie/Slide-6.webm";
+import genieSlide6Mobile from "../../portfolio/Genie/Slide-6.mobile.webm";
 import genieSlide6Poster from "../../portfolio/Genie/Slide-6.webp";
 import genieSlide7P1 from "../../portfolio/Genie/Slide-7/p1.webp";
 import genieSlide7P2 from "../../portfolio/Genie/Slide-7/p2.webp";
@@ -69,6 +73,7 @@ export const genieCase = {
             id: "case-genie-nodes-1a",
             type: "video",
             src: genieSlide1P1,
+            srcMobile: genieSlide1P1Mobile,
             poster: genieSlide1P1Poster,
             caption: "Just enter a prompt and get a result",
           },
@@ -128,6 +133,7 @@ export const genieCase = {
             id: "case-genie-community-1b",
             type: "video",
             src: genieSlide5P2,
+            srcMobile: genieSlide5P2Mobile,
             poster: genieSlide5P2Poster,
             caption: "View details",
           },
@@ -137,6 +143,7 @@ export const genieCase = {
             id: "case-genie-community-2",
             type: "video",
             src: genieSlide6,
+            srcMobile: genieSlide6Mobile,
             poster: genieSlide6Poster,
             caption: "Publish your own workflows and earn",
           },
@@ -218,6 +225,7 @@ export const genieCase = {
     imageId: "case-genie-summary",
     navPreview: genieNavSlide9,
     video: genieSummaryVideo,
+    videoMobile: genieSummaryVideoMobile,
     poster: geniePreview,
   },
 };

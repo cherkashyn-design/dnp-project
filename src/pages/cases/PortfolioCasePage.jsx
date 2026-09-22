@@ -149,6 +149,7 @@ export default function PortfolioCasePage({ project }) {
               id={project.summary.imageId || "case-summary-preview"}
               type="video"
               src={project.summary.video}
+              srcMobile={project.summary.videoMobile}
               poster={project.summary.poster}
               caption={project.summary.caption}
               variant="wide"

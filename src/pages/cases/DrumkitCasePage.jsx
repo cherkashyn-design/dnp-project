@@ -16,6 +16,7 @@ import {
   drumkitFavicon,
   drumkitPreview,
   drumkitSummaryVideo,
+  drumkitSummaryVideoMobile,
   drumkitSlide2,
   drumkitSlide3P1,
   drumkitSlide3P2,
@@ -118,6 +119,7 @@ export default function DrumkitCasePage() {
           id="case-landing-motion"
           type="video"
           src={drumkitSummaryVideo}
+          srcMobile={drumkitSummaryVideoMobile}
           poster={drumkitPreview}
           caption="Animated first sections to show product in action"
         />
