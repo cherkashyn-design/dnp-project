@@ -46,7 +46,12 @@ export default function ContactPage() {
   const [showErrors, setShowErrors] = useState(false);
   const [composingCustom, setComposingCustom] = useState(false);
   const [customDraft, setCustomDraft] = useState("");
-  const [budgetIndicator, setBudgetIndicator] = useState({ left: 0, width: 0 });
+  const [budgetIndicator, setBudgetIndicator] = useState({
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0,
+  });
   const customInputRef = useRef(null);
   const budgetRef = useRef(null);
   const nameRef = useRef(null);
@@ -83,7 +88,9 @@ export default function ContactPage() {
       }
       setBudgetIndicator({
         left: selected.offsetLeft,
+        top: selected.offsetTop,
         width: selected.offsetWidth,
+        height: selected.offsetHeight,
       });
     };
 
@@ -211,7 +218,7 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="contact-page">
+    <main className={["contact-page", submitted ? "is-success" : ""].filter(Boolean).join(" ")}>
       <div className="contact-layout">
         <aside className="contact-media" aria-hidden="true">
           <div className="contact-media-frame">
@@ -239,7 +246,9 @@ export default function ContactPage() {
                   <p>We received your request. We&apos;ll get back to you within 24 hours.</p>
                 </div>
                 <a className="contact-success-cta" href="/">
-                  <img src={backCasesIcon} alt="" aria-hidden="true" />
+                  <span className="contact-success-cta-icon" aria-hidden="true">
+                    <img src={backCasesIcon} alt="" />
+                  </span>
                   <span>Back to cases</span>
                 </a>
               </div>
@@ -253,74 +262,78 @@ export default function ContactPage() {
                 <form className="contact-form" onSubmit={handleSubmit} noValidate>
                 <fieldset className="contact-section">
                   <legend>Your Info</legend>
-                  <label
-                    className={["contact-field", showErrors && fieldErrors.name ? "is-invalid" : ""]
-                      .filter(Boolean)
-                      .join(" ")}
-                  >
-                    <span className="visually-hidden">Your name</span>
-                    <input
-                      ref={nameRef}
-                      type="text"
-                      name="name"
-                      autoComplete="name"
-                      placeholder="Your name"
-                      value={form.name}
-                      onChange={updateField("name")}
-                      aria-invalid={showErrors && fieldErrors.name ? "true" : "false"}
-                      required
-                    />
-                  </label>
-                  <label
-                    className={["contact-field", showErrors && fieldErrors.email ? "is-invalid" : ""]
-                      .filter(Boolean)
-                      .join(" ")}
-                  >
-                    <span className="visually-hidden">Email</span>
-                    <input
-                      ref={emailRef}
-                      type="email"
-                      name="email"
-                      autoComplete="email"
-                      placeholder="Email"
-                      value={form.email}
-                      onChange={updateField("email")}
-                      aria-invalid={showErrors && fieldErrors.email ? "true" : "false"}
-                      required
-                    />
-                  </label>
+                  <div className="contact-section-body">
+                    <label
+                      className={["contact-field", showErrors && fieldErrors.name ? "is-invalid" : ""]
+                        .filter(Boolean)
+                        .join(" ")}
+                    >
+                      <span className="visually-hidden">Your name</span>
+                      <input
+                        ref={nameRef}
+                        type="text"
+                        name="name"
+                        autoComplete="name"
+                        placeholder="Your name"
+                        value={form.name}
+                        onChange={updateField("name")}
+                        aria-invalid={showErrors && fieldErrors.name ? "true" : "false"}
+                        required
+                      />
+                    </label>
+                    <label
+                      className={["contact-field", showErrors && fieldErrors.email ? "is-invalid" : ""]
+                        .filter(Boolean)
+                        .join(" ")}
+                    >
+                      <span className="visually-hidden">Email</span>
+                      <input
+                        ref={emailRef}
+                        type="email"
+                        name="email"
+                        autoComplete="email"
+                        placeholder="Email"
+                        value={form.email}
+                        onChange={updateField("email")}
+                        aria-invalid={showErrors && fieldErrors.email ? "true" : "false"}
+                        required
+                      />
+                    </label>
+                  </div>
                 </fieldset>
 
                 <fieldset className="contact-section">
                   <legend>Company Info</legend>
-                  <label
-                    className={["contact-field", showErrors && fieldErrors.company ? "is-invalid" : ""]
-                      .filter(Boolean)
-                      .join(" ")}
-                  >
-                    <span className="visually-hidden">Company or project name</span>
-                    <input
-                      ref={companyRef}
-                      type="text"
-                      name="company"
-                      autoComplete="organization"
-                      placeholder="Company/Project name"
-                      value={form.company}
-                      onChange={updateField("company")}
-                      aria-invalid={showErrors && fieldErrors.company ? "true" : "false"}
-                      required
-                    />
-                  </label>
-                  <label className="contact-field contact-field-textarea">
-                    <span className="visually-hidden">What are you building?</span>
-                    <textarea
-                      name="building"
-                      placeholder="What are you building?"
-                      rows={4}
-                      value={form.building}
-                      onChange={updateField("building")}
-                    />
-                  </label>
+                  <div className="contact-section-body">
+                    <label
+                      className={["contact-field", showErrors && fieldErrors.company ? "is-invalid" : ""]
+                        .filter(Boolean)
+                        .join(" ")}
+                    >
+                      <span className="visually-hidden">Company or project name</span>
+                      <input
+                        ref={companyRef}
+                        type="text"
+                        name="company"
+                        autoComplete="organization"
+                        placeholder="Company/Project name"
+                        value={form.company}
+                        onChange={updateField("company")}
+                        aria-invalid={showErrors && fieldErrors.company ? "true" : "false"}
+                        required
+                      />
+                    </label>
+                    <label className="contact-field contact-field-textarea">
+                      <span className="visually-hidden">What are you building?</span>
+                      <textarea
+                        name="building"
+                        placeholder="What are you building?"
+                        rows={4}
+                        value={form.building}
+                        onChange={updateField("building")}
+                      />
+                    </label>
+                  </div>
                 </fieldset>
 
                 <fieldset className="contact-section">
@@ -328,121 +341,123 @@ export default function ContactPage() {
                     What do you need help with?{" "}
                     <span className="contact-optional">(Optional)</span>
                   </legend>
-                  <div className="contact-tag-options" role="group" aria-label="Help topics">
-                    {HELP_OPTIONS.map((option) => {
-                      const selected = form.helpTags.includes(option.label);
-                      return (
+                  <div className="contact-section-body">
+                    <div className="contact-tag-options" role="group" aria-label="Help topics">
+                      {HELP_OPTIONS.map((option) => {
+                        const selected = form.helpTags.includes(option.label);
+                        return (
+                          <button
+                            key={option.id}
+                            type="button"
+                            className={["contact-tag", selected ? "is-selected" : ""]
+                              .filter(Boolean)
+                              .join(" ")}
+                            aria-pressed={selected}
+                            onClick={() => toggleHelpTag(option.label)}
+                          >
+                            <span className="contact-tag-leading" aria-hidden="true">
+                              <img src={option.icon} alt="" />
+                            </span>
+                            <span className="contact-tag-label">{option.label}</span>
+                            <span className="contact-tag-trailing" aria-hidden="true">
+                              <img src={closeIcon} alt="" />
+                            </span>
+                          </button>
+                        );
+                      })}
+
+                      {form.customTags.map((tag) => (
                         <button
-                          key={option.id}
+                          key={`custom-${tag}`}
                           type="button"
-                          className={["contact-tag", selected ? "is-selected" : ""]
-                            .filter(Boolean)
-                            .join(" ")}
-                          aria-pressed={selected}
-                          onClick={() => toggleHelpTag(option.label)}
+                          className="contact-tag is-selected is-custom"
+                          onClick={() => removeCustomTag(tag)}
                         >
-                          <span className="contact-tag-leading" aria-hidden="true">
-                            <img src={option.icon} alt="" />
-                          </span>
-                          <span className="contact-tag-label">{option.label}</span>
-                          <span className="contact-tag-trailing" aria-hidden="true">
+                          <span className="contact-tag-label">{tag}</span>
+                          <span className="contact-tag-trailing is-visible" aria-hidden="true">
                             <img src={closeIcon} alt="" />
                           </span>
                         </button>
-                      );
-                    })}
+                      ))}
 
-                    {form.customTags.map((tag) => (
-                      <button
-                        key={`custom-${tag}`}
-                        type="button"
-                        className="contact-tag is-selected is-custom"
-                        onClick={() => removeCustomTag(tag)}
-                      >
-                        <span className="contact-tag-label">{tag}</span>
-                        <span className="contact-tag-trailing is-visible" aria-hidden="true">
-                          <img src={closeIcon} alt="" />
-                        </span>
-                      </button>
-                    ))}
-
-                    {composingCustom ? (
-                      <div className="contact-tag is-composing contact-custom-composer">
+                      {composingCustom ? (
+                        <div className="contact-tag is-composing contact-custom-composer">
+                          <button
+                            type="button"
+                            className="contact-tag-icon-btn"
+                            aria-label="Confirm custom request"
+                            onClick={commitCustomTag}
+                          >
+                            <img src={checkIcon} alt="" aria-hidden="true" />
+                          </button>
+                          <input
+                            ref={customInputRef}
+                            type="text"
+                            className="contact-tag-input"
+                            value={customDraft}
+                            placeholder="Custom request"
+                            aria-label="Custom request"
+                            onChange={(event) => setCustomDraft(event.target.value)}
+                            onKeyDown={handleCustomKeyDown}
+                          />
+                          <button
+                            type="button"
+                            className="contact-tag-icon-btn"
+                            aria-label="Close custom request"
+                            onClick={cancelCustomCompose}
+                          >
+                            <img src={closeIcon} alt="" aria-hidden="true" />
+                          </button>
+                        </div>
+                      ) : (
                         <button
                           type="button"
-                          className="contact-tag-icon-btn"
-                          aria-label="Confirm custom request"
-                          onClick={commitCustomTag}
+                          className="contact-tag is-add-custom contact-custom-composer"
+                          onClick={() => setComposingCustom(true)}
                         >
-                          <img src={checkIcon} alt="" aria-hidden="true" />
+                          <img src={plusIcon} alt="" aria-hidden="true" />
+                          <span>Add custom request</span>
                         </button>
-                        <input
-                          ref={customInputRef}
-                          type="text"
-                          className="contact-tag-input"
-                          value={customDraft}
-                          placeholder="Custom request"
-                          aria-label="Custom request"
-                          onChange={(event) => setCustomDraft(event.target.value)}
-                          onKeyDown={handleCustomKeyDown}
-                        />
-                        <button
-                          type="button"
-                          className="contact-tag-icon-btn"
-                          aria-label="Close custom request"
-                          onClick={cancelCustomCompose}
-                        >
-                          <img src={closeIcon} alt="" aria-hidden="true" />
-                        </button>
-                      </div>
-                    ) : (
-                      <button
-                        type="button"
-                        className="contact-tag is-add-custom contact-custom-composer"
-                        onClick={() => setComposingCustom(true)}
-                      >
-                        <img src={plusIcon} alt="" aria-hidden="true" />
-                        <span>Add custom request</span>
-                      </button>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </fieldset>
 
                 <fieldset className="contact-section">
                   <legend>Do you have budget in Mind?</legend>
-                  <div className="contact-budget" role="radiogroup" aria-label="Budget" ref={budgetRef}>
-                    <span
-                      className="contact-budget-indicator"
-                      aria-hidden="true"
-                      style={{
-                        transform: `translateX(${budgetIndicator.left}px)`,
-                        width: `${budgetIndicator.width}px`,
-                      }}
-                    />
-                    {BUDGET_OPTIONS.map((option) => {
-                      const selected = form.budget === option;
-                      return (
-                        <button
-                          key={option}
-                          type="button"
-                          className={["contact-budget-option", selected ? "is-selected" : ""]
-                            .filter(Boolean)
-                            .join(" ")}
-                          role="radio"
-                          aria-checked={selected}
-                          onClick={() => setForm((current) => ({ ...current, budget: option }))}
-                        >
-                          {option}
-                        </button>
-                      );
-                    })}
+                  <div className="contact-section-body">
+                    <div className="contact-budget" role="radiogroup" aria-label="Budget" ref={budgetRef}>
+                      <span
+                        className="contact-budget-indicator"
+                        aria-hidden="true"
+                        style={{
+                          transform: `translate(${budgetIndicator.left}px, ${budgetIndicator.top}px)`,
+                          width: `${budgetIndicator.width}px`,
+                          height: `${budgetIndicator.height}px`,
+                        }}
+                      />
+                      {BUDGET_OPTIONS.map((option) => {
+                        const selected = form.budget === option;
+                        return (
+                          <button
+                            key={option}
+                            type="button"
+                            className={["contact-budget-option", selected ? "is-selected" : ""]
+                              .filter(Boolean)
+                              .join(" ")}
+                            role="radio"
+                            aria-checked={selected}
+                            onClick={() => setForm((current) => ({ ...current, budget: option }))}
+                          >
+                            {option}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
                 </fieldset>
 
                 <div className="contact-actions">
-                  <button className="contact-submit" type="submit" disabled={submitting}>
-                    {submitting ? "Sending…" : "Send Details"}
-                  </button>
                   {submitError ? (
                     <p className="contact-submit-error" role="alert">
                       {submitError}
@@ -453,6 +468,11 @@ export default function ContactPage() {
                     <a href="/terms">Terms of Use</a> &amp;{" "}
                     <a href="/privacy">Privacy Policy</a>
                   </p>
+                  <div className="contact-submit-bar">
+                    <button className="contact-submit" type="submit" disabled={submitting}>
+                      {submitting ? "Sending…" : "Send Details"}
+                    </button>
+                  </div>
                 </div>
               </form>
               </>

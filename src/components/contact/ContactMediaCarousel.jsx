@@ -3,24 +3,50 @@ import { useEffect, useRef } from "react";
 import showreel from "../../assets/contact/Showreel.webm";
 import showreelPoster from "../../assets/contact/Showreel.jpg";
 
+function tryPlay(video) {
+  if (!video) {
+    return;
+  }
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    video.pause();
+    return;
+  }
+
+  const playback = video.play();
+  if (playback?.catch) {
+    playback.catch(() => {});
+  }
+}
+
 export function ContactMediaCarousel() {
   const videoRef = useRef(null);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) {
-      return;
+      return undefined;
     }
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      video.pause();
-      return;
-    }
+    tryPlay(video);
 
-    const playback = video.play();
-    if (playback?.catch) {
-      playback.catch(() => {});
-    }
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") {
+        tryPlay(video);
+      }
+    };
+
+    const onReady = () => tryPlay(video);
+
+    document.addEventListener("visibilitychange", onVisibility);
+    video.addEventListener("loadeddata", onReady);
+    video.addEventListener("canplay", onReady);
+
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibility);
+      video.removeEventListener("loadeddata", onReady);
+      video.removeEventListener("canplay", onReady);
+    };
   }, []);
 
   return (
