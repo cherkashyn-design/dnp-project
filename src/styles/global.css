@@ -1453,6 +1453,7 @@ img {
 }
 
 .media-lightbox-backdrop {
+  animation: media-lightbox-backdrop-in 280ms ease both;
   background: rgba(18, 18, 18, 0.92);
   border: 0;
   cursor: zoom-out;
@@ -1508,6 +1509,7 @@ img {
 }
 
 .media-lightbox-toolbar {
+  animation: media-lightbox-chrome-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
   display: flex;
   gap: 8px;
   position: absolute;
@@ -1515,11 +1517,13 @@ img {
 }
 
 .media-lightbox-toolbar-top {
+  animation-delay: 60ms;
   right: max(32px, env(safe-area-inset-right, 0px));
   top: max(32px, env(safe-area-inset-top, 0px));
 }
 
 .media-lightbox-toolbar-bottom {
+  animation-delay: 100ms;
   bottom: max(32px, env(safe-area-inset-bottom, 0px));
   left: 50%;
   transform: translateX(-50%);
@@ -1564,11 +1568,13 @@ img {
 }
 
 .media-lightbox-media {
+  animation: media-lightbox-preview-in 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
   display: block;
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
   pointer-events: none;
+  transform-origin: center center;
   user-select: none;
 }
 
@@ -1581,6 +1587,65 @@ video.media-lightbox-media {
 
 .media-lightbox-stage.is-zoomed video.media-lightbox-media {
   pointer-events: none;
+}
+
+@keyframes media-lightbox-backdrop-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes media-lightbox-preview-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes media-lightbox-chrome-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes media-lightbox-chrome-in-bottom {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.media-lightbox-toolbar-bottom {
+  animation-name: media-lightbox-chrome-in-bottom;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media-lightbox-backdrop,
+  .media-lightbox-toolbar,
+  .media-lightbox-toolbar-bottom,
+  .media-lightbox-media {
+    animation: none;
+  }
 }
 
 .mockup-player-shell {
