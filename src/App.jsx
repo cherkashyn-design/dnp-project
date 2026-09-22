@@ -1,4 +1,5 @@
-import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { Analytics } from "@vercel/analytics/react";
 
 import { CaseHeader } from "./components/case/CaseHeader.jsx";
@@ -33,6 +34,12 @@ function readHomeScroll() {
 
 function writeHomeScroll(y) {
   sessionStorage.setItem(HOME_SCROLL_KEY, String(Math.max(0, Math.round(y))));
+}
+
+function scrollWindowTo(top) {
+  window.scrollTo({ top, left: 0, behavior: "auto" });
+  document.documentElement.scrollTop = top;
+  document.body.scrollTop = top;
 }
 
 function CaseRouteFallback() {
@@ -70,21 +77,18 @@ function resolveNonHomePage(path) {
 export default function App() {
   const [path, setPath] = useState(getPath);
   const homeScrollRef = useRef(readHomeScroll());
+  const pathRef = useRef(path);
   const isHome = path === "/";
+
+  useEffect(() => {
+    pathRef.current = path;
+  }, [path]);
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
   }, []);
-
-  useLayoutEffect(() => {
-    if (isHome) {
-      window.scrollTo({ top: homeScrollRef.current, left: 0, behavior: "auto" });
-      return;
-    }
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  }, [path, isHome]);
 
   useEffect(() => {
     const rememberHomeScroll = () => {
@@ -104,31 +108,52 @@ export default function App() {
     };
   }, []);
 
+  const applyPathChange = (nextPath) => {
+    const previousPath = pathRef.current;
+
+    if (previousPath === "/" && nextPath !== "/") {
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      homeScrollRef.current = y;
+      writeHomeScroll(y);
+    }
+
+    flushSync(() => {
+      setPath(nextPath);
+      pathRef.current = nextPath;
+    });
+
+    // Case/contact/legal pages always open at the top. Home restores its own position.
+    if (nextPath === "/") {
+      scrollWindowTo(homeScrollRef.current);
+    } else {
+      scrollWindowTo(0);
+    }
+  };
+
+  const navigateWithTransition = (run) => {
+    if (typeof document.startViewTransition === "function") {
+      const transition = document.startViewTransition(run);
+      transition.finished.catch(() => {}).then(() => {
+        if (getPath() !== "/") {
+          scrollWindowTo(0);
+        }
+      });
+      return;
+    }
+    run();
+  };
+
   useEffect(() => {
     const onPopState = () => {
-      const previousPath = path;
       const nextPath = getPath();
-
-      if (previousPath === "/") {
-        const y = window.scrollY || document.documentElement.scrollTop || 0;
-        homeScrollRef.current = y;
-        writeHomeScroll(y);
-      }
-
-      const apply = () => {
-        setPath(nextPath);
-      };
-
-      if (typeof document.startViewTransition === "function") {
-        document.startViewTransition(apply);
-      } else {
-        apply();
-      }
+      navigateWithTransition(() => {
+        applyPathChange(nextPath);
+      });
     };
 
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
-  }, [path]);
+  }, []);
 
   useEffect(() => {
     const onClick = (event) => {
@@ -170,22 +195,10 @@ export default function App() {
 
       event.preventDefault();
 
-      const go = () => {
-        if (getPath() === "/") {
-          const y = window.scrollY || document.documentElement.scrollTop || 0;
-          homeScrollRef.current = y;
-          writeHomeScroll(y);
-        }
-
+      navigateWithTransition(() => {
         window.history.pushState({}, "", `${url.pathname}${url.search}${url.hash}`);
-        setPath(getPath());
-      };
-
-      if (typeof document.startViewTransition === "function") {
-        document.startViewTransition(go);
-      } else {
-        go();
-      }
+        applyPathChange(getPath());
+      });
     };
 
     document.addEventListener("click", onClick);
