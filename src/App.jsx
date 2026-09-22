@@ -8,7 +8,8 @@ import ContactPage from "./pages/ContactPage.jsx";
 import PrivacyPage from "./pages/PrivacyPage.jsx";
 import TermsPage from "./pages/TermsPage.jsx";
 
-const CaseRoutes = lazy(() => import("./pages/cases/index.jsx"));
+const loadCaseRoutes = () => import("./pages/cases/index.jsx");
+const CaseRoutes = lazy(loadCaseRoutes);
 
 const HOME_SCROLL_KEY = "dnp:home-scroll";
 
@@ -37,9 +38,13 @@ function writeHomeScroll(y) {
 }
 
 function scrollWindowTo(top) {
+  const html = document.documentElement;
+  const previousBehavior = html.style.scrollBehavior;
+  html.style.scrollBehavior = "auto";
   window.scrollTo({ top, left: 0, behavior: "auto" });
-  document.documentElement.scrollTop = top;
+  html.scrollTop = top;
   document.body.scrollTop = top;
+  html.style.scrollBehavior = previousBehavior;
 }
 
 function CaseRouteFallback() {
@@ -91,6 +96,19 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    // Warm the cases chunk so home → case transitions don't snapshot a Suspense fallback.
+    const warm = () => {
+      loadCaseRoutes().catch(() => {});
+    };
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(warm, { timeout: 1500 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const timer = window.setTimeout(warm, 400);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     const rememberHomeScroll = () => {
       if (getPath() !== "/") {
         return;
@@ -122,7 +140,6 @@ export default function App() {
       pathRef.current = nextPath;
     });
 
-    // Case/contact/legal pages always open at the top. Home restores its own position.
     if (nextPath === "/") {
       scrollWindowTo(homeScrollRef.current);
     } else {
@@ -130,25 +147,39 @@ export default function App() {
     }
   };
 
-  const navigateWithTransition = (run) => {
+  const navigateWithTransition = async (nextPath, beforeApply) => {
+    if (nextPath.startsWith("/cases/")) {
+      try {
+        await loadCaseRoutes();
+      } catch {
+        // Fall through; Suspense will handle a failed warm.
+      }
+    }
+
+    const run = () => {
+      beforeApply?.();
+      applyPathChange(nextPath);
+    };
+
     if (typeof document.startViewTransition === "function") {
       const transition = document.startViewTransition(run);
-      transition.finished.catch(() => {}).then(() => {
-        if (getPath() !== "/") {
-          scrollWindowTo(0);
-        }
-      });
+      try {
+        await transition.finished;
+      } catch {
+        // Transition may be skipped; still ensure case pages sit at the top.
+      }
+      if (getPath() !== "/") {
+        scrollWindowTo(0);
+      }
       return;
     }
+
     run();
   };
 
   useEffect(() => {
     const onPopState = () => {
-      const nextPath = getPath();
-      navigateWithTransition(() => {
-        applyPathChange(nextPath);
-      });
+      void navigateWithTransition(getPath());
     };
 
     window.addEventListener("popstate", onPopState);
@@ -195,9 +226,8 @@ export default function App() {
 
       event.preventDefault();
 
-      navigateWithTransition(() => {
+      void navigateWithTransition(nextPath, () => {
         window.history.pushState({}, "", `${url.pathname}${url.search}${url.hash}`);
-        applyPathChange(getPath());
       });
     };
 

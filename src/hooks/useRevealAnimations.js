@@ -1,7 +1,14 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
+
+function isInViewport(element) {
+  const rect = element.getBoundingClientRect();
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+  // Treat near-viewport items as visible so SPA navigations don't flash hidden content.
+  return rect.top < viewportHeight + 24 && rect.bottom > -24;
+}
 
 export function useRevealAnimations() {
-  useEffect(() => {
+  useLayoutEffect(() => {
     const root = document.getElementById("root");
     if (!root) {
       return undefined;
@@ -67,14 +74,14 @@ export function useRevealAnimations() {
 
     textElements.forEach((element) => {
       element.classList.add("text-reveal");
-      if (prefersReducedMotion) {
+      if (prefersReducedMotion || isInViewport(element)) {
         element.classList.add("is-visible");
       }
     });
 
     motionElements.forEach((element) => {
       element.classList.add("reveal-motion");
-      if (prefersReducedMotion) {
+      if (prefersReducedMotion || isInViewport(element)) {
         element.classList.add("is-visible");
       }
     });
@@ -98,7 +105,11 @@ export function useRevealAnimations() {
       },
     );
 
-    animatedElements.forEach((element) => observer.observe(element));
+    animatedElements.forEach((element) => {
+      if (!element.classList.contains("is-visible")) {
+        observer.observe(element);
+      }
+    });
 
     const revealWhenAtBottom = () => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -121,4 +132,3 @@ export function useRevealAnimations() {
     };
   }, []);
 }
-
