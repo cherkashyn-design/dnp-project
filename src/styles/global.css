@@ -127,6 +127,11 @@ body {
   overflow-x: clip;
 }
 
+/* Keep homepage mounted while browsing cases so scroll + case layout stay stable. */
+.app-home-parked {
+  display: none;
+}
+
 body,
 button,
 a {
@@ -2129,15 +2134,8 @@ img {
     display: none;
   }
 
-  .home-mobile-header-fade {
-    background: rgb(var(--fade-bg-rgb));
-  }
-
-  .home-mobile-header-fade::before {
-    display: none;
-  }
-
-  /* Solid grey at the camera / status area, fading down to transparent */
+  /* Solid grey under camera/status, fading down to transparent */
+  .home-mobile-header-fade,
   .case-header-fade,
   .contact-header-fade,
   .legal-header-fade {
@@ -2150,6 +2148,7 @@ img {
     );
   }
 
+  .home-mobile-header-fade::before,
   .case-header-fade::before,
   .contact-header-fade::before,
   .legal-header-fade::before {

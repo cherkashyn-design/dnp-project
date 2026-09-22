@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
 
 import { CaseHeader } from "./components/case/CaseHeader.jsx";
@@ -8,6 +8,8 @@ import PrivacyPage from "./pages/PrivacyPage.jsx";
 import TermsPage from "./pages/TermsPage.jsx";
 
 const CaseRoutes = lazy(() => import("./pages/cases/index.jsx"));
+
+const HOME_SCROLL_KEY = "dnp:home-scroll";
 
 function getPath() {
   return window.location.pathname.replace(/\/+$/, "") || "/";
@@ -24,6 +26,15 @@ function isAppPath(path) {
   );
 }
 
+function readHomeScroll() {
+  const value = Number(sessionStorage.getItem(HOME_SCROLL_KEY));
+  return Number.isFinite(value) && value > 0 ? value : 0;
+}
+
+function writeHomeScroll(y) {
+  sessionStorage.setItem(HOME_SCROLL_KEY, String(Math.max(0, Math.round(y))));
+}
+
 function CaseRouteFallback() {
   return (
     <main className="case-page" aria-busy="true">
@@ -32,7 +43,7 @@ function CaseRouteFallback() {
   );
 }
 
-function resolvePage(path) {
+function resolveNonHomePage(path) {
   if (path.startsWith("/cases/")) {
     return (
       <Suspense fallback={<CaseRouteFallback />}>
@@ -53,18 +64,59 @@ function resolvePage(path) {
     return <TermsPage />;
   }
 
-  return <HomePage />;
+  return null;
 }
 
 export default function App() {
   const [path, setPath] = useState(getPath);
+  const homeScrollRef = useRef(readHomeScroll());
+  const isHome = path === "/";
+
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, []);
+
+  useLayoutEffect(() => {
+    if (isHome) {
+      window.scrollTo({ top: homeScrollRef.current, left: 0, behavior: "auto" });
+      return;
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [path, isHome]);
+
+  useEffect(() => {
+    const rememberHomeScroll = () => {
+      if (getPath() !== "/") {
+        return;
+      }
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      homeScrollRef.current = y;
+      writeHomeScroll(y);
+    };
+
+    window.addEventListener("scroll", rememberHomeScroll, { passive: true });
+    window.addEventListener("pagehide", rememberHomeScroll);
+    return () => {
+      window.removeEventListener("scroll", rememberHomeScroll);
+      window.removeEventListener("pagehide", rememberHomeScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const onPopState = () => {
+      const previousPath = path;
       const nextPath = getPath();
+
+      if (previousPath === "/") {
+        const y = window.scrollY || document.documentElement.scrollTop || 0;
+        homeScrollRef.current = y;
+        writeHomeScroll(y);
+      }
+
       const apply = () => {
         setPath(nextPath);
-        window.scrollTo(0, 0);
       };
 
       if (typeof document.startViewTransition === "function") {
@@ -76,7 +128,7 @@ export default function App() {
 
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
-  }, []);
+  }, [path]);
 
   useEffect(() => {
     const onClick = (event) => {
@@ -119,9 +171,14 @@ export default function App() {
       event.preventDefault();
 
       const go = () => {
+        if (getPath() === "/") {
+          const y = window.scrollY || document.documentElement.scrollTop || 0;
+          homeScrollRef.current = y;
+          writeHomeScroll(y);
+        }
+
         window.history.pushState({}, "", `${url.pathname}${url.search}${url.hash}`);
         setPath(getPath());
-        window.scrollTo(0, 0);
       };
 
       if (typeof document.startViewTransition === "function") {
@@ -137,7 +194,14 @@ export default function App() {
 
   return (
     <>
-      {resolvePage(path)}
+      <div
+        className={isHome ? undefined : "app-home-parked"}
+        aria-hidden={isHome ? undefined : true}
+        inert={isHome ? undefined : true}
+      >
+        <HomePage />
+      </div>
+      {!isHome ? resolveNonHomePage(path) : null}
       <Analytics />
     </>
   );
