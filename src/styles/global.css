@@ -480,7 +480,7 @@ img {
 .project-info h2 {
   flex: 1 1 auto;
   font-family: var(--font-heading);
-  font-size: 42px;
+  font-size: 28px;
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1.2;
