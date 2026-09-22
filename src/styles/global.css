@@ -2648,11 +2648,17 @@ video.media-lightbox-media {
     flex-direction: column-reverse;
   }
 
-  .case-hero-media,
-  .case-hero-info {
+  .case-hero-media {
     flex: 1 1 auto;
     min-width: 0;
     padding: 16px;
+    width: 100%;
+  }
+
+  .case-hero-info {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 32px 16px 16px;
     width: 100%;
   }
 
@@ -2949,7 +2955,7 @@ video.media-lightbox-media {
   flex: 1 1 auto;
   flex-direction: column;
   gap: 32px;
-  padding: 0 0 64px;
+  padding: 32px 0 64px;
   width: 100%;
 }
 
@@ -3176,7 +3182,7 @@ video.media-lightbox-media {
   flex: 1 1 auto;
   flex-direction: column;
   gap: 48px;
-  padding: 0 32px;
+  padding: 32px 32px 0;
 }
 
 .contact-heading {
