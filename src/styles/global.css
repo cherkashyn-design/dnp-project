@@ -68,6 +68,19 @@ html[data-page-fade="in"] .vt-page-content {
   opacity: 1;
 }
 
+/* Headers / chrome stay fully opaque during page content fades */
+html[data-page-fade="out"] .home-mobile-header,
+html[data-page-fade="out"] .info-header,
+html[data-page-fade="out"] .case-header,
+html[data-page-fade="out"] .contact-header,
+html[data-page-fade="out"] .legal-header,
+html[data-page-fade="out"] .home-mobile-cta,
+html[data-page-fade="out"] .case-nav-mobile-footer,
+html[data-page-fade="out"] .cta-desktop {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .vt-page-content {
     transition: none;
@@ -545,6 +558,13 @@ img {
   justify-content: space-between;
   min-height: 112px;
   padding: 32px;
+}
+
+.info-panel-content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .logo {

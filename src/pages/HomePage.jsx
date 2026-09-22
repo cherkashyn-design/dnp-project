@@ -16,12 +16,14 @@ const COPIED_VISIBLE_MS = 2000;
 const CaseList = forwardRef(function CaseList(_props, ref) {
   return (
     <section className="cases-column" ref={ref} aria-label="Selected cases">
-      <div className="cases-grid">
-        {cases.map((project, index) => (
-          <ProjectCard key={project.name} project={project} priority={index === 0} />
-        ))}
+      <div className="vt-page-content cases-page-content">
+        <div className="cases-grid">
+          {cases.map((project, index) => (
+            <ProjectCard key={project.name} project={project} priority={index === 0} />
+          ))}
+        </div>
+        <SiteFooter />
       </div>
-      <SiteFooter />
     </section>
   );
 });
@@ -104,7 +106,7 @@ export default function HomePage() {
     >
       <CopiedToast open={copiedOpen} />
       <HomeMobileHeader isScrolled={scrollState.hasScrolled} />
-      <div className="home-page-body vt-page-content">
+      <div className="home-page-body">
         <CaseList ref={casesRef} />
         <InfoPanel onCopied={showCopiedToast} />
       </div>

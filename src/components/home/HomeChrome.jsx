@@ -79,24 +79,26 @@ export function InfoPanel({ onCopied }) {
         </a>
       </header>
 
-      <section className="intro">
-        <h1 id="homepage-title">Product Design Agency</h1>
-        <div className="intro-copy">
-          <p>
-            We design products that actually ship. Our process combines rigorous
-            design systems, hypothesis validation, and hands-on development
-            support to ensure everything works as intended
-          </p>
-          <ul className="services" aria-label="Services">
-            <li>UI/UX Design</li>
-            <li>Design Systems</li>
-            <li>Conversion Rate Optimization</li>
-            <li className="service-divider" aria-hidden="true" />
-            <li>Branding</li>
-            <li>Pitch Decks</li>
-          </ul>
-        </div>
-      </section>
+      <div className="vt-page-content info-panel-content">
+        <section className="intro">
+          <h1 id="homepage-title">Product Design Agency</h1>
+          <div className="intro-copy">
+            <p>
+              We design products that actually ship. Our process combines rigorous
+              design systems, hypothesis validation, and hands-on development
+              support to ensure everything works as intended
+            </p>
+            <ul className="services" aria-label="Services">
+              <li>UI/UX Design</li>
+              <li>Design Systems</li>
+              <li>Conversion Rate Optimization</li>
+              <li className="service-divider" aria-hidden="true" />
+              <li>Branding</li>
+              <li>Pitch Decks</li>
+            </ul>
+          </div>
+        </section>
+      </div>
 
       <section className="cta cta-desktop vt-chrome-footer" aria-label="Contact">
         <EmailButton onCopied={onCopied} />
