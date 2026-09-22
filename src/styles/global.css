@@ -411,13 +411,14 @@ img {
   align-items: center;
   display: flex;
   gap: 36px;
-  padding: 0 8px 8px;
+  justify-content: flex-start;
+  padding: 0 0 8px;
 }
 
 .project-title-row {
   align-items: center;
   display: flex;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   gap: 0;
   min-width: 0;
 }
@@ -2460,7 +2461,7 @@ video.media-lightbox-media {
     align-items: flex-start;
     flex-direction: column;
     gap: 8px;
-    padding: 0 8px;
+    padding: 0;
   }
 
   .project-title-row {
