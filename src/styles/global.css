@@ -480,7 +480,7 @@ img {
 .project-info h2 {
   flex: 1 1 auto;
   font-family: var(--font-heading);
-  font-size: 28px;
+  font-size: 42px;
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1.2;
@@ -2468,7 +2468,7 @@ video.media-lightbox-media {
   }
 
   .project-info h2 {
-    font-size: 18px;
+    font-size: 27px;
     overflow: visible;
     text-overflow: unset;
     white-space: normal;
