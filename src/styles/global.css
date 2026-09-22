@@ -1524,6 +1524,7 @@ img {
 
 .media-lightbox-toolbar-bottom {
   animation-delay: 100ms;
+  animation-name: media-lightbox-chrome-in-bottom;
   bottom: max(32px, env(safe-area-inset-bottom, 0px));
   left: 50%;
   transform: translateX(-50%);
@@ -1633,10 +1634,6 @@ video.media-lightbox-media {
     opacity: 1;
     transform: translate(-50%, 0);
   }
-}
-
-.media-lightbox-toolbar-bottom {
-  animation-name: media-lightbox-chrome-in-bottom;
 }
 
 @media (prefers-reduced-motion: reduce) {
