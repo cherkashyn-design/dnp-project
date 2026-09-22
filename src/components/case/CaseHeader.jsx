@@ -23,7 +23,7 @@ export function CaseHeader({ navigationItems }) {
 
   return (
     <>
-      <header className={["case-header", hasScrolled ? "is-scrolled" : ""].filter(Boolean).join(" ")}>
+      <header className={["case-header", "vt-chrome-header", hasScrolled ? "is-scrolled" : ""].filter(Boolean).join(" ")}>
         <div className="case-header-fade" aria-hidden="true" />
         <div className="case-header-left">
           <a className="back-link vt-back" href="/">
@@ -43,7 +43,7 @@ export function CaseHeader({ navigationItems }) {
           </a>
         </div>
       </header>
-      <div className="case-nav-mobile-footer">
+      <div className="case-nav-mobile-footer vt-chrome-footer">
         <CaseNavigationSlider navigationItems={navigationItems} />
       </div>
     </>

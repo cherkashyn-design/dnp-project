@@ -44,6 +44,18 @@
   view-transition-name: dnp-contact;
 }
 
+.vt-chrome-header {
+  view-transition-name: dnp-chrome-header;
+}
+
+.vt-chrome-footer {
+  view-transition-name: dnp-chrome-footer;
+}
+
+.vt-page-content {
+  view-transition-name: dnp-page-content;
+}
+
 /* Home keeps two logos in the DOM — only name the visible one */
 .home-mobile-header .vt-logo {
   view-transition-name: none;
@@ -57,6 +69,20 @@
   .home-mobile-header .vt-logo {
     view-transition-name: dnp-logo;
   }
+
+  /* Desktop info chrome is hidden on mobile — avoid duplicate VT names */
+  .info-header.vt-chrome-header,
+  .cta-desktop.vt-chrome-footer {
+    view-transition-name: none;
+  }
+}
+
+@media (min-width: 800px) {
+  .home-mobile-header.vt-chrome-header,
+  .home-mobile-cta.vt-chrome-footer,
+  .case-nav-mobile-footer.vt-chrome-footer {
+    view-transition-name: none;
+  }
 }
 
 ::view-transition-group(dnp-logo),
@@ -64,6 +90,35 @@
 ::view-transition-group(dnp-contact) {
   animation-duration: 480ms;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Fixed chrome stays put — no fade while content crossfades */
+::view-transition-group(dnp-chrome-header),
+::view-transition-group(dnp-chrome-footer),
+::view-transition-old(dnp-chrome-header),
+::view-transition-new(dnp-chrome-header),
+::view-transition-old(dnp-chrome-footer),
+::view-transition-new(dnp-chrome-footer) {
+  animation: none !important;
+}
+
+/* Root is mostly page background once content/chrome are named */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none !important;
+}
+
+::view-transition-old(dnp-page-content) {
+  animation: vt-content-fade-out 320ms ease both;
+}
+
+::view-transition-new(dnp-page-content) {
+  animation: vt-content-fade-in 320ms ease both;
+}
+
+::view-transition-group(dnp-page-content) {
+  animation-duration: 320ms;
+  animation-timing-function: ease;
 }
 
 ::view-transition-new(dnp-back) {
@@ -76,6 +131,26 @@
   animation-name: vt-back-out;
   animation-duration: 360ms;
   animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+
+@keyframes vt-content-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-content-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes vt-back-in {
@@ -130,6 +205,15 @@ body {
 /* Keep homepage mounted while browsing cases so scroll + case layout stay stable. */
 .app-home-parked {
   display: none;
+}
+
+.app-home-parked .vt-page-content,
+.app-home-parked .vt-chrome-header,
+.app-home-parked .vt-chrome-footer,
+.app-home-parked .vt-logo,
+.app-home-parked .vt-contact,
+.app-home-parked .vt-back {
+  view-transition-name: none;
 }
 
 body,
@@ -203,11 +287,21 @@ img {
   align-items: flex-start;
   background: var(--background-primary);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   margin-inline: auto;
   max-width: var(--page-max-width);
   min-height: 100vh;
   position: relative;
+  width: 100%;
+}
+
+.home-page-body {
+  align-items: flex-start;
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+  min-width: 0;
   width: 100%;
 }
 
@@ -2123,12 +2217,18 @@ video.media-lightbox-media {
     z-index: 1;
   }
 
+  .home-page-body {
+    flex-direction: column;
+    order: 2;
+    width: 100%;
+  }
+
   .info-panel {
     display: flex;
     flex-basis: auto;
     flex-direction: column;
     min-height: 0;
-    order: 2;
+    order: 1;
     position: relative;
     top: auto;
     width: 100%;
@@ -2152,7 +2252,7 @@ video.media-lightbox-media {
 
   .cases-column {
     min-width: 0;
-    order: 3;
+    order: 2;
     overflow-x: clip;
     padding: 0 16px 16px;
     width: 100%;

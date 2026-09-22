@@ -104,8 +104,10 @@ export default function HomePage() {
     >
       <CopiedToast open={copiedOpen} />
       <HomeMobileHeader isScrolled={scrollState.hasScrolled} />
-      <CaseList ref={casesRef} />
-      <InfoPanel onCopied={showCopiedToast} />
+      <div className="home-page-body vt-page-content">
+        <CaseList ref={casesRef} />
+        <InfoPanel onCopied={showCopiedToast} />
+      </div>
       <HomeMobileCta onCopied={showCopiedToast} />
       <div className="cases-fade cases-fade-top" aria-hidden="true" />
       <div className="cases-fade cases-fade-bottom" aria-hidden="true" />

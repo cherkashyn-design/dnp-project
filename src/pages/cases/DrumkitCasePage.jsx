@@ -39,6 +39,7 @@ export default function DrumkitCasePage() {
     <main className="case-page">
       <CaseHeader navigationItems={drumkitNavigationItems} />
 
+      <div className="vt-page-content">
       <section className="case-hero" id="case-hero">
         <div className="case-hero-media">
           <div className="case-hero-image-frame">
@@ -246,6 +247,7 @@ export default function DrumkitCasePage() {
       </section>
 
       <OtherProjectsSection currentHref="/cases/drumkit-logistic-saas" />
+      </div>
     </main>
   );
 }

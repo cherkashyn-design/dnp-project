@@ -27,6 +27,7 @@ export default function PortfolioCasePage({ project }) {
     <main className="case-page">
       <CaseHeader navigationItems={navigationItems} />
 
+      <div className="vt-page-content">
       <section className="case-hero" id="case-hero">
         <div className="case-hero-media">
           <div className="case-hero-image-frame">
@@ -173,6 +174,7 @@ export default function PortfolioCasePage({ project }) {
       ) : null}
 
       <OtherProjectsSection currentHref={window.location.pathname} />
+      </div>
     </main>
   );
 }

@@ -70,7 +70,7 @@ export function CopiedToast({ open }) {
 export function InfoPanel({ onCopied }) {
   return (
     <aside className="info-panel" aria-labelledby="homepage-title">
-      <header className="info-header">
+      <header className="info-header vt-chrome-header">
         <a className="logo vt-logo" href="/" aria-label="DoNotPress home">
           <img src={dnpLogo} alt="DoNotPress" />
         </a>
@@ -98,7 +98,7 @@ export function InfoPanel({ onCopied }) {
         </div>
       </section>
 
-      <section className="cta cta-desktop" aria-label="Contact">
+      <section className="cta cta-desktop vt-chrome-footer" aria-label="Contact">
         <EmailButton onCopied={onCopied} />
       </section>
     </aside>
@@ -123,7 +123,7 @@ export function SiteFooter() {
 
 export function HomeMobileHeader({ isScrolled }) {
   return (
-    <header className={["home-mobile-header", isScrolled ? "is-scrolled" : ""].filter(Boolean).join(" ")}>
+    <header className={["home-mobile-header", "vt-chrome-header", isScrolled ? "is-scrolled" : ""].filter(Boolean).join(" ")}>
       <div className="home-mobile-header-fade" aria-hidden="true" />
       <a className="logo vt-logo" href="/" aria-label="DoNotPress home">
         <img src={dnpLogo} alt="DoNotPress" />
@@ -137,7 +137,7 @@ export function HomeMobileHeader({ isScrolled }) {
 
 export function HomeMobileCta({ onCopied }) {
   return (
-    <div className="home-mobile-cta">
+    <div className="home-mobile-cta vt-chrome-footer">
       <EmailButton onCopied={onCopied} />
     </div>
   );
