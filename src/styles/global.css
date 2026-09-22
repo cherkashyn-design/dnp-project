@@ -1461,26 +1461,68 @@ img {
   position: absolute;
 }
 
-.media-lightbox-close {
+.icon-button {
   align-items: center;
-  background: rgba(255, 255, 255, 0.12);
-  border: 0;
-  border-radius: 999px;
-  color: #fff;
+  background: var(--foreground-secondary);
+  border: 1px solid var(--stroke-secondary);
+  border-radius: 16px;
+  color: var(--text-primary);
   cursor: pointer;
   display: inline-flex;
-  height: 44px;
+  flex: 0 0 48px;
+  height: 48px;
   justify-content: center;
   padding: 0;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    opacity 180ms ease,
+    transform 180ms ease;
+  width: 48px;
+}
+
+.icon-button:hover:not(:disabled) {
+  background: var(--foreground-additional);
+  border-color: var(--stroke-primary);
+}
+
+.icon-button:active:not(:disabled) {
+  background: var(--stroke-secondary);
+  transform: scale(0.96);
+}
+
+.icon-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.icon-button:focus-visible {
+  outline: 2px solid #7d79ff;
+  outline-offset: 2px;
+}
+
+.icon-button img {
+  display: block;
+  height: 18px;
+  width: 18px;
+}
+
+.media-lightbox-toolbar {
+  display: flex;
+  gap: 8px;
   position: absolute;
-  right: max(16px, env(safe-area-inset-right, 0px));
-  top: max(16px, env(safe-area-inset-top, 0px));
-  width: 44px;
   z-index: 2;
 }
 
-.media-lightbox-close:hover {
-  background: rgba(255, 255, 255, 0.2);
+.media-lightbox-toolbar-top {
+  right: max(16px, env(safe-area-inset-right, 0px));
+  top: max(16px, env(safe-area-inset-top, 0px));
+}
+
+.media-lightbox-toolbar-bottom {
+  bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .media-lightbox-stage {
@@ -1491,11 +1533,34 @@ img {
   justify-content: center;
   max-height: 100%;
   max-width: 100%;
-  padding: max(64px, calc(16px + env(safe-area-inset-top, 0px))) 16px
-    max(16px, env(safe-area-inset-bottom, 0px));
+  overflow: hidden;
+  padding: max(72px, calc(16px + env(safe-area-inset-top, 0px))) 16px
+    max(80px, calc(16px + env(safe-area-inset-bottom, 0px)));
   position: relative;
+  touch-action: none;
   width: 100%;
   z-index: 1;
+}
+
+.media-lightbox-stage.is-zoomed {
+  cursor: grab;
+}
+
+.media-lightbox-stage.is-zoomed:active {
+  cursor: grabbing;
+}
+
+.media-lightbox-transform {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  max-height: 100%;
+  max-width: 100%;
+  transform-origin: center center;
+  transition: none;
+  will-change: transform;
+  width: 100%;
 }
 
 .media-lightbox-media {
@@ -1503,13 +1568,19 @@ img {
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
+  pointer-events: none;
   user-select: none;
 }
 
 video.media-lightbox-media {
   background: #000;
   border-radius: 8px;
+  pointer-events: auto;
   width: min(100%, 1200px);
+}
+
+.media-lightbox-stage.is-zoomed video.media-lightbox-media {
+  pointer-events: none;
 }
 
 .mockup-player-shell {
