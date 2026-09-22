@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import checkIcon from "../../assets/icons/check-icon.svg";
-import copyIcon from "../../assets/icons/copy-icon.svg";
+import copyIcon from "../../assets/icons/copy-icon-dark.svg";
 import dnpLogo from "../../assets/brand/dnp-logo.png";
 import { email } from "../../data/site.js";
 
@@ -71,8 +71,11 @@ export function InfoPanel({ onCopied }) {
   return (
     <aside className="info-panel" aria-labelledby="homepage-title">
       <header className="info-header">
-        <a className="logo" href="/" aria-label="DoNotPress home">
+        <a className="logo vt-logo" href="/" aria-label="DoNotPress home">
           <img src={dnpLogo} alt="DoNotPress" />
+        </a>
+        <a className="start-project-pill vt-contact" href="/contact">
+          Contact Us
         </a>
       </header>
 
@@ -105,12 +108,10 @@ export function InfoPanel({ onCopied }) {
 export function SiteFooter() {
   return (
     <footer className="site-footer">
-      {/* Legal links — restore when Terms / Privacy pages are ready
       <nav aria-label="Legal links">
         <a href="/terms">Terms of Use</a>
         <a href="/privacy">Privacy Policy</a>
       </nav>
-      */}
       <p>
         <span>© 2026</span>
         <span className="footer-dot" aria-hidden="true" />
@@ -124,8 +125,11 @@ export function HomeMobileHeader({ isScrolled }) {
   return (
     <header className={["home-mobile-header", isScrolled ? "is-scrolled" : ""].filter(Boolean).join(" ")}>
       <div className="home-mobile-header-fade" aria-hidden="true" />
-      <a className="logo" href="/" aria-label="DoNotPress home">
+      <a className="logo vt-logo" href="/" aria-label="DoNotPress home">
         <img src={dnpLogo} alt="DoNotPress" />
+      </a>
+      <a className="start-project-pill vt-contact" href="/contact">
+        Contact Us
       </a>
     </header>
   );
