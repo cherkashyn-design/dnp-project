@@ -767,23 +767,6 @@ img {
   width: 20px;
 }
 
-@media (max-width: 799px) {
-  .copied-toast {
-    bottom: calc(88px + env(safe-area-inset-bottom, 0px));
-    padding-bottom: 8px;
-    padding-top: 8px;
-    top: auto;
-  }
-
-  .copied-toast-pill {
-    transform: translate3d(0, 120%, 0);
-  }
-
-  .copied-toast-pill.is-visible {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .copied-toast-pill {
     transform: none;
