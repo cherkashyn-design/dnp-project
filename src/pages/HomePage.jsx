@@ -11,7 +11,7 @@ import {
 import { cases } from "../data/site.js";
 import { useRevealAnimations } from "../hooks/useRevealAnimations.js";
 
-const COPIED_VISIBLE_MS = 2000;
+const COPIED_VISIBLE_MS = 1800;
 
 const CaseList = forwardRef(function CaseList(_props, ref) {
   return (
@@ -32,6 +32,7 @@ export default function HomePage() {
   const casesRef = useRef(null);
   const copiedTimerRef = useRef(null);
   const [copiedOpen, setCopiedOpen] = useState(false);
+  const [copiedRestartKey, setCopiedRestartKey] = useState(0);
   const [scrollState, setScrollState] = useState({
     hasScrolled: false,
     hasScrolledCases: false,
@@ -86,6 +87,7 @@ export default function HomePage() {
       window.clearTimeout(copiedTimerRef.current);
     }
 
+    setCopiedRestartKey((key) => key + 1);
     setCopiedOpen(true);
     copiedTimerRef.current = window.setTimeout(() => {
       setCopiedOpen(false);
@@ -104,7 +106,7 @@ export default function HomePage() {
         .filter(Boolean)
         .join(" ")}
     >
-      <CopiedToast open={copiedOpen} />
+      <CopiedToast open={copiedOpen} restartKey={copiedRestartKey} />
       <HomeMobileHeader isScrolled={scrollState.hasScrolled} />
       <div className="home-page-body">
         <CaseList ref={casesRef} />

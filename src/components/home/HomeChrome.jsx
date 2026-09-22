@@ -5,16 +5,37 @@ import copyIcon from "../../assets/icons/copy-icon-dark.svg";
 import dnpLogo from "../../assets/brand/dnp-logo.png";
 import { email } from "../../data/site.js";
 
-const COPIED_ANIMATION_MS = 320;
+const COPIED_ANIMATION_MS = 360;
 
 export async function copyEmailToClipboard() {
-  if (!navigator.clipboard) {
-    window.location.href = `mailto:${email}`;
-    return false;
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(email);
+      return true;
+    }
+  } catch {
+    // Fall through to legacy copy / mailto.
   }
 
-  await navigator.clipboard.writeText(email);
-  return true;
+  try {
+    const textarea = document.createElement("textarea");
+    textarea.value = email;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    document.body.appendChild(textarea);
+    textarea.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(textarea);
+    if (ok) {
+      return true;
+    }
+  } catch {
+    // Fall through to mailto.
+  }
+
+  window.location.href = `mailto:${email}`;
+  return false;
 }
 
 export function EmailButton({ onCopied }) {
@@ -35,23 +56,33 @@ export function EmailButton({ onCopied }) {
   );
 }
 
-export function CopiedToast({ open }) {
+export function CopiedToast({ open, restartKey = 0 }) {
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (open) {
-      setMounted(true);
-      const showFrame = window.requestAnimationFrame(() => {
-        setVisible(true);
-      });
-      return () => window.cancelAnimationFrame(showFrame);
+    if (!open) {
+      setVisible(false);
+      const hideTimer = window.setTimeout(() => setMounted(false), COPIED_ANIMATION_MS);
+      return () => window.clearTimeout(hideTimer);
     }
 
+    setMounted(true);
     setVisible(false);
-    const hideTimer = window.setTimeout(() => setMounted(false), COPIED_ANIMATION_MS);
-    return () => window.clearTimeout(hideTimer);
-  }, [open]);
+
+    let outerFrame = 0;
+    let innerFrame = 0;
+    outerFrame = window.requestAnimationFrame(() => {
+      innerFrame = window.requestAnimationFrame(() => {
+        setVisible(true);
+      });
+    });
+
+    return () => {
+      window.cancelAnimationFrame(outerFrame);
+      window.cancelAnimationFrame(innerFrame);
+    };
+  }, [open, restartKey]);
 
   if (!mounted) {
     return null;

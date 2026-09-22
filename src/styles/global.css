@@ -729,6 +729,7 @@ img {
   justify-content: center;
   left: 0;
   padding: 16px;
+  padding-top: max(16px, env(safe-area-inset-top, 0px));
   pointer-events: none;
   position: fixed;
   right: 0;
@@ -747,15 +748,16 @@ img {
   line-height: 1.4;
   opacity: 0;
   padding: 12px 20px;
-  transform: translateY(-12px);
+  transform: translate3d(0, -120%, 0);
   transition:
-    opacity 320ms ease,
-    transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 360ms ease,
+    transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 .copied-toast-pill.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .copied-toast-icon {
@@ -765,10 +767,31 @@ img {
   width: 20px;
 }
 
+@media (max-width: 799px) {
+  .copied-toast {
+    bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: 8px;
+    padding-top: 8px;
+    top: auto;
+  }
+
+  .copied-toast-pill {
+    transform: translate3d(0, 120%, 0);
+  }
+
+  .copied-toast-pill.is-visible {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .copied-toast-pill {
     transform: none;
     transition: opacity 160ms ease;
+  }
+
+  .copied-toast-pill.is-visible {
+    transform: none;
   }
 }
 
