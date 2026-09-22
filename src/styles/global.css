@@ -1546,7 +1546,7 @@ img {
 .case-stats > div {
   display: grid;
   gap: 48px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--stats-cols, 3), minmax(0, 1fr));
 }
 
 .case-stats article {
@@ -2283,9 +2283,16 @@ img {
 
   .case-hero-info h1,
   .case-section > h2:not(.other-projects-title),
-  .case-section .section-heading-row h2,
-  .case-stats:not(.case-stats-compact) strong {
+  .case-section .section-heading-row h2 {
     font-size: 64px;
+  }
+
+  .case-stats:not(.case-stats-compact) strong {
+    font-size: 48px;
+  }
+
+  .case-stats-compact strong {
+    font-size: 32px;
   }
 
   .case-section {
@@ -2364,6 +2371,10 @@ img {
   .section-heading-row {
     grid-template-columns: minmax(0, 1fr);
     min-width: 0;
+  }
+
+  .case-stats > div {
+    gap: 24px;
   }
 
   .overview-grid blockquote {
