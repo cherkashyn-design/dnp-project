@@ -3369,11 +3369,36 @@ a.contact-submit {
   .contact-content {
     max-width: 766px;
   }
+
+  .contact-page:not(.is-success) {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .contact-page:not(.is-success) .contact-actions {
+    padding-bottom: calc(56px + 16px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .contact-page:not(.is-success) .contact-submit-bar {
+    bottom: 0;
+    box-sizing: border-box;
+    left: 0;
+    padding: 16px 32px;
+    padding-bottom: max(16px, env(safe-area-inset-bottom, 0px));
+    position: fixed;
+    right: 0;
+    width: 100%;
+    z-index: 50;
+  }
 }
 
 @media (max-width: 800px) {
   .contact-header,
   .contact-content {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .contact-page:not(.is-success) .contact-submit-bar {
     padding-left: 16px;
     padding-right: 16px;
   }
