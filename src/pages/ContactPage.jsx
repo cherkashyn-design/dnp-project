@@ -237,7 +237,7 @@ export default function ContactPage() {
             </a>
           </header>
 
-          <div className="contact-content">
+          <div className="contact-content vt-page-content">
             {submitted ? (
               <div className="contact-success" role="status">
                 <img className="contact-success-icon" src={successCheck} alt="" aria-hidden="true" />

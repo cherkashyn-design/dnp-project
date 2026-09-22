@@ -30,7 +30,7 @@ export function LegalPage({ title, updated, children }) {
           </a>
         </header>
 
-        <article className="legal-content">
+        <article className="legal-content vt-page-content">
           <header className="legal-heading">
             <h1>{title}</h1>
             {updated ? <p className="legal-updated">Last updated: {updated}</p> : null}

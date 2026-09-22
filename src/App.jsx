@@ -12,6 +12,7 @@ const loadCaseRoutes = () => import("./pages/cases/index.jsx");
 const CaseRoutes = lazy(loadCaseRoutes);
 
 const HOME_SCROLL_KEY = "dnp:home-scroll";
+const CONTENT_FADE_MS = 280;
 
 function getPath() {
   return window.location.pathname.replace(/\/+$/, "") || "/";
@@ -45,6 +46,12 @@ function scrollWindowTo(top) {
   html.scrollTop = top;
   document.body.scrollTop = top;
   html.style.scrollBehavior = previousBehavior;
+}
+
+function wait(ms) {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, ms);
+  });
 }
 
 function CaseRouteFallback() {
@@ -81,13 +88,19 @@ function resolveNonHomePage(path) {
 
 export default function App() {
   const [path, setPath] = useState(getPath);
+  const [contentFade, setContentFade] = useState("in");
   const homeScrollRef = useRef(readHomeScroll());
   const pathRef = useRef(path);
+  const navigatingRef = useRef(false);
   const isHome = path === "/";
 
   useEffect(() => {
     pathRef.current = path;
   }, [path]);
+
+  useEffect(() => {
+    document.documentElement.dataset.pageFade = contentFade;
+  }, [contentFade]);
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -96,7 +109,6 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    // Warm the cases chunk so home → case transitions don't snapshot a Suspense fallback.
     const warm = () => {
       loadCaseRoutes().catch(() => {});
     };
@@ -148,33 +160,44 @@ export default function App() {
   };
 
   const navigateWithTransition = async (nextPath, beforeApply) => {
-    if (nextPath.startsWith("/cases/")) {
-      try {
-        await loadCaseRoutes();
-      } catch {
-        // Fall through; Suspense will handle a failed warm.
-      }
-    }
-
-    const run = () => {
-      beforeApply?.();
-      applyPathChange(nextPath);
-    };
-
-    if (typeof document.startViewTransition === "function") {
-      const transition = document.startViewTransition(run);
-      try {
-        await transition.finished;
-      } catch {
-        // Transition may be skipped; still ensure case pages sit at the top.
-      }
-      if (getPath() !== "/") {
-        scrollWindowTo(0);
-      }
+    if (navigatingRef.current || nextPath === pathRef.current) {
       return;
     }
 
-    run();
+    navigatingRef.current = true;
+
+    try {
+      // 1) Fade current page content fully out
+      setContentFade("out");
+      await wait(CONTENT_FADE_MS);
+
+      // 2) Ensure the destination case chunk is ready before showing anything
+      if (nextPath.startsWith("/cases/")) {
+        try {
+          await loadCaseRoutes();
+        } catch {
+          // Suspense will handle a failed warm.
+        }
+      }
+
+      // 3) Swap routes while content is still at 0% opacity
+      beforeApply?.();
+      flushSync(() => {
+        setContentFade("out");
+      });
+      applyPathChange(nextPath);
+
+      // 4) Paint the new page hidden, then fade it in from 0% → 100%
+      await wait(32);
+      setContentFade("in");
+      await wait(CONTENT_FADE_MS);
+    } finally {
+      navigatingRef.current = false;
+      setContentFade("in");
+      if (getPath() !== "/") {
+        scrollWindowTo(0);
+      }
+    }
   };
 
   useEffect(() => {
