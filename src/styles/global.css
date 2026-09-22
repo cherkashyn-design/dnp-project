@@ -2124,25 +2124,20 @@ img {
     padding: 6px 12px;
   }
 
+  /* Homepage content fades off on mobile — header fade only */
   .cases-fade {
-    left: 0;
-    right: 0;
-    /* Sit under sticky header (20) and fixed email CTA (30) */
-    z-index: 15;
+    display: none;
   }
 
-  .cases-fade-top {
-    height: calc(80px + 56px + env(safe-area-inset-top, 0px));
-    top: 0;
+  .home-mobile-header-fade {
+    background: rgb(var(--fade-bg-rgb));
   }
 
-  .cases-fade-bottom {
+  .home-mobile-header-fade::before {
     display: none;
   }
 
   /* Solid grey at the camera / status area, fading down to transparent */
-  .cases-fade-top,
-  .home-mobile-header-fade,
   .case-header-fade,
   .contact-header-fade,
   .legal-header-fade {
@@ -2155,8 +2150,6 @@ img {
     );
   }
 
-  .cases-fade-top::before,
-  .home-mobile-header-fade::before,
   .case-header-fade::before,
   .contact-header-fade::before,
   .legal-header-fade::before {
@@ -2187,11 +2180,6 @@ img {
   .contact-header,
   .legal-header {
     padding-top: max(16px, env(safe-area-inset-top, 0px));
-  }
-
-  .home-page:not(.is-cases-active) .cases-fade,
-  .home-page.is-at-end .cases-fade-bottom {
-    opacity: 0;
   }
 
   .lottie-quad-grid {
