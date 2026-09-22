@@ -438,22 +438,37 @@ img {
   width: 0;
 }
 
-.project-card:hover,
 .project-card:focus-within {
   cursor: pointer;
 }
 
-.project-card:hover .project-image,
 .project-card:focus-within .project-image {
   transform: scale(1.05);
 }
 
-.project-card:hover .project-hover-arrow,
 .project-card:focus-within .project-hover-arrow {
   margin-right: 12px;
   opacity: 1;
   transform: translateX(0);
   width: 20px;
+}
+
+/* Touch/swipe can leave :hover stuck; only apply hover on fine pointers. */
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover {
+    cursor: pointer;
+  }
+
+  .project-card:hover .project-image {
+    transform: scale(1.05);
+  }
+
+  .project-card:hover .project-hover-arrow {
+    margin-right: 12px;
+    opacity: 1;
+    transform: translateX(0);
+    width: 20px;
+  }
 }
 
 .project-card-link:focus-visible {
@@ -2208,15 +2223,24 @@ video.media-lightbox-media {
   white-space: nowrap;
 }
 
-.other-projects-section .project-card:hover .project-image,
 .other-projects-section .project-card:focus-within .project-image {
   transform: scale(1.05);
 }
 
-.other-projects-section .project-card:hover .project-hover-arrow,
 .other-projects-section .project-card:focus-within .project-hover-arrow {
   opacity: 1;
   transform: translateX(0);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .other-projects-section .project-card:hover .project-image {
+    transform: scale(1.05);
+  }
+
+  .other-projects-section .project-card:hover .project-hover-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .other-projects-section .project-card-link:focus-visible {
