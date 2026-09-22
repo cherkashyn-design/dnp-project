@@ -1515,12 +1515,12 @@ img {
 }
 
 .media-lightbox-toolbar-top {
-  right: max(16px, env(safe-area-inset-right, 0px));
-  top: max(16px, env(safe-area-inset-top, 0px));
+  right: max(32px, env(safe-area-inset-right, 0px));
+  top: max(32px, env(safe-area-inset-top, 0px));
 }
 
 .media-lightbox-toolbar-bottom {
-  bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  bottom: max(32px, env(safe-area-inset-bottom, 0px));
   left: 50%;
   transform: translateX(-50%);
 }
@@ -1534,8 +1534,8 @@ img {
   max-height: 100%;
   max-width: 100%;
   overflow: hidden;
-  padding: max(72px, calc(16px + env(safe-area-inset-top, 0px))) 16px
-    max(80px, calc(16px + env(safe-area-inset-bottom, 0px)));
+  padding: max(96px, calc(32px + 48px + env(safe-area-inset-top, 0px))) 32px
+    max(96px, calc(32px + 48px + env(safe-area-inset-bottom, 0px)));
   position: relative;
   touch-action: none;
   width: 100%;
@@ -2504,6 +2504,20 @@ video.media-lightbox-media {
 
   .case-page {
     padding-bottom: 80px;
+  }
+
+  .media-lightbox-toolbar-top {
+    right: max(16px, env(safe-area-inset-right, 0px));
+    top: max(16px, env(safe-area-inset-top, 0px));
+  }
+
+  .media-lightbox-toolbar-bottom {
+    bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  }
+
+  .media-lightbox-stage {
+    padding: max(80px, calc(16px + 48px + env(safe-area-inset-top, 0px))) 16px
+      max(80px, calc(16px + 48px + env(safe-area-inset-bottom, 0px)));
   }
 
   .start-project-pill {
