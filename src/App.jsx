@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 
 import { CaseHeader } from "./components/case/CaseHeader.jsx";
 import HomePage from "./pages/HomePage.jsx";
+import BlogPage from "./pages/BlogPage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
 import PrivacyPage from "./pages/PrivacyPage.jsx";
 import TermsPage from "./pages/TermsPage.jsx";
@@ -22,6 +23,7 @@ function isAppPath(path) {
   return (
     path === "/" ||
     path.startsWith("/cases/") ||
+    path === "/blog" ||
     path === "/contact" ||
     path === "/contacts" ||
     path === "/privacy" ||
@@ -69,6 +71,10 @@ function resolveNonHomePage(path) {
         <CaseRoutes key={path} />
       </Suspense>
     );
+  }
+
+  if (path === "/blog") {
+    return <BlogPage />;
   }
 
   if (path === "/contact" || path === "/contacts") {

@@ -23,6 +23,8 @@ export function useRevealAnimations() {
           ".intro-copy p",
           ".services li:not(.service-divider)",
           ".project-info h2",
+          ".blog-card-title-row h2",
+          ".blog-card-excerpt",
           ".case-hero-info h1",
           ".info-block p",
           ".case-meta dt",
@@ -49,6 +51,7 @@ export function useRevealAnimations() {
       root.querySelectorAll(
         [
           ".project-card",
+          ".blog-card",
           ".case-hero-image-frame",
           ".case-hero-info",
           ".case-media-block",

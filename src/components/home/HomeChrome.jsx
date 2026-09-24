@@ -119,6 +119,9 @@ export function InfoPanel({ onCopied }) {
               design systems, hypothesis validation, and hands-on development
               support to ensure everything works as intended
             </p>
+            <p className="intro-blog-link">
+              <a href="/blog">Read the blog</a>
+            </p>
             <ul className="services" aria-label="Services">
               <li>UI/UX Design</li>
               <li>Design Systems</li>
@@ -141,7 +144,8 @@ export function InfoPanel({ onCopied }) {
 export function SiteFooter() {
   return (
     <footer className="site-footer">
-      <nav aria-label="Legal links">
+      <nav aria-label="Site links">
+        <a href="/blog">Blog</a>
         <a href="/terms">Terms of Use</a>
         <a href="/privacy">Privacy Policy</a>
       </nav>
