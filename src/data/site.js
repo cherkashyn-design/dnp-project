@@ -13,7 +13,14 @@ import comfyPreviewLq from "../../portfolio/ComfyUI/Preview.lq.jpg";
 
 export const email = "contact@donotpress.com";
 
-export const cases = [
+/** Temporarily hidden from the site; keep entries so they are easy to restore. */
+export const hiddenCaseHrefs = new Set([
+  "/cases/comfyui-pro-ai-tool",
+  "/cases/hermes-cloud-ai-admin-panel",
+  "/cases/genie-node-based-ai-editor",
+]);
+
+const allCases = [
   {
     name: "ComfyUI - pro AI tool",
     image: comfyPreview,
@@ -57,3 +64,5 @@ export const cases = [
     href: "/cases/drumkit-logistic-saas",
   },
 ];
+
+export const cases = allCases.filter((project) => !hiddenCaseHrefs.has(project.href));
