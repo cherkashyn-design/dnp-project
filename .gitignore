@@ -1,5 +1,7 @@
 node_modules
 dist
+redesign/node_modules
+redesign/dist
 .DS_Store
 **/.DS_Store
 *.local

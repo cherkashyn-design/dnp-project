@@ -17,7 +17,6 @@ export const email = "contact@donotpress.com";
 export const hiddenCaseHrefs = new Set([
   "/cases/comfyui-pro-ai-tool",
   "/cases/hermes-cloud-ai-admin-panel",
-  "/cases/genie-node-based-ai-editor",
 ]);
 
 const allCases = [
@@ -43,7 +42,7 @@ const allCases = [
     href: "/cases/hermes-cloud-ai-admin-panel",
   },
   {
-    name: "Genie node based AI editor",
+    name: "Nodify - node based AI editor",
     image: geniePreview,
     lqImage: geniePreviewLq,
     tags: ["SaaS", "App"],

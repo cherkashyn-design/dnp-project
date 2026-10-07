@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm --prefix redesign run dev -- --host 127.0.0.1 --port 5173",
     "dev:api": "vercel dev --listen 5173",
-    "build": "vite build",
-    "preview": "vite preview",
+    "build": "node scripts/build-redesign.mjs",
+    "preview": "vite preview --outDir dist",
     "generate:lq": "python3 scripts/generate-lq-images.py",
     "optimize:images": "python3 scripts/optimize-portfolio-images.py",
     "optimize:videos": "python3 scripts/optimize-portfolio-videos.py"
