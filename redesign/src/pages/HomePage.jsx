@@ -17,12 +17,18 @@ import soc2 from "../assets/standards/soc2.svg";
 import iso from "../assets/standards/iso.svg";
 import gdpr from "../assets/standards/gdpr.svg";
 import ycBadge from "../assets/standards/yc.svg";
-import maksym from "../assets/people/maksym.png";
+import maksym from "../assets/people/maksym.webp";
 import { appHref } from "../base.js";
+import { SoftImage, SoftVideo } from "../components/SoftMedia.jsx";
 import { cases } from "../data/cases.js";
 import { budgets, email, faqs, phone, services, testimonials } from "../data/content.js";
 
 const MOBILE_SHOWREEL = "(max-width: 600px)";
+const MOBILE_HERO = "(max-width: 720px)";
+
+function isMobileHero() {
+  return typeof window !== "undefined" && window.matchMedia(MOBILE_HERO).matches;
+}
 
 function Showreel({ className }) {
   const videoRef = useRef(null);
@@ -57,7 +63,7 @@ function Showreel({ className }) {
   }, [mobile]);
 
   return (
-    <video
+    <SoftVideo
       ref={videoRef}
       className={className}
       src={mobile ? showreelMobile : showreel}
@@ -81,6 +87,15 @@ export function HomePage({ onNavigate }) {
   const [budget, setBudget] = useState(budgets[0]);
   const [copied, setCopied] = useState("");
   const [sent, setSent] = useState(false);
+  const [mobileHero, setMobileHero] = useState(() => isMobileHero());
+
+  useEffect(() => {
+    const media = window.matchMedia(MOBILE_HERO);
+    const onChange = () => setMobileHero(media.matches);
+    onChange();
+    media.addEventListener("change", onChange);
+    return () => media.removeEventListener("change", onChange);
+  }, []);
 
   const copy = async (value) => {
     try {
@@ -92,7 +107,7 @@ export function HomePage({ onNavigate }) {
   };
 
   const onShowreelPointerDown = (event) => {
-    if (event.button !== 0) return;
+    if (event.button !== 0 || isMobileHero()) return;
     event.preventDefault();
     event.currentTarget.setPointerCapture(event.pointerId);
     document.documentElement.style.scrollBehavior = "auto";
@@ -138,6 +153,14 @@ export function HomePage({ onNavigate }) {
     let frame = 0;
     const update = () => {
       if (dragRef.current) return;
+      if (isMobileHero()) {
+        node.style.marginTop = "";
+        node.style.setProperty("--showreel", "0");
+        node.classList.add("is-resting");
+        node.classList.add("is-mobile-static");
+        return;
+      }
+      node.classList.remove("is-mobile-static");
       const header = document.querySelector(".site-header");
       node.style.marginTop = `-${header?.offsetHeight ?? 0}px`;
       const range = node.offsetHeight - window.innerHeight;
@@ -222,17 +245,14 @@ export function HomePage({ onNavigate }) {
                 <br />
                 shippable product design
               </h1>
-              <div className="hero-subtitle">
-                <p>Experience across 20+ design projects</p>
-                <div className="hero-line">
-                  <span>for</span>
-                  <span className="yc-badge">
-                    <img src={yc} alt="" />
-                    Backed
-                  </span>
-                  <span>startups</span>
-                </div>
-              </div>
+              <p className="hero-subtitle">
+                Do Not Press — product design studio & agency for{" "}
+                <span className="yc-badge">
+                  <img src={yc} alt="" />
+                  Backed
+                </span>{" "}
+                startups
+              </p>
             </div>
             <a className="button-l" href="#contact">
               <span>Let’s talk</span>
@@ -240,9 +260,11 @@ export function HomePage({ onNavigate }) {
             </a>
           </div>
           <div className="showreel" data-ink onPointerDown={onShowreelPointerDown}>
-            <button className="showreel-handle" type="button" aria-label="Drag to expand showreel" tabIndex={-1}>
-              <span className="showreel-mark" />
-            </button>
+            {!mobileHero ? (
+              <button className="showreel-handle" type="button" aria-label="Drag to expand showreel" tabIndex={-1}>
+                <span className="showreel-mark" />
+              </button>
+            ) : null}
             <Showreel />
           </div>
         </section>
@@ -273,7 +295,7 @@ export function HomePage({ onNavigate }) {
             <div className="standards-mark">
               <img className="is-yc" src={ycBadge} alt="" width="86.3349" height="87.1701" />
             </div>
-            <span>Baked by Y Combinator</span>
+            <span>Backed by Y Combinator</span>
           </div>
         </div>
       </section>
@@ -292,7 +314,7 @@ export function HomePage({ onNavigate }) {
               style={{ "--reveal": `${index * 80}ms` }}
               onClick={(event) => openCase(event, project.slug)}
             >
-              <img src={project.image} alt="" />
+              <SoftImage src={project.image} alt="" />
               <span className="project-hover">
                 <span className="project-title">{project.title}</span>
                 <span className="project-tags">
@@ -323,7 +345,7 @@ export function HomePage({ onNavigate }) {
             >
               <div className="proof-copy">
                 <div className="proof-author">
-                  <img src={item.avatar} alt="" />
+                  <SoftImage src={item.avatar} alt="" />
                   <div>
                     <span className="proof-name">{item.name}</span>
                     <span className="proof-role">{item.role}</span>
@@ -374,7 +396,7 @@ export function HomePage({ onNavigate }) {
                   {service.shot ? (
                     <div className={open ? "fold is-open" : "fold"} aria-hidden={!open}>
                       <div>
-                        <img className="accordion-shot" src={service.shot.image} alt={service.shot.name} />
+                        <SoftImage className="accordion-shot" src={service.shot.image} alt={service.shot.name} />
                       </div>
                     </div>
                   ) : null}
@@ -421,7 +443,7 @@ export function HomePage({ onNavigate }) {
             workflow they need to stop guessing and start scaling
           </p>
           <div className="founder-portrait" ref={portraitRef}>
-          <img src={maksym} alt="Maksym C." />
+          <SoftImage src={maksym} alt="Maksym C." />
           <p className="founder-bio">
             Product designer for 20+ YC-backed startups.
             <br />
@@ -467,8 +489,8 @@ export function HomePage({ onNavigate }) {
             Let’s grow something great
           </h2>
           <p className="contact-lead">
-            Tell us about the product, the plans, and the deadline. 30-min call · no deck required ·
-            reply in 1 business day.
+            Do Not Press is a design agency ready when you are. Tell us about the product, the plans,
+            and the deadline. 30-min call · no deck required · reply in 1 business day.
           </p>
         </div>
         <hr />

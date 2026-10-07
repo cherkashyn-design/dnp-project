@@ -5,6 +5,7 @@ import instagramIcon from "../assets/icons/share-instagram.svg";
 import linkedinIcon from "../assets/icons/share-linkedin.svg";
 import xIcon from "../assets/icons/share-x.svg";
 import { appHref } from "../base.js";
+import { SoftImage } from "../components/SoftMedia.jsx";
 import { getBlogPost } from "../data/blog.js";
 
 function slugify(value) {
@@ -118,7 +119,7 @@ function ArticleBody({ content, onNavigate }) {
         if (block.type === "image") {
           return (
             <figure className="article-figure" data-ink key={key}>
-              <img alt={block.alt || block.caption || ""} src={block.src} />
+              <SoftImage alt={block.alt || block.caption || ""} src={block.src} />
               {block.caption ? <figcaption>{block.caption}</figcaption> : null}
             </figure>
           );
@@ -215,7 +216,7 @@ export function ArticlePage({ slug, onNavigate }) {
         </div>
         {post.cover ? (
           <div className="article-cover" data-ink>
-            <img alt="" src={post.cover} />
+            <SoftImage alt="" src={post.cover} />
           </div>
         ) : null}
       </header>

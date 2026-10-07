@@ -1,4 +1,5 @@
 import { appHref } from "../base.js";
+import { SoftImage } from "../components/SoftMedia.jsx";
 import { cases } from "../data/cases.js";
 import { CaseContact } from "./CasePage.jsx";
 
@@ -24,7 +25,7 @@ export function CasesPage({ onNavigate }) {
       <section className="cases-hero">
         <div className="cases-hero-copy">
           <h1>Cases</h1>
-          <p>Product, brand, and landing work shipped with startups.</p>
+          <p>Product, brand, and landing work from Do Not Press studio.</p>
         </div>
       </section>
       <section className="cases-list" aria-label="Cases">
@@ -38,7 +39,7 @@ export function CasesPage({ onNavigate }) {
               key={project.slug}
               onClick={(event) => open(event, `/cases/${project.slug}`)}
             >
-              <img src={project.image} alt="" />
+              <SoftImage src={project.image} alt="" />
               <span className="project-hover">
                 <span className="project-title">{project.title}</span>
                 <span className="project-tags">

@@ -1,23 +1,24 @@
 :root {
   --bg-main: #ffffff;
   --bg-primary: #4951fb;
-  --bg-secondary: #0f0f0f14;
+  /* Opaque 6-digit hex only — Safari on iOS can drop #RRGGBBAA / some rgba vars and fall back to link blue */
+  --bg-secondary: #ebebeb;
   --bg-reverse: #0f0f0f;
-  --bg-reverse-secondary: #ffffff3d;
-  --bg-reverse-tertiary: #ffffff0f;
-  --bg-main-transparent: #ffffffe5;
+  --bg-reverse-secondary: #3d3d3d;
+  --bg-reverse-tertiary: #1f1f1f;
+  --bg-main-transparent: #ffffff;
   --text-main: #0f0f0f;
-  --text-secondary: #0f0f0f99;
-  --text-tertiary: #0f0f0f80;
-  --text-additional: #0f0f0f4d;
+  --text-secondary: #6b6b6b;
+  --text-tertiary: #808080;
+  --text-additional: #b3b3b3;
   --text-reverse: #ffffff;
-  --text-reverse-secondary: #ffffff80;
-  --text-reverse-tertiary: #ffffff66;
-  --line-secondary: #0f0f0f0f;
-  --line-tertiary: #0f0f0f0a;
-  --line-main: #0f0f0f14;
-  --line-reverse-secondary: #ffffff3d;
-  --line-reverse-tertiary: #ffffff1f;
+  --text-reverse-secondary: #b3b3b3;
+  --text-reverse-tertiary: #999999;
+  --line-secondary: #f0f0f0;
+  --line-tertiary: #f5f5f5;
+  --line-main: #ebebeb;
+  --line-reverse-secondary: #3d3d3d;
+  --line-reverse-tertiary: #2a2a2a;
   --gradient-proof: linear-gradient(180deg, #616d7b 0%, #bfb8bf 100%);
   --font-serif: "Instrument Serif", serif;
   --font-sans: "Ubuntu", sans-serif;
@@ -66,6 +67,22 @@ body {
   font-weight: 400;
 }
 
+/* Keep fill in sync with color so Safari never paints link-blue when vars resolve */
+body,
+p,
+span,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+button {
+  -webkit-text-fill-color: currentColor;
+}
+
 h1,
 h2,
 h3,
@@ -83,9 +100,19 @@ textarea {
   font: inherit;
 }
 
-a {
+a,
+a:visited,
+a:active,
+a[href^="tel:"],
+a[href^="mailto:"],
+a[x-apple-data-detectors],
+span[x-apple-data-detectors],
+a[x-apple-data-detectors]:hover,
+a[x-apple-data-detectors]:active,
+a[x-apple-data-detectors]:visited {
   color: inherit;
   text-decoration: none;
+  -webkit-text-fill-color: currentColor;
 }
 
 img,
@@ -368,7 +395,7 @@ video {
 }
 
 .menu-toggle:hover {
-  background: #0f0f0f1f;
+  background: rgba(15, 15, 15, 0.12);
 }
 
 .pill {
@@ -561,26 +588,19 @@ video {
 }
 
 .hero-subtitle {
-  align-items: center;
-  color: var(--text-secondary);
-  display: flex;
-  flex-direction: column;
+  color: #6b6b6b;
+  -webkit-text-fill-color: #6b6b6b;
   font-size: 20px;
-  gap: 4px;
   letter-spacing: -0.4px;
   line-height: 1.5;
   margin: 16px 0 0;
+  max-width: 34em;
   text-align: center;
+  text-wrap: balance;
 }
 
-.hero-subtitle p {
-  margin: 0;
-}
-
-.hero-line {
-  align-items: center;
-  display: flex;
-  gap: 6px;
+.hero-subtitle .yc-badge {
+  -webkit-text-fill-color: #0f0f0f;
 }
 
 .yc-badge {
@@ -594,6 +614,7 @@ video {
   letter-spacing: -0.32px;
   line-height: 28px;
   padding: 0 8px 0 4px;
+  vertical-align: -0.35em;
 }
 
 .yc-badge img {
@@ -648,20 +669,150 @@ video {
   width: 36px;
 }
 
+.showreel .media-shell,
 .showreel video {
   border-radius: calc(16px + (var(--radius-panel) - 16px) * var(--showreel));
   height: 100%;
-  object-fit: cover;
   width: 100%;
 }
 
-@media (max-width: 600px) {
+.showreel video {
+  object-fit: cover;
+}
+
+.media-shell {
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+
+.media-shell > img,
+.media-shell > video,
+.media-shell > svg,
+.media-shell > div {
+  display: block;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  width: 100%;
+}
+
+.media-shell.is-ready > img,
+.media-shell.is-ready > video,
+.media-shell.is-ready > svg,
+.media-shell.is-ready > div {
+  opacity: 1;
+}
+
+.media-skeleton {
+  background: linear-gradient(135deg, #e8e6e2 0%, #f3f1ed 45%, #ddd9d2 100%);
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.media-shell.is-ready .media-skeleton {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.media-skeleton-shine {
+  animation: media-skeleton-shine 1.35s ease-in-out infinite;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0) 35%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0) 65%,
+    transparent 100%
+  );
+  display: block;
+  height: 100%;
+  transform: translateX(-120%);
+  width: 55%;
+}
+
+@keyframes media-skeleton-shine {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media-skeleton-shine {
+    animation: none;
+  }
+
+  .media-shell > img,
+  .media-shell > video,
+  .media-shell > svg,
+  .media-shell > div,
+  .media-shell.is-ready .media-skeleton {
+    transition: none;
+  }
+}
+
+@media (max-width: 720px) {
+  /* Static hero — no 200vh expand so Safari keeps glassy chrome and CTA stays visible */
+  .hero-scroll,
+  .hero-scroll.is-mobile-static {
+    height: auto;
+    margin-top: 0;
+  }
+
+  .hero {
+    flex-direction: column;
+    gap: 40px;
+    height: auto;
+    justify-content: flex-start;
+    overflow: visible;
+    padding: 108px 16px 40px;
+    position: relative;
+  }
+
+  .hero-copy {
+    gap: 28px;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    will-change: auto;
+  }
+
+  .hero-subtitle {
+    font-size: 17px;
+    max-width: min(22em, 100%);
+  }
+
+  .hero-copy .button-l {
+    position: relative;
+    z-index: 2;
+  }
+
   .showreel {
-    aspect-ratio: auto;
-    left: 0;
+    aspect-ratio: 252 / 164;
+    bottom: auto;
+    cursor: default;
+    height: auto;
+    left: auto;
+    position: relative;
+    touch-action: auto;
     transform: none;
     width: 100%;
-    height: calc(252px + (100vh - 252px) * var(--showreel));
+    will-change: auto;
+  }
+
+  .showreel .media-shell,
+  .showreel video {
+    border-radius: 24px;
+  }
+
+  .showreel-handle {
+    display: none;
   }
 }
 
@@ -699,13 +850,19 @@ video {
   position: relative;
 }
 
+.project-card > .media-shell,
 .project-card > img {
   height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   width: 100%;
 }
 
+.project-card > .media-shell > img,
+.project-card > img {
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-card:hover > .media-shell > img,
 .project-card:hover > img {
   transform: scale(1.05);
 }
@@ -797,11 +954,16 @@ video {
   gap: 12px;
 }
 
+.proof-author .media-shell,
 .proof-author img {
   border-radius: 12px;
   height: 48px;
-  object-fit: cover;
   width: 48px;
+}
+
+.proof-author .media-shell > img,
+.proof-author img {
+  object-fit: cover;
 }
 
 .proof-name {
@@ -930,6 +1092,13 @@ video {
 .accordion-shot {
   aspect-ratio: 1920 / 1080;
   border-radius: 16px;
+  display: block;
+  overflow: hidden;
+  width: 100%;
+}
+
+.accordion-shot > img {
+  height: 100%;
   object-fit: cover;
   width: 100%;
 }
@@ -960,10 +1129,15 @@ video {
   overflow: hidden;
 }
 
+.feature-card > .media-shell,
 .feature-card > img {
   aspect-ratio: 616 / 364;
   height: auto;
   width: 100%;
+}
+
+.feature-card > .media-shell > img {
+  object-fit: cover;
 }
 
 .feature-copy {
@@ -1054,11 +1228,16 @@ video {
   will-change: transform;
 }
 
+.founder .media-shell,
 .founder img {
   border-radius: 16px;
   height: 264px;
-  object-fit: cover;
   width: 264px;
+}
+
+.founder .media-shell > img,
+.founder img {
+  object-fit: cover;
 }
 
 .founder-bio {
@@ -1299,7 +1478,9 @@ body:has(.page.is-ink) {
 }
 
 .field::placeholder {
-  color: var(--text-reverse-tertiary);
+  color: #999999;
+  -webkit-text-fill-color: #999999;
+  opacity: 1;
 }
 
 .field-control {
@@ -1536,10 +1717,6 @@ textarea.field {
     grid-template-columns: 1fr 1fr;
   }
 
-  .hero {
-    padding-top: 108px;
-  }
-
   .section-title,
   .feature-card h3 {
     font-size: 40px;
@@ -1610,7 +1787,7 @@ main {
 }
 
 .pill:hover {
-  background: #0f0f0f1f;
+  background: rgba(15, 15, 15, 0.12);
   color: var(--text-secondary);
 }
 
@@ -1626,17 +1803,19 @@ main {
 }
 
 .pill.is-blur:hover {
-  background: #0f0f0f1f;
+  background: rgba(15, 15, 15, 0.12);
 }
 
 .project-card:hover .project-hover {
   opacity: 1;
 }
 
+.feature-card > .media-shell > img,
 .feature-card > img {
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.feature-card:hover > .media-shell > img,
 .feature-card:hover > img {
   transform: scale(1.035);
 }
@@ -1646,7 +1825,7 @@ main {
 }
 
 .proof-card:hover {
-  background: #ffffff47;
+  background: rgba(255, 255, 255, 0.28);
 }
 
 .field,
@@ -1753,14 +1932,22 @@ main {
   width: 100%;
 }
 
+.case-shot > .media-shell,
 .case-shot > img,
 .case-shot > video,
 .case-marquee {
   height: 100%;
   inset: 0;
-  object-fit: cover;
   position: absolute;
   width: 100%;
+}
+
+.case-shot > .media-shell > img,
+.case-shot > .media-shell > video,
+.case-shot > img,
+.case-shot > video,
+.case-marquee {
+  object-fit: cover;
 }
 
 .case-shot .tag {
@@ -1833,12 +2020,17 @@ main {
   text-align: center;
 }
 
+.case-quote-body .media-shell,
 .case-quote-body img {
   border-radius: 12px;
   height: 264px;
-  object-fit: cover;
   width: 264px;
   will-change: transform;
+}
+
+.case-quote-body .media-shell > img,
+.case-quote-body img {
+  object-fit: cover;
 }
 
 .case-info {
@@ -1995,10 +2187,16 @@ main {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.case-lottie-card {
+  min-width: 0;
+  width: 100%;
+}
+
 .case-lottie {
   aspect-ratio: 428 / 685;
   border-radius: 24px;
   overflow: hidden;
+  position: relative;
   width: 100%;
 }
 
@@ -2006,7 +2204,7 @@ main {
   aspect-ratio: 616 / 453.2;
 }
 
-.case-lottie > * {
+.case-lottie > *:not(.media-skeleton) {
   height: 100%;
   width: 100%;
 }
@@ -2047,12 +2245,17 @@ main {
   overflow: hidden;
 }
 
-.case-marquee-bg {
+.case-marquee-bg,
+.case-marquee > .media-shell {
   height: 100%;
   inset: 0;
-  object-fit: cover;
   position: absolute;
   width: 100%;
+}
+
+.case-marquee-bg,
+.case-marquee > .media-shell > img {
+  object-fit: cover;
 }
 
 .case-marquee-viewport {
@@ -2074,13 +2277,18 @@ main {
   width: max-content;
 }
 
+.case-marquee-track .media-shell,
 .case-marquee-track img {
   aspect-ratio: 1082 / 1936;
   border-radius: 1.65cqh 1.65cqh 0 0;
   flex: 0 0 auto;
   height: 100%;
-  object-fit: cover;
   width: auto;
+}
+
+.case-marquee-track .media-shell > img,
+.case-marquee-track img {
+  object-fit: cover;
 }
 
 @keyframes marquee-x {
@@ -2138,16 +2346,41 @@ main {
     font-size: 48px;
   }
 
-  .case-quote blockquote {
-    font-size: 32px;
+  .case-quote blockquote,
+  .case-motion h2 {
+    font-size: 26px;
   }
 
   .case-info,
   .case-story-row,
-  .case-motion-row,
   .case-stats,
   .case-shot-row {
     grid-template-columns: 1fr;
+  }
+
+  .case-motion-row {
+    display: flex;
+    gap: 12px;
+    grid-template-columns: none;
+    margin-inline: -16px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding-inline: 16px;
+    scroll-padding-inline: 16px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    width: calc(100% + 32px);
+  }
+
+  .case-motion-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .case-motion-row > .case-lottie-card {
+    flex: 0 0 calc(100% - 28px);
+    scroll-snap-align: start;
+    width: calc(100% - 28px);
   }
 
   .case-info-copy {
@@ -2240,15 +2473,21 @@ main {
   background: var(--bg-secondary);
 }
 
+.blog-card-media .media-shell,
 .blog-card-media img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+}
+
+.blog-card-media .media-shell > img,
+.blog-card-media img {
   object-fit: cover;
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.blog-card:hover .blog-card-media .media-shell > img,
 .blog-card:hover .blog-card-media img {
   transform: scale(1.05);
 }
@@ -2332,11 +2571,17 @@ main {
   aspect-ratio: 616 / 453.2;
   overflow: hidden;
   border-radius: 24px;
+  position: relative;
 }
 
+.article-cover .media-shell,
 .article-cover img {
   width: 100%;
   height: 100%;
+}
+
+.article-cover .media-shell > img,
+.article-cover img {
   object-fit: cover;
 }
 
@@ -2489,9 +2734,15 @@ main {
   margin: 0;
 }
 
+.article-figure .media-shell,
 .article-figure img {
   width: 100%;
   border-radius: 24px;
+  overflow: hidden;
+}
+
+.article-figure .media-shell {
+  aspect-ratio: 16 / 10;
 }
 
 .article-figure figcaption {

@@ -62,7 +62,7 @@ export function SiteFooter({ onNavigate }) {
         Tbilisi, Georgia
       </p>
       <div className="footer-links" ref={linksRef}>
-        <span className="pill is-outline">© 2026. DoNotPress</span>
+        <span className="pill is-outline">© 2026 · Do Not Press Studio</span>
         <a className="pill" href={appHref("/terms")} onClick={(event) => go(event, "/terms")}>
           Terms
         </a>

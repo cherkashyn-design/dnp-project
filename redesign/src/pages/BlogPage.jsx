@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 import { appHref } from "../base.js";
+import { SoftImage } from "../components/SoftMedia.jsx";
 import { blogPosts } from "../data/blog.js";
 
 export function BlogPage({ onNavigate }) {
@@ -27,8 +28,8 @@ export function BlogPage({ onNavigate }) {
       <header className="blog-hero">
         <h1>Blog</h1>
         <p>
-          Notes on design systems, conversion, and complex product UX, written from shipping work
-          with startups and larger teams
+          Notes on design systems, conversion, and complex product UX from Do Not Press design —
+          written from shipping work with startups and larger teams
         </p>
       </header>
       <section className="blog-list" aria-label="Articles">
@@ -43,7 +44,7 @@ export function BlogPage({ onNavigate }) {
               onClick={(event) => open(event, post.href)}
             >
               <div className="blog-card-media" data-ink>
-                {post.cover ? <img src={post.cover} alt="" /> : null}
+                {post.cover ? <SoftImage src={post.cover} alt="" /> : null}
                 <span className="blog-tag">{post.tags[0]}</span>
               </div>
               <h2>{post.title}</h2>

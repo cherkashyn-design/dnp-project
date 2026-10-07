@@ -9,6 +9,8 @@ import whatsapp from "../assets/icons/whatsapp.svg";
 import telegram from "../assets/icons/telegram.svg";
 import { appHref } from "../base.js";
 import { LottieFrame } from "../components/LottieFrame.jsx";
+import { LottieStrip } from "../components/LottieStrip.jsx";
+import { SoftImage, SoftVideo } from "../components/SoftMedia.jsx";
 import { SidebarReel } from "../components/SidebarReel.jsx";
 import { cases } from "../data/cases.js";
 import { budgets, email, phone } from "../data/content.js";
@@ -103,7 +105,9 @@ function CaseVideo({ src, srcMobile, poster }) {
     return () => video.removeEventListener("canplay", start);
   }, [source]);
 
-  return <video ref={videoRef} src={source} poster={poster} muted loop playsInline autoPlay />;
+  return (
+    <SoftVideo ref={videoRef} src={source} poster={poster} muted loop playsInline autoPlay />
+  );
 }
 
 function Shot({ media }) {
@@ -112,7 +116,7 @@ function Shot({ media }) {
       {media.type === "video" ? (
         <CaseVideo src={media.src} srcMobile={media.srcMobile} poster={media.poster} />
       ) : (
-        <img src={media.src} alt="" />
+        <SoftImage src={media.src} alt="" />
       )}
       {media.caption ? <figcaption className="tag">{media.caption}</figcaption> : null}
     </figure>
@@ -196,11 +200,7 @@ function MotionBand({ text, animations }) {
   return (
     <section className="case-motion">
       <h2>{text}</h2>
-      <div className="case-motion-row">
-        {animations.map((animation) => (
-          <LottieFrame key={animation.label} load={animation.load} label={animation.label} />
-        ))}
-      </div>
+      <LottieStrip animations={animations} />
     </section>
   );
 }
@@ -234,7 +234,7 @@ function OtherProjects({ slug, onNavigate }) {
               onNavigate(`/cases/${item.slug}`);
             }}
           >
-            <img src={item.image} alt="" />
+            <SoftImage src={item.image} alt="" />
             <span className="project-hover">
               <span className="project-title">{item.title}</span>
               <span className="project-tags">
@@ -277,8 +277,8 @@ export function CaseContact({ page = false }) {
           </h2>
         )}
         <p className="contact-lead">
-          Tell us about the product, the plans, and the deadline. 30-min call · no deck required · reply
-          in 1 business day.
+          Do Not Press is a design agency ready when you are. Tell us about the product, the plans, and
+          the deadline. 30-min call · no deck required · reply in 1 business day.
         </p>
       </div>
       <hr />
@@ -433,7 +433,7 @@ function DrumkitCase({ onNavigate }) {
           <p>AI B2B tool to optimize logistic expenses and time spent</p>
         </div>
         <figure className="case-shot">
-          <img src={drumkitPreview} alt="Drumkit landing page on a laptop" />
+          <SoftImage src={drumkitPreview} alt="Drumkit landing page on a laptop" />
         </figure>
       </section>
 
@@ -448,7 +448,7 @@ function DrumkitCase({ onNavigate }) {
             also got a very positive attitude, is persistent through design changes/requests, and
             thoughtful throughout. They a pleasure to work with and I would gladly work with they again.
           </blockquote>
-          <img ref={portraitRef} src={dhruv} alt="Dhruv G." />
+          <SoftImage ref={portraitRef} src={dhruv} alt="Dhruv G." />
         </div>
       </section>
 
@@ -565,11 +565,7 @@ function DrumkitCase({ onNavigate }) {
             ["-94%", "SOP management time spent"],
           ]}
         />
-        <div className="case-motion-row">
-          {drumkitSlide9Animations.map((animation) => (
-            <LottieFrame key={animation.label} load={animation.load} label={animation.label} />
-          ))}
-        </div>
+        <LottieStrip animations={drumkitSlide9Animations} />
         <p className="case-note">
           Autofilling, appointment, slots matching and carrier functionality animations to show the product
         </p>
@@ -590,7 +586,7 @@ function LegacyCase({ project, data, onNavigate }) {
           {data.subtitle ? <p>{data.subtitle}</p> : null}
         </div>
         <figure className="case-shot">
-          <img src={data.heroImage} alt={data.heroAlt || ""} />
+          <SoftImage src={data.heroImage} alt={data.heroAlt || ""} />
         </figure>
       </section>
 

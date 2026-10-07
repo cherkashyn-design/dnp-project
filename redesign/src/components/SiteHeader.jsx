@@ -19,6 +19,7 @@ export function SiteHeader({ path, onNavigate }) {
   const [settled, setSettled] = useState(false);
   const onCase = path.startsWith("/cases");
   const onBlog = path.startsWith("/blog");
+  const onBlogListing = path === "/blog";
   menuBusy.current = open || present;
 
   const go = (event, href) => {
@@ -34,7 +35,7 @@ export function SiteHeader({ path, onNavigate }) {
       const nav = navRef.current;
       const contact = contactRef.current;
       const mark = logoRef.current;
-      if (!header || !nav || !contact || !mark) return;
+      if (!header || !nav || !mark) return;
 
       const navHidden = getComputedStyle(nav).display === "none";
       const navPrevious = {
@@ -55,7 +56,9 @@ export function SiteHeader({ path, onNavigate }) {
 
       // Menu-open CSS collapses Contact Us — sample natural width off-layout
       // without writing opacity/padding that can flash through computed styles.
-      if (!menuBusy.current || widths.current.contact < 1) {
+      if (!contact) {
+        widths.current.contact = 0;
+      } else if (!menuBusy.current || widths.current.contact < 1) {
         const contactPrevious = {
           maxWidth: contact.style.maxWidth,
           position: contact.style.position,
@@ -95,7 +98,7 @@ export function SiteHeader({ path, onNavigate }) {
     observer.observe(header);
     document.fonts?.ready.then(measure);
     return () => observer.disconnect();
-  }, []);
+  }, [onBlogListing]);
 
   useEffect(() => {
     if (!compact) {
@@ -150,18 +153,26 @@ export function SiteHeader({ path, onNavigate }) {
           </a>
         ))}
       </nav>
-      <a className="logo" href={appHref("/")} aria-label="DoNotPress" onClick={(event) => go(event, "/")} ref={logoRef}>
-        <img src={logo} alt="" />
+      <a
+        className="logo"
+        href={appHref("/")}
+        aria-label="Do Not Press home"
+        onClick={(event) => go(event, "/")}
+        ref={logoRef}
+      >
+        <img src={logo} alt="Do Not Press" />
       </a>
       <div className="header-actions">
-        <a
-          className="pill is-dark"
-          href={appHref("/contact")}
-          onClick={(event) => go(event, "/contact")}
-          ref={contactRef}
-        >
-          Contact Us
-        </a>
+        {onBlogListing ? null : (
+          <a
+            className="pill is-dark"
+            href={appHref("/contact")}
+            onClick={(event) => go(event, "/contact")}
+            ref={contactRef}
+          >
+            Contact Us
+          </a>
+        )}
         <button
           className="menu-toggle"
           type="button"
@@ -202,9 +213,11 @@ export function SiteHeader({ path, onNavigate }) {
               </a>
             ))}
           </div>
-          <a className="button-l menu-talk" href={appHref("/contact")} onClick={(event) => go(event, "/contact")}>
-            Let’s talk
-          </a>
+          {onBlogListing ? null : (
+            <a className="button-l menu-talk" href={appHref("/contact")} onClick={(event) => go(event, "/contact")}>
+              Let’s talk
+            </a>
+          )}
         </nav>
       ) : null}
     </header>

@@ -1,9 +1,9 @@
 import { blogPosts as source } from "../../../src/data/blog.js";
-import drumkit from "../assets/cases/drumkit.webp";
+import { blogCovers } from "../../../src/data/blogMedia.js";
 
 export const blogPosts = source.map((post) => ({
   ...post,
-  cover: post.cover ?? drumkit,
+  cover: post.cover ?? blogCovers[post.slug] ?? null,
 }));
 
 export function getBlogPost(slug) {

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { appHref, stripBase } from "./base.js";
 import { SiteFooter } from "./components/SiteFooter.jsx";
 import { SiteHeader } from "./components/SiteHeader.jsx";
+import { getBlogPost } from "./data/blog.js";
 import { getCase } from "./data/cases.js";
 import { ArticlePage } from "./pages/ArticlePage.jsx";
 import { BlogPage } from "./pages/BlogPage.jsx";
@@ -11,6 +12,7 @@ import { CasesPage } from "./pages/CasesPage.jsx";
 import { ContactPage } from "./pages/ContactPage.jsx";
 import { HomePage } from "./pages/HomePage.jsx";
 import { SimplePage } from "./pages/SimplePage.jsx";
+import { applyPageSeo, resolvePageSeo } from "./seo.js";
 
 function readPath() {
   return `${stripBase(window.location.pathname)}${window.location.hash}`;
@@ -128,7 +130,13 @@ export default function App() {
 
   const pathname = path.split("#")[0];
   const caseSlug = pathname.startsWith("/cases/") ? pathname.slice("/cases/".length) : "";
+  const blogSlug = pathname.startsWith("/blog/") ? pathname.slice("/blog/".length) : "";
   const project = caseSlug ? getCase(caseSlug) : null;
+  const post = blogSlug ? getBlogPost(blogSlug) : null;
+
+  useEffect(() => {
+    applyPageSeo(resolvePageSeo(pathname, { project, post }));
+  }, [pathname, project, post]);
 
   let page = <HomePage onNavigate={navigate} />;
   if (project) {
@@ -140,17 +148,17 @@ export default function App() {
   } else if (pathname === "/blog") {
     page = <BlogPage onNavigate={navigate} />;
   } else if (pathname.startsWith("/blog/")) {
-    page = <ArticlePage onNavigate={navigate} slug={pathname.slice("/blog/".length)} />;
+    page = <ArticlePage onNavigate={navigate} slug={blogSlug} />;
   } else if (pathname === "/terms") {
     page = (
       <SimplePage title="Terms">
-        <p>Terms of use for DoNotPress.</p>
+        <p>Terms of use for Do Not Press.</p>
       </SimplePage>
     );
   } else if (pathname === "/privacy") {
     page = (
       <SimplePage title="Privacy">
-        <p>How DoNotPress handles the details you send through the contact form.</p>
+        <p>How Do Not Press handles the details you send through the contact form.</p>
       </SimplePage>
     );
   }
