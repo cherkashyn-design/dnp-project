@@ -5,6 +5,7 @@ import { SiteFooter } from "./components/SiteFooter.jsx";
 import { SiteHeader } from "./components/SiteHeader.jsx";
 import { getBlogPost } from "./data/blog.js";
 import { getCase } from "./data/cases.js";
+import { INK_EVENT } from "./inkSurface.js";
 import { ArticlePage } from "./pages/ArticlePage.jsx";
 import { BlogPage } from "./pages/BlogPage.jsx";
 import { CasePage } from "./pages/CasePage.jsx";
@@ -39,8 +40,8 @@ function isDarkFill(color) {
 
 function isInkSurface(node, header) {
   if (!(node instanceof Element) || header.contains(node)) return false;
+  // Only explicitly marked dark surfaces (sections or media sampled as dark).
   if (node.closest("[data-ink]")) return true;
-  if (node.closest("img, video, canvas")) return true;
   return isDarkFill(getComputedStyle(node).backgroundColor);
 }
 
@@ -104,9 +105,11 @@ export default function App() {
     syncInk();
     window.addEventListener("scroll", syncInk, { passive: true });
     window.addEventListener("resize", syncInk);
+    window.addEventListener(INK_EVENT, syncInk);
     return () => {
       window.removeEventListener("scroll", syncInk);
       window.removeEventListener("resize", syncInk);
+      window.removeEventListener(INK_EVENT, syncInk);
       page.classList.remove("is-over-ink");
     };
   }, [path]);

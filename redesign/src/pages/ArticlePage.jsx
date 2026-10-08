@@ -118,7 +118,7 @@ function ArticleBody({ content, onNavigate }) {
         }
         if (block.type === "image") {
           return (
-            <figure className="article-figure" data-ink key={key}>
+            <figure className="article-figure" key={key}>
               <SoftImage alt={block.alt || block.caption || ""} src={block.src} />
               {block.caption ? <figcaption>{block.caption}</figcaption> : null}
             </figure>
@@ -215,7 +215,7 @@ export function ArticlePage({ slug, onNavigate }) {
           </div>
         </div>
         {post.cover ? (
-          <div className="article-cover" data-ink>
+          <div className="article-cover">
             <SoftImage alt="" src={post.cover} />
           </div>
         ) : null}

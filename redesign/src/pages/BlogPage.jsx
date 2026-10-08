@@ -43,7 +43,7 @@ export function BlogPage({ onNavigate }) {
               key={post.slug}
               onClick={(event) => open(event, post.href)}
             >
-              <div className="blog-card-media" data-ink>
+              <div className="blog-card-media">
                 {post.cover ? <SoftImage src={post.cover} alt="" /> : null}
                 <span className="blog-tag">{post.tags[0]}</span>
               </div>

@@ -1,5 +1,7 @@
 import { forwardRef, useEffect, useRef, useState } from "react";
 
+import { mediaLooksDark, resolveInkMode, setInkSurface } from "../inkSurface.js";
+
 function Skeleton() {
   return (
     <span className="media-skeleton" aria-hidden="true">
@@ -8,22 +10,47 @@ function Skeleton() {
   );
 }
 
+function applyInk(shell, media, ink) {
+  if (!shell) return;
+  const mode = resolveInkMode(ink);
+  if (mode === "force-on") {
+    setInkSurface(shell, true);
+    return;
+  }
+  if (mode === "force-off") {
+    setInkSurface(shell, false);
+    return;
+  }
+  setInkSurface(shell, media ? mediaLooksDark(media) : false);
+}
+
 export const SoftImage = forwardRef(function SoftImage(
-  { src, alt = "", className = "", onLoad, onError, decoding = "async", ...props },
+  { src, alt = "", className = "", ink, onLoad, onError, decoding = "async", ...props },
   ref,
 ) {
+  const shellRef = useRef(null);
   const imgRef = useRef(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     setReady(false);
     const img = imgRef.current;
-    if (img?.complete && img.naturalWidth > 0) setReady(true);
-  }, [src]);
+    if (img?.complete && img.naturalWidth > 0) {
+      setReady(true);
+      applyInk(shellRef.current, img, ink);
+      return;
+    }
+    // Until the bitmap is readable, only forced-on media count as ink.
+    applyInk(shellRef.current, null, resolveInkMode(ink) === "force-on" ? true : false);
+  }, [src, ink]);
 
   return (
     <span
-      ref={ref}
+      ref={(node) => {
+        shellRef.current = node;
+        if (typeof ref === "function") ref(node);
+        else if (ref) ref.current = node;
+      }}
       className={`media-shell${ready ? " is-ready" : " is-loading"}${className ? ` ${className}` : ""}`}
     >
       {!ready ? <Skeleton /> : null}
@@ -34,10 +61,12 @@ export const SoftImage = forwardRef(function SoftImage(
         decoding={decoding}
         onLoad={(event) => {
           setReady(true);
+          applyInk(shellRef.current, event.currentTarget, ink);
           onLoad?.(event);
         }}
         onError={(event) => {
           setReady(true);
+          applyInk(shellRef.current, null, false);
           onError?.(event);
         }}
         {...props}
@@ -47,32 +76,43 @@ export const SoftImage = forwardRef(function SoftImage(
 });
 
 export const SoftVideo = forwardRef(function SoftVideo(
-  { className = "", onCanPlay, onLoadedData, poster, ...props },
+  { className = "", ink, onCanPlay, onLoadedData, poster, ...props },
   ref,
 ) {
+  const shellRef = useRef(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     setReady(false);
-  }, [props.src, poster]);
+    applyInk(shellRef.current, null, resolveInkMode(ink) === "force-on" ? true : false);
+  }, [props.src, poster, ink]);
 
-  const markReady = () => setReady(true);
+  const markReady = (video) => {
+    setReady(true);
+    applyInk(shellRef.current, video, ink);
+  };
 
   return (
-    <span className={`media-shell${ready ? " is-ready" : " is-loading"}${className ? ` ${className}` : ""}`}>
+    <span
+      ref={shellRef}
+      className={`media-shell${ready ? " is-ready" : " is-loading"}${className ? ` ${className}` : ""}`}
+    >
       {!ready ? <Skeleton /> : null}
       <video
         ref={ref}
         poster={poster}
         onLoadedData={(event) => {
-          markReady();
+          markReady(event.currentTarget);
           onLoadedData?.(event);
         }}
         onCanPlay={(event) => {
-          markReady();
+          markReady(event.currentTarget);
           onCanPlay?.(event);
         }}
-        onError={markReady}
+        onError={() => {
+          setReady(true);
+          applyInk(shellRef.current, null, false);
+        }}
         {...props}
       />
     </span>
