@@ -10,6 +10,7 @@ import { LottieStrip } from "../components/LottieStrip.jsx";
 import { SoftImage, SoftVideo } from "../components/SoftMedia.jsx";
 import { SidebarReel } from "../components/SidebarReel.jsx";
 import { cases } from "../data/cases.js";
+import { spawnPressRipple } from "../pressRipple.js";
 import { genieCase } from "../../../src/data/genie.js";
 import { salesDriverCase } from "../../../src/data/salesDriver.js";
 import { yummoCase } from "../../../src/data/yummo.js";
@@ -159,6 +160,7 @@ function Story({ story }) {
                 className="faq-item story-item"
                 type="button"
                 aria-expanded={isOpen}
+                onPointerDown={spawnPressRipple}
                 onClick={() => setOpen(isOpen ? -1 : index)}
               >
                 <div>

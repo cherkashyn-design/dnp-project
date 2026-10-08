@@ -1118,19 +1118,30 @@ a.menu-talk:hover {
   border-top: 0;
 }
 
-.accordion-item:hover {
-  background: rgba(15, 15, 15, 0.04);
+.accordion-item:hover,
+.faq-item:hover {
+  background: rgba(15, 15, 15, 0.03);
+  color: #0f0f0f;
+  -webkit-text-fill-color: #0f0f0f;
+}
+
+.accordion-item:active,
+.faq-item:active {
+  background: rgba(15, 15, 15, 0.1);
   color: #0f0f0f;
   -webkit-text-fill-color: #0f0f0f;
 }
 
 .accordion-item:hover .accordion-title,
-.accordion-item:hover .accordion-number {
+.accordion-item:hover .accordion-number,
+.accordion-item:active .accordion-title,
+.accordion-item:active .accordion-number {
   color: inherit;
   -webkit-text-fill-color: inherit;
 }
 
-.accordion-item:hover .accordion-number {
+.accordion-item:hover .accordion-number,
+.accordion-item:active .accordion-number {
   color: #808080;
   -webkit-text-fill-color: #808080;
 }
@@ -1410,11 +1421,13 @@ a.menu-talk:hover {
   gap: 64px;
   isolation: isolate;
   justify-content: space-between;
+  margin-inline: -12px;
   overflow: hidden;
-  padding: 24px 0;
+  padding: 24px 12px;
   position: relative;
   text-align: left;
-  width: 100%;
+  transition: background 0.2s ease;
+  width: calc(100% + 24px);
 }
 
 .faq-item > div {
