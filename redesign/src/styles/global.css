@@ -1031,10 +1031,14 @@ video {
 }
 
 .accordion-item {
+  -webkit-appearance: none;
+  appearance: none;
   align-items: start;
   background: transparent;
   border: 0;
   border-top: 1px solid var(--line-secondary);
+  color: #0f0f0f;
+  -webkit-text-fill-color: #0f0f0f;
   cursor: pointer;
   display: grid;
   gap: 96px;
@@ -1058,11 +1062,13 @@ video {
 }
 
 .accordion-number {
-  color: var(--text-tertiary);
+  color: #808080;
+  -webkit-text-fill-color: #808080;
 }
 
 .accordion-copy {
-  color: var(--text-main);
+  color: #0f0f0f;
+  -webkit-text-fill-color: #0f0f0f;
   font-size: 16px;
   letter-spacing: -0.32px;
   line-height: 1.4;
@@ -1086,6 +1092,8 @@ video {
 }
 
 .accordion-title {
+  color: #0f0f0f;
+  -webkit-text-fill-color: #0f0f0f;
   flex: 1;
 }
 
@@ -1262,9 +1270,13 @@ video {
 }
 
 .faq-item {
+  -webkit-appearance: none;
+  appearance: none;
   background: transparent;
   border: 0;
   border-top: 1px solid var(--line-secondary);
+  color: #0f0f0f;
+  -webkit-text-fill-color: #0f0f0f;
   cursor: pointer;
   display: flex;
   gap: 64px;
@@ -1280,6 +1292,8 @@ video {
 }
 
 .faq-item h3 {
+  color: #0f0f0f;
+  -webkit-text-fill-color: #0f0f0f;
   font-family: var(--font-serif);
   font-size: 36px;
   font-weight: 400;
@@ -1288,7 +1302,8 @@ video {
 }
 
 .faq-item p {
-  color: var(--text-tertiary);
+  color: #808080;
+  -webkit-text-fill-color: #808080;
   font-size: 16px;
   letter-spacing: -0.32px;
   line-height: 1.4;
@@ -1705,6 +1720,46 @@ textarea.field {
 
   .faq {
     gap: 24px;
+  }
+
+  /* Figma mobile ServicesDropdown: title → image → copy, 24px gaps, no index column */
+  .accordion-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .accordion-number {
+    display: none;
+  }
+
+  .accordion-body {
+    order: 2;
+    width: 100%;
+  }
+
+  .accordion-body .fold.is-open > div {
+    padding-top: 24px;
+  }
+
+  .accordion-head {
+    justify-self: stretch;
+    max-width: none;
+    order: 1;
+    width: 100%;
+  }
+
+  .accordion-title-row {
+    padding: 0;
+  }
+
+  .accordion-copy {
+    width: 100%;
+  }
+
+  #services,
+  .section {
+    scroll-margin-top: calc(72px + env(safe-area-inset-top, 0px));
   }
 }
 
