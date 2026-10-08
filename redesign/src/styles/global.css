@@ -626,7 +626,7 @@ a.menu-talk:hover {
   letter-spacing: -0.32px;
   line-height: 28px;
   padding: 0 8px 0 4px;
-  vertical-align: -0.35em;
+  vertical-align: middle;
 }
 
 .yc-badge img {
