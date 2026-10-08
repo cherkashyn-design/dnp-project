@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 import checkIcon from "../assets/icons/check.svg";
 import copyIcon from "../assets/icons/copy.svg";
@@ -12,6 +12,30 @@ function goApp(event, href) {
   event.preventDefault();
   window.history.pushState({}, "", appHref(href));
   window.dispatchEvent(new PopStateEvent("popstate"));
+}
+
+function isValidEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function validateFields({ name, emailValue, project }) {
+  const errors = {};
+
+  if (!name) {
+    errors.name = "Please enter your name";
+  }
+
+  if (!emailValue) {
+    errors.email = "Please enter your email";
+  } else if (!isValidEmail(emailValue)) {
+    errors.email = "Enter a valid email address";
+  }
+
+  if (!project) {
+    errors.project = "Please enter a project name";
+  }
+
+  return errors;
 }
 
 async function submitContact(payload) {
@@ -33,6 +57,22 @@ export function ContactSection({ page = false }) {
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [showErrors, setShowErrors] = useState(false);
+  const [values, setValues] = useState({ name: "", email: "", project: "", message: "" });
+
+  const nameRef = useRef(null);
+  const emailRef = useRef(null);
+  const projectRef = useRef(null);
+
+  const fieldErrors = useMemo(
+    () =>
+      validateFields({
+        name: values.name.trim(),
+        emailValue: values.email.trim(),
+        project: values.project.trim(),
+      }),
+    [values.name, values.email, values.project],
+  );
 
   const copy = async (value) => {
     try {
@@ -43,12 +83,18 @@ export function ContactSection({ page = false }) {
     }
   };
 
+  const updateValue = (field) => (event) => {
+    const next = event.target.value;
+    setValues((current) => ({ ...current, [field]: next }));
+  };
+
   const onSubmit = async (event) => {
     event.preventDefault();
     if (submitting || sent) return;
 
     const form = event.currentTarget;
     const data = new FormData(form);
+    setShowErrors(true);
     setSubmitError("");
 
     const payload = {
@@ -61,12 +107,31 @@ export function ContactSection({ page = false }) {
       website: String(data.get("website") || "").trim(),
     };
 
-    if (!form.reportValidity()) return;
+    const errors = validateFields({
+      name: payload.name,
+      emailValue: payload.email,
+      project: payload.company,
+    });
+
+    if (errors.name) {
+      nameRef.current?.focus();
+      return;
+    }
+    if (errors.email) {
+      emailRef.current?.focus();
+      return;
+    }
+    if (errors.project) {
+      projectRef.current?.focus();
+      return;
+    }
 
     setSubmitting(true);
     try {
       await submitContact(payload);
       setSent(true);
+      setShowErrors(false);
+      setValues({ name: "", email: "", project: "", message: "" });
       form.reset();
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : "Something went wrong. Please try again.");
@@ -74,6 +139,10 @@ export function ContactSection({ page = false }) {
       setSubmitting(false);
     }
   };
+
+  const nameInvalid = showErrors && Boolean(fieldErrors.name);
+  const emailInvalid = showErrors && Boolean(fieldErrors.email);
+  const projectInvalid = showErrors && Boolean(fieldErrors.project);
 
   return (
     <section className={page ? "contact is-page" : "section contact"} id="contact" data-ink>
@@ -128,52 +197,76 @@ export function ContactSection({ page = false }) {
         </div>
       </div>
       <hr />
-      <form onSubmit={onSubmit} noValidate={false}>
+      <form onSubmit={onSubmit} noValidate>
         <div className="hp-field" aria-hidden="true">
           <span>Website</span>
           <input className="field" name="website" type="text" tabIndex={-1} autoComplete="off" />
         </div>
         <div className="field-row">
           <div className="field-label">Your Name</div>
-          <div className="field-control">
+          <div className={nameInvalid ? "field-control is-invalid" : "field-control"}>
             <input
+              ref={nameRef}
               className="field"
               name="name"
-              required
+              value={values.name}
+              onChange={updateValue("name")}
               placeholder="Alex"
               aria-label="Your Name"
+              aria-invalid={nameInvalid}
+              aria-describedby={nameInvalid ? "contact-name-error" : undefined}
               disabled={sent || submitting}
             />
-            <span className="field-error">Please enter your name</span>
+            {nameInvalid ? (
+              <span className="field-error" id="contact-name-error" role="alert">
+                {fieldErrors.name}
+              </span>
+            ) : null}
           </div>
         </div>
         <div className="field-row">
           <div className="field-label">Email</div>
-          <div className="field-control">
+          <div className={emailInvalid ? "field-control is-invalid" : "field-control"}>
             <input
+              ref={emailRef}
               className="field"
               type="email"
               name="email"
-              required
+              value={values.email}
+              onChange={updateValue("email")}
               placeholder="example@mail.com"
               aria-label="Email"
+              aria-invalid={emailInvalid}
+              aria-describedby={emailInvalid ? "contact-email-error" : undefined}
               disabled={sent || submitting}
             />
-            <span className="field-error">Enter a valid email</span>
+            {emailInvalid ? (
+              <span className="field-error" id="contact-email-error" role="alert">
+                {fieldErrors.email}
+              </span>
+            ) : null}
           </div>
         </div>
         <div className="field-row">
           <div className="field-label">Project Name</div>
-          <div className="field-control">
+          <div className={projectInvalid ? "field-control is-invalid" : "field-control"}>
             <input
+              ref={projectRef}
               className="field"
               name="project"
-              required
+              value={values.project}
+              onChange={updateValue("project")}
               placeholder="DNP Studio"
               aria-label="Project Name"
+              aria-invalid={projectInvalid}
+              aria-describedby={projectInvalid ? "contact-project-error" : undefined}
               disabled={sent || submitting}
             />
-            <span className="field-error">Please enter a project name</span>
+            {projectInvalid ? (
+              <span className="field-error" id="contact-project-error" role="alert">
+                {fieldErrors.project}
+              </span>
+            ) : null}
           </div>
         </div>
         <div className="field-row">
@@ -201,6 +294,8 @@ export function ContactSection({ page = false }) {
             <textarea
               className="field"
               name="message"
+              value={values.message}
+              onChange={updateValue("message")}
               placeholder="What are you building?"
               aria-label="Message"
               disabled={sent || submitting}
