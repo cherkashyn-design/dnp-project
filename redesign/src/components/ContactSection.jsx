@@ -66,10 +66,47 @@ export function ContactSection({ page = false }) {
   const [showErrors, setShowErrors] = useState(false);
   const [values, setValues] = useState({ name: "", email: "", project: "", message: "" });
 
+  const sectionRef = useRef(null);
   const nameRef = useRef(null);
   const emailRef = useRef(null);
   const projectRef = useRef(null);
   const toastTimer = useRef(0);
+
+  const animateSentCollapse = () => {
+    const section = sectionRef.current;
+    if (!(section instanceof HTMLElement)) {
+      setSent(true);
+      return;
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setSent(true);
+      return;
+    }
+
+    const from = section.getBoundingClientRect().height;
+    section.style.height = `${from}px`;
+    section.style.overflow = "hidden";
+    setSent(true);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const to = section.scrollHeight;
+        section.style.transition =
+          "height 0.65s cubic-bezier(0.22, 1, 0.36, 1), padding 0.65s cubic-bezier(0.22, 1, 0.36, 1)";
+        section.style.height = `${to}px`;
+
+        const finish = (event) => {
+          if (event.target !== section || (event.propertyName && event.propertyName !== "height")) return;
+          section.style.height = "";
+          section.style.overflow = "";
+          section.style.transition = "";
+          section.removeEventListener("transitionend", finish);
+        };
+        section.addEventListener("transitionend", finish);
+      });
+    });
+  };
 
   const fieldErrors = useMemo(
     () =>
@@ -152,10 +189,10 @@ export function ContactSection({ page = false }) {
     setSubmitting(true);
     try {
       await submitContact(payload);
-      setSent(true);
       setShowErrors(false);
       setValues({ name: "", email: "", project: "", message: "" });
       form.reset();
+      animateSentCollapse();
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : "Something went wrong. Please try again.");
     } finally {
@@ -169,6 +206,7 @@ export function ContactSection({ page = false }) {
 
   return (
     <section
+      ref={sectionRef}
       className={page ? `contact is-page${sent ? " is-sent" : ""}` : `section contact${sent ? " is-sent" : ""}`}
       id="contact"
       data-ink

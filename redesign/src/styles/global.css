@@ -1457,6 +1457,15 @@ a.menu-talk:hover {
   flex-direction: column;
   gap: var(--space-48);
   padding: var(--section-vert-l) var(--section-horiz);
+  will-change: height;
+}
+
+/* Equal side/bottom inset around the Thanks card; height is animated in JS. */
+.contact.is-sent {
+  min-height: 0;
+  padding-bottom: var(--section-horiz);
+  padding-left: var(--section-horiz);
+  padding-right: var(--section-horiz);
 }
 
 body:has(.page.is-ink) {
@@ -1597,11 +1606,11 @@ body:has(.page.is-ink) {
   border-radius: 28px;
   box-sizing: border-box;
   display: flex;
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   flex-direction: column;
   gap: 24px;
   justify-content: center;
-  min-height: 280px;
+  min-height: 240px;
   padding: 40px 16px 64px;
   text-align: center;
   width: 100%;
@@ -1641,7 +1650,10 @@ body:has(.page.is-ink) {
 }
 
 .contact.is-page.is-sent {
-  min-height: calc(100vh - 220px);
+  min-height: 0;
+  padding-bottom: var(--section-horiz);
+  padding-left: var(--section-horiz);
+  padding-right: var(--section-horiz);
 }
 
 .field-row,
