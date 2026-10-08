@@ -22,7 +22,7 @@ const HELP_OPTIONS = [
   { id: "brand-identity", label: "Brand Identity", icon: brandIdentityIcon },
 ];
 
-const BUDGET_OPTIONS = ["$5k+", "$10k+", "$25k+", "Not sure"];
+const BUDGET_OPTIONS = ["$8k+", "$20k+", "$50k+", "Not sure"];
 
 const INITIAL_FORM = {
   name: "",

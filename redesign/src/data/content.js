@@ -93,4 +93,4 @@ export const faqs = [
   },
 ];
 
-export const budgets = ["$5k+", "$10k+", "$25k+", "Not sure"];
+export const budgets = ["$8k+", "$20k+", "$50k+", "Not sure"];

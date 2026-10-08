@@ -1,4 +1,4 @@
-const BUDGET_OPTIONS = new Set(["$5k+", "$10k+", "$25k+", "Not sure"]);
+const BUDGET_OPTIONS = new Set(["$8k+", "$20k+", "$50k+", "Not sure"]);
 const MAX_TEXT = 2000;
 const MAX_NAME = 120;
 const MAX_EMAIL = 200;

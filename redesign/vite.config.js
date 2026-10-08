@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(root, "..");
-const BUDGET_OPTIONS = new Set(["$5k+", "$10k+", "$25k+", "Not sure"]);
+const BUDGET_OPTIONS = new Set(["$8k+", "$20k+", "$50k+", "Not sure"]);
 
 function escapeHtml(value) {
   return String(value)
