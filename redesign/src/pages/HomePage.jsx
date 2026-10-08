@@ -19,6 +19,7 @@ import { ContactSection } from "../components/ContactSection.jsx";
 import { SoftImage, SoftVideo } from "../components/SoftMedia.jsx";
 import { cases } from "../data/cases.js";
 import { faqs, services, testimonials } from "../data/content.js";
+import { spawnPressRipple } from "../pressRipple.js";
 
 const MOBILE_SHOWREEL = "(max-width: 600px)";
 const MOBILE_HERO = "(max-width: 720px)";
@@ -363,6 +364,7 @@ export function HomePage({ onNavigate }) {
                 className="accordion-item"
                 type="button"
                 aria-expanded={open}
+                onPointerDown={spawnPressRipple}
                 onClick={() => setOpenService(open ? -1 : index)}
               >
                 <p className="accordion-number">{service.number}</p>
@@ -451,6 +453,7 @@ export function HomePage({ onNavigate }) {
                 className="faq-item"
                 type="button"
                 aria-expanded={open}
+                onPointerDown={spawnPressRipple}
                 onClick={() => setOpenFaq(open ? -1 : index)}
               >
                 <div>
