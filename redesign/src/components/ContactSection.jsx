@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import successCheck from "../assets/contact/success-check.png";
 import checkIcon from "../assets/icons/check.svg";
@@ -7,6 +7,9 @@ import telegram from "../assets/icons/telegram.svg";
 import whatsapp from "../assets/icons/whatsapp.svg";
 import { appHref } from "../base.js";
 import { budgets, email, phone, telegramUrl, whatsappUrl } from "../data/content.js";
+import { CopiedToast } from "./CopiedToast.jsx";
+
+const COPY_TOAST_MS = 2200;
 
 function goApp(event, href) {
   if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -54,6 +57,8 @@ async function submitContact(payload) {
 
 export function ContactSection({ page = false }) {
   const [copied, setCopied] = useState("");
+  const [toastOpen, setToastOpen] = useState(false);
+  const [toastKey, setToastKey] = useState(0);
   const [budget, setBudget] = useState(budgets[0]);
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -64,6 +69,7 @@ export function ContactSection({ page = false }) {
   const nameRef = useRef(null);
   const emailRef = useRef(null);
   const projectRef = useRef(null);
+  const toastTimer = useRef(0);
 
   const fieldErrors = useMemo(
     () =>
@@ -75,12 +81,28 @@ export function ContactSection({ page = false }) {
     [values.name, values.email, values.project],
   );
 
+  useEffect(
+    () => () => {
+      if (toastTimer.current) window.clearTimeout(toastTimer.current);
+    },
+    [],
+  );
+
   const copy = async (value) => {
     try {
       await navigator.clipboard.writeText(value);
       setCopied(value);
+      setToastOpen(true);
+      setToastKey((key) => key + 1);
+      if (toastTimer.current) window.clearTimeout(toastTimer.current);
+      toastTimer.current = window.setTimeout(() => {
+        setToastOpen(false);
+        setCopied("");
+        toastTimer.current = 0;
+      }, COPY_TOAST_MS);
     } catch {
       setCopied("");
+      setToastOpen(false);
     }
   };
 
@@ -151,6 +173,7 @@ export function ContactSection({ page = false }) {
       id="contact"
       data-ink
     >
+      <CopiedToast open={toastOpen} restartKey={toastKey} />
       <div className="contact-intro">
         {page ? (
           <h1 className="section-title" data-reveal>
@@ -184,17 +207,19 @@ export function ContactSection({ page = false }) {
         <div className="copy-row">
           <div className="field-label">Whatsapp / Telegram</div>
           <div className={copied === phone ? "copy-box is-copied" : "copy-box"}>
-            <button className="copy-box-main" type="button" onClick={() => copy(phone)}>
-              <span>{phone}</span>
-            </button>
-            <span className="contact-icons">
-              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
-                <img src={whatsapp} alt="" />
-              </a>
-              <a href={telegramUrl} target="_blank" rel="noopener noreferrer" aria-label="Chat on Telegram">
-                <img src={telegram} alt="" />
-              </a>
-            </span>
+            <div className="copy-box-content">
+              <button className="copy-box-main" type="button" onClick={() => copy(phone)}>
+                <span>{phone}</span>
+              </button>
+              <span className="contact-icons">
+                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+                  <img src={whatsapp} alt="" />
+                </a>
+                <a href={telegramUrl} target="_blank" rel="noopener noreferrer" aria-label="Chat on Telegram">
+                  <img src={telegram} alt="" />
+                </a>
+              </span>
+            </div>
             <button className="copy-icon" type="button" aria-label="Copy phone number" onClick={() => copy(phone)}>
               <img src={copied === phone ? checkIcon : copyIcon} alt="" />
             </button>
