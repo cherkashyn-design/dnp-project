@@ -86,13 +86,15 @@ function buildTelegramMessage(payload) {
     "",
     `<b>Name:</b> ${escapeHtml(payload.name)}`,
     `<b>Email:</b> ${escapeHtml(payload.email)}`,
-    `<b>Company:</b> ${escapeHtml(payload.company)}`,
-    `<b>Building:</b> ${escapeHtml(payload.building || "—")}`,
-    `<b>Help with:</b> ${help}`,
+    `<b>Project:</b> ${escapeHtml(payload.company)}`,
+    `<b>Message:</b> ${escapeHtml(payload.building || "—")}`,
+    help === "—" ? null : `<b>Help with:</b> ${help}`,
     `<b>Budget:</b> ${escapeHtml(payload.budget)}`,
     `<b>IP:</b> ${escapeHtml(payload.ip)}`,
     `<b>Location:</b> ${escapeHtml(location)}`,
-  ].join("\n");
+  ]
+    .filter(Boolean)
+    .join("\n");
 }
 
 export default async function handler(req, res) {

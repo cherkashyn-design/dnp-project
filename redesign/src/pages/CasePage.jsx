@@ -3,17 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import dhruv from "../assets/people/dhruv.png";
 import plus from "../assets/icons/plus.svg";
 import minus from "../assets/icons/minus.svg";
-import copyIcon from "../assets/icons/copy.svg";
-import checkIcon from "../assets/icons/check.svg";
-import whatsapp from "../assets/icons/whatsapp.svg";
-import telegram from "../assets/icons/telegram.svg";
 import { appHref } from "../base.js";
+import { ContactSection } from "../components/ContactSection.jsx";
 import { LottieFrame } from "../components/LottieFrame.jsx";
 import { LottieStrip } from "../components/LottieStrip.jsx";
 import { SoftImage, SoftVideo } from "../components/SoftMedia.jsx";
 import { SidebarReel } from "../components/SidebarReel.jsx";
 import { cases } from "../data/cases.js";
-import { budgets, email, phone } from "../data/content.js";
 import { genieCase } from "../../../src/data/genie.js";
 import { salesDriverCase } from "../../../src/data/salesDriver.js";
 import { yummoCase } from "../../../src/data/yummo.js";
@@ -252,134 +248,7 @@ function OtherProjects({ slug, onNavigate }) {
   );
 }
 
-export function CaseContact({ page = false }) {
-  const [copied, setCopied] = useState("");
-  const [budget, setBudget] = useState(budgets[0]);
-  const [sent, setSent] = useState(false);
-
-  const copy = (value) => {
-    navigator.clipboard.writeText(value).then(
-      () => setCopied(value),
-      () => setCopied(""),
-    );
-  };
-
-  return (
-    <section className={page ? "contact is-page" : "section contact"} id="contact" data-ink>
-      <div className="contact-intro">
-        {page ? (
-          <h1 className="section-title" data-reveal>
-            Let’s grow something great
-          </h1>
-        ) : (
-          <h2 className="section-title" data-reveal>
-            Let’s grow something great
-          </h2>
-        )}
-        <p className="contact-lead">
-          Do Not Press is a design agency ready when you are. Tell us about the product, the plans, and
-          the deadline. 30-min call · no deck required · reply in 1 business day.
-        </p>
-      </div>
-      <hr />
-      <div className="contact-block">
-        <div className="copy-row">
-          <div className="field-label">Our Email</div>
-          <button
-            className={copied === email ? "copy-box is-copied" : "copy-box"}
-            type="button"
-            onClick={() => copy(email)}
-          >
-            <span>{email}</span>
-            <span className="copy-icon" aria-hidden="true">
-              <img src={copied === email ? checkIcon : copyIcon} alt="" />
-            </span>
-          </button>
-        </div>
-        <div className="copy-row">
-          <div className="field-label">Whatsapp / Telegram</div>
-          <button
-            className={copied === phone ? "copy-box is-copied" : "copy-box"}
-            type="button"
-            onClick={() => copy(phone)}
-          >
-            <span>
-              {phone}
-              <span className="contact-icons">
-                <img src={whatsapp} alt="" />
-                <img src={telegram} alt="" />
-              </span>
-            </span>
-            <span className="copy-icon" aria-hidden="true">
-              <img src={copied === phone ? checkIcon : copyIcon} alt="" />
-            </span>
-          </button>
-        </div>
-      </div>
-      <hr />
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          setSent(true);
-        }}
-      >
-        <label className="field-row">
-          <span className="field-label">Your Name*</span>
-          <span className="field-control">
-            <input className="field" name="name" required placeholder="Alex" />
-            <span className="field-error">Error Text</span>
-          </span>
-        </label>
-        <label className="field-row">
-          <span className="field-label">Email*</span>
-          <span className="field-control">
-            <input className="field" type="email" name="email" required placeholder="example@mail.com" />
-            <span className="field-error">Error Text</span>
-          </span>
-        </label>
-        <label className="field-row">
-          <span className="field-label">Project Name*</span>
-          <span className="field-control">
-            <input className="field" name="project" required placeholder="DNP Studio" />
-            <span className="field-error">Error Text</span>
-          </span>
-        </label>
-        <div className="field-row">
-          <div className="field-label">Your Budget*</div>
-          <div className="segments" role="radiogroup" aria-label="Your Budget">
-            {budgets.map((option) => (
-              <button
-                key={option}
-                type="button"
-                className={budget === option ? "is-active" : ""}
-                onClick={() => setBudget(option)}
-              >
-                {option}
-              </button>
-            ))}
-          </div>
-        </div>
-        <label className="field-row">
-          <span className="field-label">Message*</span>
-          <span className="field-control">
-            <textarea className="field" name="message" required placeholder="What are you building?" />
-            <span className="field-error">Error Text</span>
-          </span>
-        </label>
-        <div className="field-row">
-          <div />
-          <button className="button-l is-reverse" type="submit">
-            <span>{sent ? "Sent" : "Send Details"}</span>
-          </button>
-        </div>
-        <div className="field-row">
-          <div />
-          <p className="legal-note">By clicking “Send Details” you accept our Terms of Use & Privacy Policy</p>
-        </div>
-      </form>
-    </section>
-  );
-}
+export { ContactSection as CaseContact } from "../components/ContactSection.jsx";
 
 function sectionRows(section) {
   if (section.mediaRows) return section.mediaRows;

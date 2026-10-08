@@ -1517,6 +1517,29 @@ body:has(.page.is-ink) {
   min-width: 0;
 }
 
+.hp-field {
+  height: 0;
+  left: -9999px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 0;
+}
+
+.form-submit-error {
+  color: #ff3d3d;
+  -webkit-text-fill-color: #ff3d3d;
+  font-size: 14px;
+  letter-spacing: -0.28px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.button-l:disabled {
+  cursor: default;
+  opacity: 0.72;
+}
+
 .field-error {
   color: #ff3d3d;
   display: none;

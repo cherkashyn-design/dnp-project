@@ -3,11 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import yc from "../assets/brand/yc.svg";
 import plus from "../assets/icons/plus.svg";
 import minus from "../assets/icons/minus.svg";
-import copyIcon from "../assets/icons/copy.svg";
-import checkIcon from "../assets/icons/check.svg";
 import arrowLight from "../assets/icons/arrow-light.svg";
-import whatsapp from "../assets/icons/whatsapp.svg";
-import telegram from "../assets/icons/telegram.svg";
 import keepBuilding from "../assets/features/keep-building.svg";
 import designTeam from "../assets/features/design-team.svg";
 import showreel from "../assets/showreel/showreel.mp4";
@@ -19,9 +15,10 @@ import gdpr from "../assets/standards/gdpr.svg";
 import ycBadge from "../assets/standards/yc.svg";
 import maksym from "../assets/people/maksym.webp";
 import { appHref } from "../base.js";
+import { ContactSection } from "../components/ContactSection.jsx";
 import { SoftImage, SoftVideo } from "../components/SoftMedia.jsx";
 import { cases } from "../data/cases.js";
-import { budgets, email, faqs, phone, services, testimonials } from "../data/content.js";
+import { faqs, services, testimonials } from "../data/content.js";
 
 const MOBILE_SHOWREEL = "(max-width: 600px)";
 const MOBILE_HERO = "(max-width: 720px)";
@@ -84,9 +81,6 @@ export function HomePage({ onNavigate }) {
   const portraitRef = useRef(null);
   const [openService, setOpenService] = useState(0);
   const [openFaq, setOpenFaq] = useState(0);
-  const [budget, setBudget] = useState(budgets[0]);
-  const [copied, setCopied] = useState("");
-  const [sent, setSent] = useState(false);
   const [mobileHero, setMobileHero] = useState(() => isMobileHero());
 
   useEffect(() => {
@@ -96,15 +90,6 @@ export function HomePage({ onNavigate }) {
     media.addEventListener("change", onChange);
     return () => media.removeEventListener("change", onChange);
   }, []);
-
-  const copy = async (value) => {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopied(value);
-    } catch {
-      setCopied("");
-    }
-  };
 
   const onShowreelPointerDown = (event) => {
     if (event.button !== 0 || isMobileHero()) return;
@@ -483,115 +468,7 @@ export function HomePage({ onNavigate }) {
         </div>
       </section>
 
-      <section className="section contact" id="contact" data-ink>
-        <div className="contact-intro">
-          <h2 className="section-title" data-reveal>
-            Let’s grow something great
-          </h2>
-          <p className="contact-lead">
-            Do Not Press is a design agency ready when you are. Tell us about the product, the plans,
-            and the deadline. 30-min call · no deck required · reply in 1 business day.
-          </p>
-        </div>
-        <hr />
-        <div className="contact-block">
-        <div className="copy-row">
-          <div className="field-label">Our Email</div>
-          <button
-            className={copied === email ? "copy-box is-copied" : "copy-box"}
-            type="button"
-            onClick={() => copy(email)}
-          >
-            <span>{email}</span>
-            <span className="copy-icon" aria-hidden="true">
-              <img src={copied === email ? checkIcon : copyIcon} alt="" />
-            </span>
-          </button>
-        </div>
-        <div className="copy-row">
-          <div className="field-label">Whatsapp / Telegram</div>
-          <button
-            className={copied === phone ? "copy-box is-copied" : "copy-box"}
-            type="button"
-            onClick={() => copy(phone)}
-          >
-            <span>
-              {phone}
-              <span className="contact-icons">
-                <img src={whatsapp} alt="" />
-                <img src={telegram} alt="" />
-              </span>
-            </span>
-            <span className="copy-icon" aria-hidden="true">
-              <img src={copied === phone ? checkIcon : copyIcon} alt="" />
-            </span>
-          </button>
-        </div>
-        </div>
-        <hr />
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            setSent(true);
-          }}
-        >
-          <label className="field-row">
-            <span className="field-label">Your Name*</span>
-            <span className="field-control">
-              <input className="field" name="name" required placeholder="Alex" />
-              <span className="field-error">Error Text</span>
-            </span>
-          </label>
-          <label className="field-row">
-            <span className="field-label">Email*</span>
-            <span className="field-control">
-              <input className="field" type="email" name="email" required placeholder="example@mail.com" />
-              <span className="field-error">Error Text</span>
-            </span>
-          </label>
-          <label className="field-row">
-            <span className="field-label">Project Name*</span>
-            <span className="field-control">
-              <input className="field" name="project" required placeholder="DNP Studio" />
-              <span className="field-error">Error Text</span>
-            </span>
-          </label>
-          <div className="field-row">
-            <div className="field-label">Your Budget*</div>
-            <div className="segments" role="radiogroup" aria-label="Your Budget">
-              {budgets.map((option) => (
-                <button
-                  key={option}
-                  type="button"
-                  className={budget === option ? "is-active" : ""}
-                  onClick={() => setBudget(option)}
-                >
-                  {option}
-                </button>
-              ))}
-            </div>
-          </div>
-          <label className="field-row">
-            <span className="field-label">Message*</span>
-            <span className="field-control">
-              <textarea className="field" name="message" required placeholder="What are you building?" />
-              <span className="field-error">Error Text</span>
-            </span>
-          </label>
-          <div className="field-row">
-            <div />
-            <button className="button-l is-reverse" type="submit">
-              <span>{sent ? "Sent" : "Send Details"}</span>
-            </button>
-          </div>
-          <div className="field-row">
-            <div />
-            <p className="legal-note">
-              By clicking “Send Details” you accept our Terms of Use & Privacy Policy
-            </p>
-          </div>
-        </form>
-      </section>
+      <ContactSection />
     </>
   );
 }

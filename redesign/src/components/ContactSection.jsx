@@ -1,0 +1,214 @@
+import { useState } from "react";
+
+import checkIcon from "../assets/icons/check.svg";
+import copyIcon from "../assets/icons/copy.svg";
+import telegram from "../assets/icons/telegram.svg";
+import whatsapp from "../assets/icons/whatsapp.svg";
+import { budgets, email, phone } from "../data/content.js";
+
+async function submitContact(payload) {
+  const response = await fetch("/api/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  const result = await response.json().catch(() => null);
+  if (!response.ok) {
+    throw new Error(result?.error || "Something went wrong. Please try again.");
+  }
+  return result;
+}
+
+export function ContactSection({ page = false }) {
+  const [copied, setCopied] = useState("");
+  const [budget, setBudget] = useState(budgets[0]);
+  const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  const copy = async (value) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(value);
+    } catch {
+      setCopied("");
+    }
+  };
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    if (submitting || sent) return;
+
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    setSubmitError("");
+
+    const payload = {
+      name: String(data.get("name") || "").trim(),
+      email: String(data.get("email") || "").trim(),
+      company: String(data.get("project") || "").trim(),
+      building: String(data.get("message") || "").trim(),
+      budget,
+      helpTags: [],
+      website: String(data.get("website") || "").trim(),
+    };
+
+    if (!form.reportValidity()) return;
+
+    setSubmitting(true);
+    try {
+      await submitContact(payload);
+      setSent(true);
+      form.reset();
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <section className={page ? "contact is-page" : "section contact"} id="contact" data-ink>
+      <div className="contact-intro">
+        {page ? (
+          <h1 className="section-title" data-reveal>
+            Let’s grow something great
+          </h1>
+        ) : (
+          <h2 className="section-title" data-reveal>
+            Let’s grow something great
+          </h2>
+        )}
+        <p className="contact-lead">
+          Do Not Press is a design agency ready when you are. Tell us about the product, the plans, and
+          the deadline. 30-min call · no deck required · reply in 1 business day.
+        </p>
+      </div>
+      <hr />
+      <div className="contact-block">
+        <div className="copy-row">
+          <div className="field-label">Our Email</div>
+          <button
+            className={copied === email ? "copy-box is-copied" : "copy-box"}
+            type="button"
+            onClick={() => copy(email)}
+          >
+            <span>{email}</span>
+            <span className="copy-icon" aria-hidden="true">
+              <img src={copied === email ? checkIcon : copyIcon} alt="" />
+            </span>
+          </button>
+        </div>
+        <div className="copy-row">
+          <div className="field-label">Whatsapp / Telegram</div>
+          <button
+            className={copied === phone ? "copy-box is-copied" : "copy-box"}
+            type="button"
+            onClick={() => copy(phone)}
+          >
+            <span>
+              {phone}
+              <span className="contact-icons">
+                <img src={whatsapp} alt="" />
+                <img src={telegram} alt="" />
+              </span>
+            </span>
+            <span className="copy-icon" aria-hidden="true">
+              <img src={copied === phone ? checkIcon : copyIcon} alt="" />
+            </span>
+          </button>
+        </div>
+      </div>
+      <hr />
+      <form onSubmit={onSubmit} noValidate={false}>
+        <label className="hp-field" aria-hidden="true">
+          <span>Website</span>
+          <input className="field" name="website" type="text" tabIndex={-1} autoComplete="off" />
+        </label>
+        <label className="field-row">
+          <span className="field-label">Your Name*</span>
+          <span className="field-control">
+            <input className="field" name="name" required placeholder="Alex" disabled={sent || submitting} />
+            <span className="field-error">Please enter your name</span>
+          </span>
+        </label>
+        <label className="field-row">
+          <span className="field-label">Email*</span>
+          <span className="field-control">
+            <input
+              className="field"
+              type="email"
+              name="email"
+              required
+              placeholder="example@mail.com"
+              disabled={sent || submitting}
+            />
+            <span className="field-error">Enter a valid email</span>
+          </span>
+        </label>
+        <label className="field-row">
+          <span className="field-label">Project Name*</span>
+          <span className="field-control">
+            <input
+              className="field"
+              name="project"
+              required
+              placeholder="DNP Studio"
+              disabled={sent || submitting}
+            />
+            <span className="field-error">Please enter a project name</span>
+          </span>
+        </label>
+        <div className="field-row">
+          <div className="field-label">Your Budget*</div>
+          <div className="segments" role="radiogroup" aria-label="Your Budget">
+            {budgets.map((option) => (
+              <button
+                key={option}
+                type="button"
+                className={budget === option ? "is-active" : ""}
+                onClick={() => setBudget(option)}
+                disabled={sent || submitting}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </div>
+        <label className="field-row">
+          <span className="field-label">Message*</span>
+          <span className="field-control">
+            <textarea
+              className="field"
+              name="message"
+              required
+              placeholder="What are you building?"
+              disabled={sent || submitting}
+            />
+            <span className="field-error">Please add a short message</span>
+          </span>
+        </label>
+        {submitError ? (
+          <div className="field-row">
+            <div />
+            <p className="form-submit-error" role="alert">
+              {submitError}
+            </p>
+          </div>
+        ) : null}
+        <div className="field-row">
+          <div />
+          <button className="button-l is-reverse" type="submit" disabled={sent || submitting}>
+            <span>{sent ? "Sent" : submitting ? "Sending…" : "Send Details"}</span>
+          </button>
+        </div>
+        <div className="field-row">
+          <div />
+          <p className="legal-note">
+            By clicking “Send Details” you accept our Terms of Use & Privacy Policy
+          </p>
+        </div>
+      </form>
+    </section>
+  );
+}
