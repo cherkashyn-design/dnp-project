@@ -219,9 +219,9 @@ export function HomePage({ onNavigate }) {
                 shippable product design
               </h1>
               <p className="hero-subtitle">
-                <span className="hero-subtitle-line">Do Not Press — product design studio</span>
+                <span className="hero-subtitle-line">Product design studio &amp; agency</span>
                 <span className="hero-subtitle-line">
-                  &amp; agency for{" "}
+                  experienced with{" "}
                   <span className="yc-badge">
                     <img src={yc} alt="" />
                     Backed

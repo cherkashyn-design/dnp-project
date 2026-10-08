@@ -56,23 +56,48 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const nodes = document.querySelectorAll("[data-reveal]");
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      nodes.forEach((node) => node.classList.add("is-in"));
-      return undefined;
-    }
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-in");
-          observer.unobserve(entry.target);
-        });
-      },
-      { rootMargin: "0px", threshold: 0 },
-    );
-    nodes.forEach((node) => observer.observe(node));
-    return () => observer.disconnect();
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const watched = new WeakSet();
+    let io = null;
+
+    const watch = (node) => {
+      if (!(node instanceof Element) || !node.hasAttribute("data-reveal") || watched.has(node)) {
+        return;
+      }
+      watched.add(node);
+      if (reduced) {
+        node.classList.add("is-in");
+        return;
+      }
+      if (!io) {
+        io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add("is-in");
+              io?.unobserve(entry.target);
+            });
+          },
+          { rootMargin: "0px", threshold: 0 },
+        );
+      }
+      io.observe(node);
+    };
+
+    const scan = () => {
+      document.querySelectorAll("[data-reveal]").forEach(watch);
+    };
+
+    // Lazy routes mount after this effect; rescan when Suspense inserts content.
+    scan();
+    const root = document.querySelector("main") || document.body;
+    const mo = new MutationObserver(scan);
+    mo.observe(root, { childList: true, subtree: true });
+
+    return () => {
+      mo.disconnect();
+      io?.disconnect();
+    };
   }, [path]);
 
   useEffect(() => {
