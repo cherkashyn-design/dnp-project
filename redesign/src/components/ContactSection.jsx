@@ -121,46 +121,55 @@ export function ContactSection({ page = false }) {
       </div>
       <hr />
       <form onSubmit={onSubmit} noValidate={false}>
-        <label className="hp-field" aria-hidden="true">
+        <div className="hp-field" aria-hidden="true">
           <span>Website</span>
           <input className="field" name="website" type="text" tabIndex={-1} autoComplete="off" />
-        </label>
-        <label className="field-row">
-          <span className="field-label">Your Name*</span>
-          <span className="field-control">
-            <input className="field" name="name" required placeholder="Alex" disabled={sent || submitting} />
+        </div>
+        <div className="field-row">
+          <div className="field-label">Your Name</div>
+          <div className="field-control">
+            <input
+              className="field"
+              name="name"
+              required
+              placeholder="Alex"
+              aria-label="Your Name"
+              disabled={sent || submitting}
+            />
             <span className="field-error">Please enter your name</span>
-          </span>
-        </label>
-        <label className="field-row">
-          <span className="field-label">Email*</span>
-          <span className="field-control">
+          </div>
+        </div>
+        <div className="field-row">
+          <div className="field-label">Email</div>
+          <div className="field-control">
             <input
               className="field"
               type="email"
               name="email"
               required
               placeholder="example@mail.com"
+              aria-label="Email"
               disabled={sent || submitting}
             />
             <span className="field-error">Enter a valid email</span>
-          </span>
-        </label>
-        <label className="field-row">
-          <span className="field-label">Project Name*</span>
-          <span className="field-control">
+          </div>
+        </div>
+        <div className="field-row">
+          <div className="field-label">Project Name</div>
+          <div className="field-control">
             <input
               className="field"
               name="project"
               required
               placeholder="DNP Studio"
+              aria-label="Project Name"
               disabled={sent || submitting}
             />
             <span className="field-error">Please enter a project name</span>
-          </span>
-        </label>
+          </div>
+        </div>
         <div className="field-row">
-          <div className="field-label">Your Budget*</div>
+          <div className="field-label">Your Budget</div>
           <div className="segments" role="radiogroup" aria-label="Your Budget">
             {budgets.map((option) => (
               <button
@@ -175,19 +184,21 @@ export function ContactSection({ page = false }) {
             ))}
           </div>
         </div>
-        <label className="field-row">
-          <span className="field-label">Message*</span>
-          <span className="field-control">
+        <div className="field-row">
+          <div className="field-label">
+            Message
+            <span className="field-optional">Optional</span>
+          </div>
+          <div className="field-control">
             <textarea
               className="field"
               name="message"
-              required
               placeholder="What are you building?"
+              aria-label="Message"
               disabled={sent || submitting}
             />
-            <span className="field-error">Please add a short message</span>
-          </span>
-        </label>
+          </div>
+        </div>
         {submitError ? (
           <div className="field-row">
             <div />

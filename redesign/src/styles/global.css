@@ -1481,10 +1481,23 @@ body:has(.page.is-ink) {
 }
 
 .field-label {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
   font-family: var(--font-serif);
   font-size: 24px;
+  gap: 8px;
   line-height: 1.1;
   padding: 6px 0;
+}
+
+.field-optional {
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
 }
 
 .field,
