@@ -222,22 +222,27 @@ export function ArticlePage({ slug, onNavigate }) {
       </header>
       <div className="article-layout">
         <aside className="article-side">
-          <nav aria-label="On this page">
-            {headings.map((heading) => (
-              <a
-                className={heading === active ? "is-active" : ""}
-                href={`#${slugify(heading)}`}
-                key={heading}
-                onClick={(event) => {
-                  event.preventDefault();
-                  setActive(heading);
-                  document.getElementById(slugify(heading))?.scrollIntoView({ behavior: "smooth" });
-                }}
-              >
-                {heading}
-              </a>
-            ))}
-          </nav>
+          {headings.length ? (
+            <div className="article-plan">
+              <p className="article-plan-title">Article plan</p>
+              <nav aria-label="Article plan">
+                {headings.map((heading) => (
+                  <a
+                    className={heading === active ? "is-active" : ""}
+                    href={`#${slugify(heading)}`}
+                    key={heading}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setActive(heading);
+                      document.getElementById(slugify(heading))?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                  >
+                    {heading}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          ) : null}
           <div className="article-share">
             <p>Share Article</p>
             <div>
