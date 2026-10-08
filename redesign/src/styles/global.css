@@ -1472,6 +1472,59 @@ body:has(.page.is-ink) {
   width: 100%;
 }
 
+.contact-success {
+  align-items: center;
+  background: rgba(88, 203, 128, 0.15);
+  border-radius: 28px;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: center;
+  min-height: 280px;
+  padding: 40px 16px 64px;
+  text-align: center;
+  width: 100%;
+}
+
+.contact-success-icon {
+  display: block;
+  height: 66px;
+  object-fit: contain;
+  width: 63px;
+}
+
+.contact-success-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.contact-success-title {
+  color: var(--text-reverse);
+  -webkit-text-fill-color: var(--text-reverse);
+  font-family: var(--font-serif);
+  font-size: 54px;
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.contact-success-text {
+  color: var(--text-reverse-tertiary);
+  -webkit-text-fill-color: var(--text-reverse-tertiary);
+  font-size: 16px;
+  letter-spacing: -0.32px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.contact.is-page.is-sent {
+  min-height: calc(100vh - 220px);
+}
+
 .field-row,
 .copy-row {
   align-items: flex-start;
@@ -1859,6 +1912,15 @@ textarea.field {
   .contact form,
   .contact-block {
     gap: var(--space-28);
+  }
+
+  .contact-success {
+    min-height: 240px;
+    padding: 32px 16px 48px;
+  }
+
+  .contact-success-title {
+    font-size: 40px;
   }
 
   .standards-row {

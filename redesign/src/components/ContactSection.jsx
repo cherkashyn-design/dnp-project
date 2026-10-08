@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 
+import successCheck from "../assets/contact/success-check.png";
 import checkIcon from "../assets/icons/check.svg";
 import copyIcon from "../assets/icons/copy.svg";
 import telegram from "../assets/icons/telegram.svg";
@@ -145,7 +146,11 @@ export function ContactSection({ page = false }) {
   const projectInvalid = showErrors && Boolean(fieldErrors.project);
 
   return (
-    <section className={page ? "contact is-page" : "section contact"} id="contact" data-ink>
+    <section
+      className={page ? `contact is-page${sent ? " is-sent" : ""}` : `section contact${sent ? " is-sent" : ""}`}
+      id="contact"
+      data-ink
+    >
       <div className="contact-intro">
         {page ? (
           <h1 className="section-title" data-reveal>
@@ -197,6 +202,17 @@ export function ContactSection({ page = false }) {
         </div>
       </div>
       <hr />
+      {sent ? (
+        <div className="contact-success" role="status" aria-live="polite">
+          <img className="contact-success-icon" src={successCheck} alt="" aria-hidden="true" />
+          <div className="contact-success-copy">
+            <p className="contact-success-title">Thanks</p>
+            <p className="contact-success-text">
+              We received your request. We&apos;ll get back to you within 24 hours.
+            </p>
+          </div>
+        </div>
+      ) : (
       <form onSubmit={onSubmit} noValidate>
         <div className="hp-field" aria-hidden="true">
           <span>Website</span>
@@ -312,8 +328,8 @@ export function ContactSection({ page = false }) {
         ) : null}
         <div className="field-row">
           <div />
-          <button className="button-l is-reverse" type="submit" disabled={sent || submitting}>
-            <span>{sent ? "Sent" : submitting ? "Sending…" : "Send Details"}</span>
+          <button className="button-l is-reverse" type="submit" disabled={submitting}>
+            <span>{submitting ? "Sending…" : "Send Details"}</span>
           </button>
         </div>
         <div className="field-row">
@@ -330,6 +346,7 @@ export function ContactSection({ page = false }) {
           </p>
         </div>
       </form>
+      )}
     </section>
   );
 }
