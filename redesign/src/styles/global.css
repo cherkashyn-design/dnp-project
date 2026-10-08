@@ -4,8 +4,9 @@
   /* Opaque 6-digit hex only — Safari on iOS can drop #RRGGBBAA / some rgba vars and fall back to link blue */
   --bg-secondary: #ebebeb;
   --bg-reverse: #0f0f0f;
-  --bg-reverse-secondary: #3d3d3d;
-  --bg-reverse-tertiary: #1f1f1f;
+  /* Frosted white on dark/gradient panels — rgba bg is Safari-safe (text tokens stay opaque) */
+  --bg-reverse-secondary: rgba(255, 255, 255, 0.24);
+  --bg-reverse-tertiary: rgba(255, 255, 255, 0.06);
   --bg-main-transparent: #ffffff;
   --text-main: #0f0f0f;
   --text-secondary: #6b6b6b;
@@ -17,8 +18,8 @@
   --line-secondary: #f0f0f0;
   --line-tertiary: #f5f5f5;
   --line-main: #ebebeb;
-  --line-reverse-secondary: #3d3d3d;
-  --line-reverse-tertiary: #2a2a2a;
+  --line-reverse-secondary: rgba(255, 255, 255, 0.24);
+  --line-reverse-tertiary: rgba(255, 255, 255, 0.12);
   --gradient-proof: linear-gradient(180deg, #616d7b 0%, #bfb8bf 100%);
   --font-serif: "Instrument Serif", serif;
   --font-sans: "Ubuntu", sans-serif;
@@ -1840,23 +1841,7 @@ main {
   opacity: 1;
 }
 
-.feature-card > .media-shell > img,
-.feature-card > img {
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.feature-card:hover > .media-shell > img,
-.feature-card:hover > img {
-  transform: scale(1.035);
-}
-
-.proof-card {
-  transition: background 0.35s ease;
-}
-
-.proof-card:hover {
-  background: rgba(255, 255, 255, 0.28);
-}
+/* proof-card / feature-card are static — no hover affordance */
 
 .field,
 .segments button {
