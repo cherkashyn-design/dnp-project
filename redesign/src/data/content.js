@@ -1,7 +1,7 @@
 import { cases } from "./cases.js";
-import dhruv from "../assets/people/dhruv.png";
-import orkhan from "../assets/people/orkhan.png";
-import vasyl from "../assets/people/vasyl.png";
+import dhruv from "../assets/people/dhruv.webp";
+import orkhan from "../assets/people/orkhan.webp";
+import vasyl from "../assets/people/vasyl.webp";
 import drumkitLogo from "../assets/logos/drumkit.svg";
 import nodityLogo from "../assets/logos/nodity.svg";
 import templateRocketLogo from "../assets/logos/templaterocket.svg";

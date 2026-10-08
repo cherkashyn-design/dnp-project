@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import dhruv from "../assets/people/dhruv.png";
+import dhruv from "../assets/people/dhruv.webp";
 import plus from "../assets/icons/plus.svg";
 import minus from "../assets/icons/minus.svg";
 import { appHref } from "../base.js";
@@ -250,8 +250,6 @@ function OtherProjects({ slug, onNavigate }) {
   );
 }
 
-export { ContactSection as CaseContact } from "../components/ContactSection.jsx";
-
 function sectionRows(section) {
   if (section.mediaRows) return section.mediaRows;
   if (section.tabs) return section.tabs.map((tab) => [tab]);
@@ -443,7 +441,7 @@ function DrumkitCase({ onNavigate }) {
       </section>
 
       <OtherProjects slug="drumkit-logistic-saas" onNavigate={onNavigate} />
-      <CaseContact />
+      <ContactSection />
     </article>
   );
 }
@@ -519,7 +517,7 @@ function LegacyCase({ project, data, onNavigate }) {
       ) : null}
 
       <OtherProjects slug={project.slug} onNavigate={onNavigate} />
-      <CaseContact />
+      <ContactSection />
     </article>
   );
 }

@@ -6,40 +6,16 @@ import yummoPreview from "../../portfolio/Yummo/Preview.webp";
 import yummoPreviewLq from "../../portfolio/Yummo/Preview.lq.jpg";
 import geniePreview from "../../portfolio/Genie/Preview.webp";
 import geniePreviewLq from "../../portfolio/Genie/Preview.lq.jpg";
-import hermesPreview from "../../portfolio/Hermes/Preview.webp";
-import hermesPreviewLq from "../../portfolio/Hermes/Preview.lq.jpg";
-import comfyPreview from "../../portfolio/ComfyUI/Preview.webp";
-import comfyPreviewLq from "../../portfolio/ComfyUI/Preview.lq.jpg";
 
 export const email = "contact@donotpress.com";
 
-/** Temporarily hidden from the site; keep entries so they are easy to restore. */
-export const hiddenCaseHrefs = new Set([
-  "/cases/comfyui-pro-ai-tool",
-  "/cases/hermes-cloud-ai-admin-panel",
-]);
-
-const allCases = [
-  {
-    name: "ComfyUI - pro AI tool",
-    image: comfyPreview,
-    lqImage: comfyPreviewLq,
-    tags: ["SaaS", "App"],
-    href: "/cases/comfyui-pro-ai-tool",
-  },
+export const cases = [
   {
     name: "Yummo - Food guide for moms",
     image: yummoPreview,
     lqImage: yummoPreviewLq,
     tags: ["Branding", "Landing", "App"],
     href: "/cases/yummo-food-guide-for-moms",
-  },
-  {
-    name: "Hermes Cloud - AI admin panel",
-    image: hermesPreview,
-    lqImage: hermesPreviewLq,
-    tags: ["SaaS", "App"],
-    href: "/cases/hermes-cloud-ai-admin-panel",
   },
   {
     name: "Nodify - node based AI editor",
@@ -63,5 +39,3 @@ const allCases = [
     href: "/cases/drumkit-logistic-saas",
   },
 ];
-
-export const cases = allCases.filter((project) => !hiddenCaseHrefs.has(project.href));

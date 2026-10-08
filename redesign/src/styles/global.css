@@ -189,6 +189,7 @@ video {
   background: transparent;
   gap: var(--space-6);
   grid-template-columns: 1fr auto;
+  padding-top: calc(12px + env(safe-area-inset-top, 0px));
 }
 
 .site-header.is-compact .nav-pills {
@@ -244,13 +245,14 @@ video {
   height: 20px;
 }
 
+html.is-menu-open,
+html.is-menu-open body {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 .site-header.is-compact.is-open {
-  left: 0;
-  padding-top: calc(12px + env(safe-area-inset-top, 0px));
-  position: fixed;
-  right: 0;
-  top: 0;
-  width: 100%;
+  /* Stay sticky — do not switch to fixed (that pulls the header out of flow and jumps the page). */
   z-index: 30;
 }
 
@@ -611,6 +613,10 @@ a.menu-talk:hover {
   text-wrap: balance;
 }
 
+.hero-subtitle-line + .hero-subtitle-line::before {
+  content: " ";
+}
+
 .hero-subtitle .yc-badge {
   -webkit-text-fill-color: #0f0f0f;
 }
@@ -801,8 +807,20 @@ a.menu-talk:hover {
   }
 
   .hero-subtitle {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
     font-size: 17px;
-    max-width: min(22em, 100%);
+    max-width: 100%;
+    text-wrap: pretty;
+  }
+
+  .hero-subtitle-line {
+    display: block;
+  }
+
+  .hero-subtitle-line + .hero-subtitle-line::before {
+    content: none;
   }
 
   .hero-copy .button-l {
@@ -1118,11 +1136,25 @@ a.menu-talk:hover {
   border-top: 0;
 }
 
-.accordion-item:hover,
-.faq-item:hover {
-  background: rgba(15, 15, 15, 0.03);
-  color: #0f0f0f;
-  -webkit-text-fill-color: #0f0f0f;
+/* Hover only on real pointer devices — touch leaves :hover stuck grey after tap. */
+@media (hover: hover) and (pointer: fine) {
+  .accordion-item:hover,
+  .faq-item:hover {
+    background: rgba(15, 15, 15, 0.03);
+    color: #0f0f0f;
+    -webkit-text-fill-color: #0f0f0f;
+  }
+
+  .accordion-item:hover .accordion-title,
+  .accordion-item:hover .accordion-number {
+    color: inherit;
+    -webkit-text-fill-color: inherit;
+  }
+
+  .accordion-item:hover .accordion-number {
+    color: #808080;
+    -webkit-text-fill-color: #808080;
+  }
 }
 
 .accordion-item:active,
@@ -1132,15 +1164,12 @@ a.menu-talk:hover {
   -webkit-text-fill-color: #0f0f0f;
 }
 
-.accordion-item:hover .accordion-title,
-.accordion-item:hover .accordion-number,
 .accordion-item:active .accordion-title,
 .accordion-item:active .accordion-number {
   color: inherit;
   -webkit-text-fill-color: inherit;
 }
 
-.accordion-item:hover .accordion-number,
 .accordion-item:active .accordion-number {
   color: #808080;
   -webkit-text-fill-color: #808080;
@@ -2213,7 +2242,7 @@ main {
 }
 
 [data-reveal] {
-  animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise 1.45s cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: var(--reveal, 0ms);
   animation-play-state: paused;
 }
@@ -2225,7 +2254,7 @@ main {
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(28px);
   }
 
   to {

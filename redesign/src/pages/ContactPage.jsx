@@ -1,5 +1,5 @@
-import { CaseContact } from "./CasePage.jsx";
+import { ContactSection } from "../components/ContactSection.jsx";
 
 export function ContactPage() {
-  return <CaseContact page />;
+  return <ContactSection page />;
 }

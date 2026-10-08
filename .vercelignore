@@ -1,0 +1,26 @@
+# Local / agent clutter — never needed for builds
+.cursor
+.tmp-*
+.tmp-*/
+**/.DS_Store
+
+# Hidden / unused case libraries (not imported by redesign build)
+portfolio/Hermes
+portfolio/ComfyUI
+
+# Superseded showreel sources (site uses showreel-desktop.*)
+redesign/src/assets/showreel/showreel.mp4
+redesign/src/assets/showreel/showreel.jpg
+redesign/src/assets/showreel/showreel.webm
+redesign/src/assets/showreel/showreel-mobile.webm
+redesign/src/assets/showreel/showreel-mobile-poster.webp
+
+# PNG portraits replaced by WebP
+redesign/src/assets/people/dhruv.png
+redesign/src/assets/people/vasyl.png
+redesign/src/assets/people/orkhan.png
+
+# Dev-only
+*.log
+.env*
+!.env.example

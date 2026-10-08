@@ -9,3 +9,7 @@ redesign/dist
 .env.*
 !.env.example
 .vercel
+
+.cursor/
+.tmp-*
+.tmp-*/

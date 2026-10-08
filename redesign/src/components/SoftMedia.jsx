@@ -25,7 +25,7 @@ function applyInk(shell, media, ink) {
 }
 
 export const SoftImage = forwardRef(function SoftImage(
-  { src, alt = "", className = "", ink, onLoad, onError, decoding = "async", ...props },
+  { src, alt = "", className = "", ink, onLoad, onError, decoding = "async", loading = "lazy", ...props },
   ref,
 ) {
   const shellRef = useRef(null);
@@ -59,6 +59,7 @@ export const SoftImage = forwardRef(function SoftImage(
         src={src}
         alt={alt}
         decoding={decoding}
+        loading={loading}
         onLoad={(event) => {
           setReady(true);
           applyInk(shellRef.current, event.currentTarget, ink);

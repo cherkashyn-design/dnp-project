@@ -121,32 +121,29 @@ export function SiteHeader({ path, onNavigate }) {
     const onKey = (event) => {
       if (event.key === "Escape") setOpen(false);
     };
-    const scrollY = window.scrollY;
-    const { body, documentElement } = document;
-    const previous = {
-      overflow: body.style.overflow,
-      position: body.style.position,
-      top: body.style.top,
-      width: body.style.width,
-      paddingRight: body.style.paddingRight,
-    };
-    const scrollbar = window.innerWidth - documentElement.clientWidth;
-
-    body.style.overflow = "hidden";
-    body.style.position = "fixed";
-    body.style.top = `-${scrollY}px`;
-    body.style.width = "100%";
+    // Standard scroll lock: overflow only — no body position:fixed / scrollTo restore
+    // (those jump the page and fight sticky header).
+    const html = document.documentElement;
+    const { body } = document;
+    const scrollbar = window.innerWidth - html.clientWidth;
+    html.classList.add("is-menu-open");
+    body.classList.add("is-menu-open");
     if (scrollbar > 0) body.style.paddingRight = `${scrollbar}px`;
 
+    const onTouchMove = (event) => {
+      const panel = document.getElementById("site-menu");
+      if (panel?.contains(event.target)) return;
+      event.preventDefault();
+    };
+
     document.addEventListener("keydown", onKey);
+    document.addEventListener("touchmove", onTouchMove, { passive: false });
     return () => {
-      body.style.overflow = previous.overflow;
-      body.style.position = previous.position;
-      body.style.top = previous.top;
-      body.style.width = previous.width;
-      body.style.paddingRight = previous.paddingRight;
+      html.classList.remove("is-menu-open");
+      body.classList.remove("is-menu-open");
+      body.style.paddingRight = "";
       document.removeEventListener("keydown", onKey);
-      window.scrollTo(0, scrollY);
+      document.removeEventListener("touchmove", onTouchMove);
     };
   }, [present]);
 

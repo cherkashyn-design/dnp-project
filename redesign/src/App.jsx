@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 
 import { appHref, stripBase } from "./base.js";
 import { SiteFooter } from "./components/SiteFooter.jsx";
@@ -6,15 +6,16 @@ import { SiteHeader } from "./components/SiteHeader.jsx";
 import { getBlogPost } from "./data/blog.js";
 import { getCase } from "./data/cases.js";
 import { INK_EVENT } from "./inkSurface.js";
-import { ArticlePage } from "./pages/ArticlePage.jsx";
-import { BlogPage } from "./pages/BlogPage.jsx";
-import { CasePage } from "./pages/CasePage.jsx";
-import { CasesPage } from "./pages/CasesPage.jsx";
-import { ContactPage } from "./pages/ContactPage.jsx";
 import { HomePage } from "./pages/HomePage.jsx";
-import { PrivacyPage } from "./pages/PrivacyPage.jsx";
-import { TermsPage } from "./pages/TermsPage.jsx";
 import { applyPageSeo, resolvePageSeo } from "./seo.js";
+
+const CasePage = lazy(() => import("./pages/CasePage.jsx").then((m) => ({ default: m.CasePage })));
+const CasesPage = lazy(() => import("./pages/CasesPage.jsx").then((m) => ({ default: m.CasesPage })));
+const ContactPage = lazy(() => import("./pages/ContactPage.jsx").then((m) => ({ default: m.ContactPage })));
+const BlogPage = lazy(() => import("./pages/BlogPage.jsx").then((m) => ({ default: m.BlogPage })));
+const ArticlePage = lazy(() => import("./pages/ArticlePage.jsx").then((m) => ({ default: m.ArticlePage })));
+const PrivacyPage = lazy(() => import("./pages/PrivacyPage.jsx").then((m) => ({ default: m.PrivacyPage })));
+const TermsPage = lazy(() => import("./pages/TermsPage.jsx").then((m) => ({ default: m.TermsPage })));
 
 function readPath() {
   return `${stripBase(window.location.pathname)}${window.location.hash}`;
@@ -68,7 +69,7 @@ export default function App() {
           observer.unobserve(entry.target);
         });
       },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.2 },
+      { rootMargin: "0px", threshold: 0 },
     );
     nodes.forEach((node) => observer.observe(node));
     return () => observer.disconnect();
@@ -162,7 +163,9 @@ export default function App() {
   return (
     <div className={pathname === "/contact" ? "page is-ink" : "page"}>
       <SiteHeader path={pathname} onNavigate={navigate} />
-      <main key={pathname}>{page}</main>
+      <main key={pathname}>
+        <Suspense fallback={null}>{page}</Suspense>
+      </main>
       <SiteFooter onNavigate={navigate} />
     </div>
   );

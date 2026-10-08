@@ -1,7 +1,7 @@
 import { appHref } from "../base.js";
 import { SoftImage } from "../components/SoftMedia.jsx";
 import { cases } from "../data/cases.js";
-import { CaseContact } from "./CasePage.jsx";
+import { ContactSection } from "../components/ContactSection.jsx";
 
 const listingOrder = [
   "drumkit-logistic-saas",
@@ -54,7 +54,7 @@ export function CasesPage({ onNavigate }) {
           ))}
         </div>
       </section>
-      <CaseContact />
+      <ContactSection />
     </>
   );
 }

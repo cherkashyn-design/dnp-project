@@ -13,7 +13,7 @@ export function BlogPage({ onNavigate }) {
           if (entry.isIntersecting) entry.target.classList.add("is-in");
         });
       },
-      { threshold: 0.15 },
+      { rootMargin: "0px", threshold: 0 },
     );
     nodes.forEach((node) => observer.observe(node));
     return () => observer.disconnect();

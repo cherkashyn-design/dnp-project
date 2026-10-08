@@ -6,9 +6,8 @@ import minus from "../assets/icons/minus.svg";
 import arrowLight from "../assets/icons/arrow-light.svg";
 import keepBuilding from "../assets/features/keep-building.svg";
 import designTeam from "../assets/features/design-team.svg";
-import showreel from "../assets/showreel/showreel.mp4";
-import showreelMobile from "../assets/showreel/showreel-mobile.webm";
-import showreelPoster from "../assets/showreel/showreel.jpg";
+import showreelDesktop from "../assets/showreel/showreel-desktop.webm";
+import showreelDesktopPoster from "../assets/showreel/showreel-desktop-poster.webp";
 import soc2 from "../assets/standards/soc2.svg";
 import iso from "../assets/standards/iso.svg";
 import gdpr from "../assets/standards/gdpr.svg";
@@ -21,7 +20,6 @@ import { cases } from "../data/cases.js";
 import { faqs, services, testimonials } from "../data/content.js";
 import { spawnPressRipple } from "../pressRipple.js";
 
-const MOBILE_SHOWREEL = "(max-width: 600px)";
 const MOBILE_HERO = "(max-width: 720px)";
 
 function isMobileHero() {
@@ -30,17 +28,6 @@ function isMobileHero() {
 
 function Showreel({ className }) {
   const videoRef = useRef(null);
-  const [mobile, setMobile] = useState(() =>
-    typeof window !== "undefined" ? window.matchMedia(MOBILE_SHOWREEL).matches : false,
-  );
-
-  useEffect(() => {
-    const media = window.matchMedia(MOBILE_SHOWREEL);
-    const onChange = () => setMobile(media.matches);
-    onChange();
-    media.addEventListener("change", onChange);
-    return () => media.removeEventListener("change", onChange);
-  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -58,19 +45,19 @@ function Showreel({ className }) {
       video.removeEventListener("loadeddata", start);
       video.removeEventListener("canplay", start);
     };
-  }, [mobile]);
+  }, []);
 
   return (
     <SoftVideo
       ref={videoRef}
       className={className}
-      src={mobile ? showreelMobile : showreel}
-      poster={mobile ? undefined : showreelPoster}
+      src={showreelDesktop}
+      poster={showreelDesktopPoster}
       autoPlay
       muted
       loop
       playsInline
-      preload="auto"
+      preload="metadata"
     />
   );
 }
@@ -185,7 +172,7 @@ export function HomePage({ onNavigate }) {
           observer.unobserve(entry.target);
         });
       },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.2 },
+      { rootMargin: "0px", threshold: 0 },
     );
     nodes.forEach((node) => observer.observe(node));
     return () => observer.disconnect();
@@ -232,12 +219,15 @@ export function HomePage({ onNavigate }) {
                 shippable product design
               </h1>
               <p className="hero-subtitle">
-                Do Not Press — product design studio & agency for{" "}
-                <span className="yc-badge">
-                  <img src={yc} alt="" />
-                  Backed
-                </span>{" "}
-                startups
+                <span className="hero-subtitle-line">Do Not Press — product design studio</span>
+                <span className="hero-subtitle-line">
+                  &amp; agency for{" "}
+                  <span className="yc-badge">
+                    <img src={yc} alt="" />
+                    Backed
+                  </span>{" "}
+                  startups
+                </span>
               </p>
             </div>
             <a className="button-l" href="#contact">
