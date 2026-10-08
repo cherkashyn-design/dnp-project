@@ -55,6 +55,7 @@
 }
 
 html {
+  overflow-x: clip;
   scroll-behavior: smooth;
 }
 
@@ -65,6 +66,7 @@ body {
   font-family: var(--font-sans);
   font-synthesis: none;
   font-weight: 400;
+  overflow-x: clip;
 }
 
 /* Keep fill in sync with color so Safari never paints link-blue when vars resolve */
@@ -482,6 +484,7 @@ video {
   display: grid;
   gap: 16px;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 100%;
   width: 100%;
 }
 
@@ -491,18 +494,20 @@ video {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  min-width: 0;
   padding: 0 36px;
 }
 
 .standards-mark {
   height: 124px;
+  max-width: 100%;
   position: relative;
   width: 124px;
 }
 
 .standards-mark img {
   left: 0;
-  max-width: none;
+  max-width: 100%;
   position: absolute;
 }
 
@@ -1030,13 +1035,13 @@ video {
   display: grid;
   gap: 96px;
   grid-template-columns: 64px minmax(0, 374px) minmax(0, 1fr);
-  margin-inline: -12px;
+  max-width: 100%;
   padding: 24px 12px;
   text-align: left;
   transition:
     background 0.25s ease,
     color 0.25s ease;
-  width: calc(100% + 24px);
+  width: 100%;
 }
 
 .accordion-item:first-child {
@@ -1722,7 +1727,23 @@ textarea.field {
   }
 
   .standards-row {
-    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .standards-item {
+    padding: 16px;
+  }
+
+  .standards-mark {
+    height: auto;
+    aspect-ratio: 1;
+    width: min(124px, 100%);
+  }
+
+  .standards-item span {
+    font-size: 16px;
+    overflow-wrap: anywhere;
   }
 
   .faq {
