@@ -15,12 +15,13 @@ redesign/node_modules
 redesign/dist
 
 # Unused by redesign build (legacy app + case source libraries)
-src
-portfolio
-docs
-scripts/optimize-portfolio-images.py
-scripts/optimize-portfolio-videos.py
-scripts/generate-lq-images.py
+# Leading slash = repo root only (do not match redesign/src)
+/src
+/portfolio
+/docs
+/scripts/optimize-portfolio-images.py
+/scripts/optimize-portfolio-videos.py
+/scripts/generate-lq-images.py
 
 # Superseded showreel sources (site uses showreel-desktop.*)
 redesign/src/assets/showreel/showreel.mp4
