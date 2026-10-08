@@ -2828,6 +2828,60 @@ main {
     grid-template-columns: 1fr;
   }
 
+  /* Captions leave the image overlay and sit in the content flow. */
+  .case-shot {
+    align-items: stretch;
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .case-shot > .media-shell,
+  .case-shot > img,
+  .case-shot > video,
+  .case-shot > .case-marquee {
+    aspect-ratio: 616 / 453.2;
+    border-radius: 24px;
+    flex: none;
+    height: auto;
+    inset: auto;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  .case-shot.is-reel > .case-marquee {
+    aspect-ratio: 3840 / 2000;
+  }
+
+  .case-shot > .media-shell > img,
+  .case-shot > .media-shell > video,
+  .case-shot > img,
+  .case-shot > video {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .case-shot .tag {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: transparent;
+    border-radius: 0;
+    color: var(--text-secondary);
+    -webkit-text-fill-color: var(--text-secondary);
+    font-size: 16px;
+    letter-spacing: -0.32px;
+    line-height: 1.5;
+    padding: 0;
+    position: static;
+    white-space: normal;
+    width: 100%;
+  }
+
   .case-motion-row {
     display: flex;
     gap: 12px;
