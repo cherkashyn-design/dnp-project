@@ -80,14 +80,14 @@ export function resolvePageSeo(pathname, { project, post } = {}) {
   if (pathname === "/terms") {
     return {
       title: "Terms | Do Not Press",
-      description: "Terms of use for Do Not Press studio.",
+      description: "Terms for using the Do Not Press website and contact forms.",
       path: "/terms",
     };
   }
 
   if (pathname === "/privacy") {
     return {
-      title: "Privacy | Do Not Press",
+      title: "Privacy Policy | Do Not Press",
       description: "Privacy policy for Do Not Press studio and agency.",
       path: "/privacy",
     };

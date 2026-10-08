@@ -4,7 +4,15 @@ import checkIcon from "../assets/icons/check.svg";
 import copyIcon from "../assets/icons/copy.svg";
 import telegram from "../assets/icons/telegram.svg";
 import whatsapp from "../assets/icons/whatsapp.svg";
+import { appHref } from "../base.js";
 import { budgets, email, phone, telegramUrl, whatsappUrl } from "../data/content.js";
+
+function goApp(event, href) {
+  if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  event.preventDefault();
+  window.history.pushState({}, "", appHref(href));
+  window.dispatchEvent(new PopStateEvent("popstate"));
+}
 
 async function submitContact(payload) {
   const response = await fetch("/api/contact", {
@@ -216,7 +224,14 @@ export function ContactSection({ page = false }) {
         <div className="field-row">
           <div />
           <p className="legal-note">
-            By clicking “Send Details” you accept our Terms of Use & Privacy Policy
+            By clicking “Send Details” you accept our{" "}
+            <a href={appHref("/terms")} onClick={(event) => goApp(event, "/terms")}>
+              Terms
+            </a>{" "}
+            &amp;{" "}
+            <a href={appHref("/privacy")} onClick={(event) => goApp(event, "/privacy")}>
+              Privacy Policy
+            </a>
           </p>
         </div>
       </form>

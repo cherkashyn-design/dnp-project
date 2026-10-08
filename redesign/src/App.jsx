@@ -11,7 +11,8 @@ import { CasePage } from "./pages/CasePage.jsx";
 import { CasesPage } from "./pages/CasesPage.jsx";
 import { ContactPage } from "./pages/ContactPage.jsx";
 import { HomePage } from "./pages/HomePage.jsx";
-import { SimplePage } from "./pages/SimplePage.jsx";
+import { PrivacyPage } from "./pages/PrivacyPage.jsx";
+import { TermsPage } from "./pages/TermsPage.jsx";
 import { applyPageSeo, resolvePageSeo } from "./seo.js";
 
 function readPath() {
@@ -150,17 +151,9 @@ export default function App() {
   } else if (pathname.startsWith("/blog/")) {
     page = <ArticlePage onNavigate={navigate} slug={blogSlug} />;
   } else if (pathname === "/terms") {
-    page = (
-      <SimplePage title="Terms">
-        <p>Terms of use for Do Not Press.</p>
-      </SimplePage>
-    );
+    page = <TermsPage />;
   } else if (pathname === "/privacy") {
-    page = (
-      <SimplePage title="Privacy">
-        <p>How Do Not Press handles the details you send through the contact form.</p>
-      </SimplePage>
-    );
+    page = <PrivacyPage />;
   }
 
   return (

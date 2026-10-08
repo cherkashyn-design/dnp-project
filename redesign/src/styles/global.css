@@ -1700,7 +1700,87 @@ textarea.field {
 }
 
 .legal-note a {
+  color: inherit;
   text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal-note a:hover {
+  color: var(--text-reverse);
+}
+
+.legal-page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin: 0 auto;
+  max-width: 720px;
+  padding: 76px var(--section-horiz) 96px;
+  width: 100%;
+}
+
+.legal-heading h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(48px, 8vw, 72px);
+  font-weight: 400;
+  letter-spacing: -1.2px;
+  line-height: 0.95;
+  margin: 0 0 16px;
+}
+
+.legal-updated {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 0;
+}
+
+.legal-body {
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  gap: 16px;
+  line-height: 1.55;
+}
+
+.legal-body h2 {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 16px 0 0;
+}
+
+.legal-body p,
+.legal-body ul {
+  margin: 0;
+}
+
+.legal-body ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 1.25em;
+}
+
+.legal-body a {
+  color: var(--text-main);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--text-main) 35%, transparent);
+  text-underline-offset: 3px;
+}
+
+.legal-body a:hover {
+  color: var(--text-secondary);
+  text-decoration-color: currentColor;
+}
+
+.legal-disclaimer {
+  border-top: 1px solid var(--line-main);
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-top: 16px;
+  padding-top: 24px;
 }
 
 .site-footer {
