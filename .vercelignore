@@ -14,11 +14,21 @@ dist
 redesign/node_modules
 redesign/dist
 
-# Unused by redesign build (legacy app + case source libraries)
-# Leading slash = repo root only (do not match redesign/src)
-/src
-/portfolio
+# Legacy app shell — redesign only needs /src/data + /src/assets/blog
+/src/components
+/src/pages
+/src/styles
+/src/hooks
+/src/lib
+/src/App.jsx
+/src/main.jsx
+/src/assets/contact
+/src/assets/brand
+/src/assets/icons
 /docs
+
+# LQ placeholders + unused portfolio originals (not imported by redesign case data)
+**/*.lq.jpg
 /scripts/optimize-portfolio-images.py
 /scripts/optimize-portfolio-videos.py
 /scripts/generate-lq-images.py
