@@ -244,6 +244,16 @@ video {
   height: 20px;
 }
 
+.site-header.is-compact.is-open {
+  left: 0;
+  padding-top: calc(12px + env(safe-area-inset-top, 0px));
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 30;
+}
+
 .site-header.is-compact.is-open .pill.is-dark {
   opacity: 0;
   pointer-events: none;
@@ -283,11 +293,14 @@ video {
   justify-content: flex-start;
   left: 0;
   opacity: 0;
-  padding: 36px 12px 12px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 36px 12px calc(12px + env(safe-area-inset-bottom, 0px));
   pointer-events: none;
   position: fixed;
   right: 0;
-  top: 60px;
+  top: calc(60px + env(safe-area-inset-top, 0px));
   transition: opacity 0.2s ease;
   z-index: 19;
 }
@@ -361,13 +374,30 @@ video {
   min-width: 0;
 }
 
-.menu-talk {
+.menu-talk,
+a.menu-talk,
+a.menu-talk:visited,
+a.menu-talk:active,
+a.menu-talk:hover {
+  background: var(--bg-reverse);
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  flex: none;
   width: 100%;
 }
 
-.menu-panel .menu-talk:hover {
+.menu-panel.is-in .menu-talk,
+.menu-panel.is-in a.menu-talk {
+  opacity: 1;
+}
+
+.menu-panel .menu-talk:hover,
+.menu-panel .menu-talk:active {
   /* Cancel .button-l:hover padding shrink so the CTA doesn’t jump */
-  opacity: 0.92;
+  background: var(--bg-reverse);
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  opacity: 1;
   padding-inline: 48px;
 }
 

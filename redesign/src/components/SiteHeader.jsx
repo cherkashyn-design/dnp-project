@@ -121,12 +121,32 @@ export function SiteHeader({ path, onNavigate }) {
     const onKey = (event) => {
       if (event.key === "Escape") setOpen(false);
     };
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const scrollY = window.scrollY;
+    const { body, documentElement } = document;
+    const previous = {
+      overflow: body.style.overflow,
+      position: body.style.position,
+      top: body.style.top,
+      width: body.style.width,
+      paddingRight: body.style.paddingRight,
+    };
+    const scrollbar = window.innerWidth - documentElement.clientWidth;
+
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.width = "100%";
+    if (scrollbar > 0) body.style.paddingRight = `${scrollbar}px`;
+
     document.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = previous;
+      body.style.overflow = previous.overflow;
+      body.style.position = previous.position;
+      body.style.top = previous.top;
+      body.style.width = previous.width;
+      body.style.paddingRight = previous.paddingRight;
       document.removeEventListener("keydown", onKey);
+      window.scrollTo(0, scrollY);
     };
   }, [present]);
 
