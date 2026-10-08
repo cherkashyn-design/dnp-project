@@ -546,8 +546,10 @@ video {
   gap: 64px;
   opacity: clamp(0, calc(1 - var(--showreel) * 1.35), 1);
   pointer-events: none;
+  position: relative;
   transform: translate3d(0, calc(var(--showreel) * -48px), 0);
   will-change: opacity, transform;
+  z-index: 1;
 }
 
 .hero-scroll.is-resting .hero-copy {
@@ -599,19 +601,24 @@ video {
 }
 
 .showreel {
+  /* Rest: 252×164, 16px from bottom → center at 100% - 98px. Expand: viewport center. */
+  --showreel-rest-h: calc(252px * 164 / 252);
   aspect-ratio: 252 / 164;
-  bottom: calc(16px * (1 - var(--showreel)));
+  bottom: auto;
   cursor: grab;
   height: auto;
   left: 50%;
   opacity: 1;
   position: absolute;
+  top: calc(
+    (100% - 16px - var(--showreel-rest-h) / 2) * (1 - var(--showreel)) + 50% * var(--showreel)
+  );
   touch-action: none;
-  transform: translateX(-50%) scale(calc(0.95 + 0.05 * var(--showreel)));
-  transform-origin: center bottom;
+  transform: translate3d(-50%, -50%, 0) scale(calc(0.95 + 0.05 * var(--showreel)));
+  transform-origin: center center;
   user-select: none;
   width: calc(252px + (min(100%, 100vh * 252 / 164) - 252px) * var(--showreel));
-  will-change: transform, width, height;
+  will-change: transform, width, top;
   z-index: 2;
 }
 
@@ -776,6 +783,7 @@ video {
     height: auto;
     left: auto;
     position: relative;
+    top: auto;
     touch-action: auto;
     transform: none;
     width: 100%;
