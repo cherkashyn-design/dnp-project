@@ -1571,15 +1571,25 @@ textarea.field {
   text-align: left;
 }
 
-.copy-box span {
+.copy-box > span,
+.copy-box-main {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
   flex: 1;
+  font: inherit;
+  min-width: 0;
   padding: 6px 12px;
+  text-align: left;
 }
 
 .copy-box .copy-icon {
   align-items: center;
   background: white;
+  border: 0;
   border-radius: 12px;
+  cursor: pointer;
   display: inline-flex;
   flex: none;
   padding: 6px 12px;
@@ -1601,7 +1611,8 @@ textarea.field {
   border-color: rgba(108, 232, 128, 0.12);
 }
 
-.copy-box.is-copied > span {
+.copy-box.is-copied > span,
+.copy-box.is-copied .copy-box-main {
   color: #6ce880;
 }
 
@@ -1613,9 +1624,21 @@ textarea.field {
   display: inline-flex;
   flex: none;
   gap: 6px;
-  margin-left: 8px;
+  margin-left: 0;
   padding: 0;
   vertical-align: middle;
+}
+
+.contact-icons a {
+  align-items: center;
+  display: inline-flex;
+  line-height: 0;
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+
+.contact-icons a:hover {
+  opacity: 1;
 }
 
 .segments {

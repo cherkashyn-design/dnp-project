@@ -8,6 +8,9 @@ import templateRocketLogo from "../assets/logos/templaterocket.svg";
 
 export const email = "contact@donotpress.com";
 export const phone = "+995 551 155 743";
+export const phoneE164 = "995551155743";
+export const whatsappUrl = `https://wa.me/${phoneE164}`;
+export const telegramUrl = `https://t.me/+${phoneE164}`;
 
 function caseShot(slug) {
   return cases.find((item) => item.slug === slug) ?? null;

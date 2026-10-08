@@ -4,7 +4,7 @@ import checkIcon from "../assets/icons/check.svg";
 import copyIcon from "../assets/icons/copy.svg";
 import telegram from "../assets/icons/telegram.svg";
 import whatsapp from "../assets/icons/whatsapp.svg";
-import { budgets, email, phone } from "../data/content.js";
+import { budgets, email, phone, telegramUrl, whatsappUrl } from "../data/content.js";
 
 async function submitContact(payload) {
   const response = await fetch("/api/contact", {
@@ -101,22 +101,22 @@ export function ContactSection({ page = false }) {
         </div>
         <div className="copy-row">
           <div className="field-label">Whatsapp / Telegram</div>
-          <button
-            className={copied === phone ? "copy-box is-copied" : "copy-box"}
-            type="button"
-            onClick={() => copy(phone)}
-          >
-            <span>
-              {phone}
-              <span className="contact-icons">
+          <div className={copied === phone ? "copy-box is-copied" : "copy-box"}>
+            <button className="copy-box-main" type="button" onClick={() => copy(phone)}>
+              <span>{phone}</span>
+            </button>
+            <span className="contact-icons">
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
                 <img src={whatsapp} alt="" />
+              </a>
+              <a href={telegramUrl} target="_blank" rel="noopener noreferrer" aria-label="Chat on Telegram">
                 <img src={telegram} alt="" />
-              </span>
+              </a>
             </span>
-            <span className="copy-icon" aria-hidden="true">
+            <button className="copy-icon" type="button" aria-label="Copy phone number" onClick={() => copy(phone)}>
               <img src={copied === phone ? checkIcon : copyIcon} alt="" />
-            </span>
-          </button>
+            </button>
+          </div>
         </div>
       </div>
       <hr />
