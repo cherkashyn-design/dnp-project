@@ -1027,7 +1027,7 @@ video {
   align-items: start;
   background: transparent;
   border: 0;
-  border-radius: 16px;
+  border-radius: 0;
   border-top: 1px solid var(--line-secondary);
   color: #0f0f0f;
   -webkit-text-fill-color: #0f0f0f;
@@ -1038,9 +1038,7 @@ video {
   max-width: 100%;
   padding: 24px 12px;
   text-align: left;
-  transition:
-    background 0.25s ease,
-    color 0.25s ease;
+  transition: background 0.25s ease;
   width: 100%;
 }
 
@@ -1048,18 +1046,25 @@ video {
   border-top: 0;
 }
 
-.accordion-item:hover {
+.accordion-item:hover,
+.accordion-item:active {
   background: rgba(15, 15, 15, 0.04);
+  color: #0f0f0f;
+  -webkit-text-fill-color: #0f0f0f;
 }
 
 .accordion-item:hover .accordion-title,
-.accordion-item:hover .accordion-number {
-  color: #6b6b6b;
-  -webkit-text-fill-color: #6b6b6b;
+.accordion-item:hover .accordion-number,
+.accordion-item:active .accordion-title,
+.accordion-item:active .accordion-number {
+  color: inherit;
+  -webkit-text-fill-color: inherit;
 }
 
-.accordion-item:hover .accordion-icon {
-  opacity: 0.55;
+.accordion-item:hover .accordion-number,
+.accordion-item:active .accordion-number {
+  color: #808080;
+  -webkit-text-fill-color: #808080;
 }
 
 .accordion-number,
@@ -1095,16 +1100,22 @@ video {
 }
 
 .accordion-title-row {
-  align-items: flex-start;
+  align-items: center;
   display: flex;
+  flex-wrap: nowrap;
   gap: 36px;
   padding: 0 12px;
+  white-space: nowrap;
 }
 
 .accordion-title {
   color: #0f0f0f;
   -webkit-text-fill-color: #0f0f0f;
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .accordion-shot {
@@ -1124,8 +1135,7 @@ video {
 .accordion-icon {
   flex: none;
   height: 28px;
-  margin-top: 8px;
-  transition: opacity 0.25s ease;
+  margin-top: 0;
   width: 28px;
 }
 
