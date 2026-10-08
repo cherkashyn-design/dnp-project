@@ -1051,6 +1051,45 @@ a.menu-talk:hover {
   border-top: 1px solid var(--line-secondary);
 }
 
+/* Full-bleed hover into section gutters; text/lines stay aligned with the title. */
+#services {
+  overflow: visible;
+}
+
+#services .accordion {
+  border-top: 0;
+  margin-inline: calc(var(--section-horiz) * -1);
+}
+
+#services .accordion::before {
+  background: var(--line-secondary);
+  content: "";
+  display: block;
+  height: 1px;
+  margin-inline: var(--section-horiz);
+}
+
+#services .accordion-item {
+  border-top: 0;
+  padding-inline: var(--section-horiz);
+}
+
+#services .accordion-item::before {
+  background: var(--line-secondary);
+  content: "";
+  height: 1px;
+  left: var(--section-horiz);
+  pointer-events: none;
+  position: absolute;
+  right: var(--section-horiz);
+  top: 0;
+  z-index: 2;
+}
+
+#services .accordion-item:first-child::before {
+  content: none;
+}
+
 .accordion-item {
   -webkit-appearance: none;
   appearance: none;
@@ -1171,7 +1210,7 @@ a.menu-talk:hover {
   display: flex;
   flex-wrap: nowrap;
   gap: 36px;
-  padding: 0 12px;
+  padding: 0;
   white-space: nowrap;
 }
 
