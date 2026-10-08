@@ -3,10 +3,24 @@
 .tmp-*
 .tmp-*/
 **/.DS_Store
+.git
+*.log
+.env*
+!.env.example
 
-# Hidden / unused case libraries (not imported by redesign build)
-portfolio/Hermes
-portfolio/ComfyUI
+# Installable / build outputs (Vercel installs deps on the server)
+node_modules
+dist
+redesign/node_modules
+redesign/dist
+
+# Unused by redesign build (legacy app + case source libraries)
+src
+portfolio
+docs
+scripts/optimize-portfolio-images.py
+scripts/optimize-portfolio-videos.py
+scripts/generate-lq-images.py
 
 # Superseded showreel sources (site uses showreel-desktop.*)
 redesign/src/assets/showreel/showreel.mp4
@@ -19,8 +33,3 @@ redesign/src/assets/showreel/showreel-mobile-poster.webp
 redesign/src/assets/people/dhruv.png
 redesign/src/assets/people/vasyl.png
 redesign/src/assets/people/orkhan.png
-
-# Dev-only
-*.log
-.env*
-!.env.example
