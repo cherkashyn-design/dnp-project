@@ -112,7 +112,7 @@ export function SiteHeader({ path, onNavigate }) {
       return () => window.clearTimeout(timer);
     }
     setSettled(false);
-    const timer = window.setTimeout(() => setPresent(false), 300);
+    const timer = window.setTimeout(() => setPresent(false), 220);
     return () => window.clearTimeout(timer);
   }, [open, compact]);
 

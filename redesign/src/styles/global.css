@@ -198,24 +198,25 @@ video {
   background: var(--bg-secondary);
   border: 0;
   border-radius: 10px;
+  box-sizing: border-box;
   cursor: pointer;
   display: inline-flex;
+  flex: none;
+  height: 28px;
   justify-content: center;
   padding: 4px 24px;
-  transition: background 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: background 0.2s ease;
+  width: 68px;
 }
 
 .site-header.is-compact .pill.is-dark {
-  overflow: hidden;
-  max-width: 160px;
+  flex: none;
+  /* Fade only — never animate width/padding or the header reflows */
   transition:
-    opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-    max-width 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-    padding 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-    margin 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-    background 0.25s ease,
-    border-color 0.25s ease,
-    color 0.25s ease;
+    opacity 0.2s ease,
+    visibility 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 .menu-mark {
@@ -242,11 +243,9 @@ video {
 }
 
 .site-header.is-compact.is-open .pill.is-dark {
-  max-width: 0;
-  margin: 0;
   opacity: 0;
-  padding-inline: 0;
   pointer-events: none;
+  visibility: hidden;
 }
 
 .site-header.is-compact.is-open .menu-toggle,
@@ -287,7 +286,7 @@ video {
   position: fixed;
   right: 0;
   top: 60px;
-  transition: opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.2s ease;
   z-index: 19;
 }
 
@@ -317,41 +316,15 @@ video {
 .menu-kicker,
 .menu-row,
 .menu-talk {
+  /* Opacity only — no translateY bounce on open/close */
   opacity: 0;
-  transform: translateY(10px);
-  transition:
-    opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
-    color 0.25s ease;
-  transition-delay: 0s;
+  transition: opacity 0.2s ease, color 0.2s ease;
 }
 
 .menu-panel.is-in .menu-kicker,
 .menu-panel.is-in .menu-row,
 .menu-panel.is-in .menu-talk {
   opacity: 1;
-  transform: none;
-  transition-duration: 0.45s;
-}
-
-.menu-panel.is-in .menu-kicker {
-  transition-delay: 0.04s;
-}
-
-.menu-panel.is-in .menu-row:nth-child(2) {
-  transition-delay: 0.08s;
-}
-
-.menu-panel.is-in .menu-row:nth-child(3) {
-  transition-delay: 0.12s;
-}
-
-.menu-panel.is-in .menu-row:nth-child(4) {
-  transition-delay: 0.16s;
-}
-
-.menu-panel.is-in .menu-talk {
-  transition-delay: 0.2s;
 }
 
 .menu-kicker {
@@ -390,7 +363,9 @@ video {
   width: 100%;
 }
 
-.menu-talk:hover {
+.menu-panel .menu-talk:hover {
+  /* Cancel .button-l:hover padding shrink so the CTA doesn’t jump */
+  opacity: 0.92;
   padding-inline: 48px;
 }
 
