@@ -1,5 +1,5 @@
 const ICONS = ["/favicon-cycle/D.png", "/favicon-cycle/N.png", "/favicon-cycle/P.png"];
-const INTERVAL_MS = 3000;
+const INTERVAL_MS = 1000;
 
 function setFavicon(href) {
   document
