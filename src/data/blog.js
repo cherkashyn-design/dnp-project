@@ -13,7 +13,7 @@ export const blogPosts = [
     slug: "design-system-best-practices-assets-and-styles",
     title: "Design system best practices: Assets and styles",
     excerpt:
-      "How to prepare illustrations, icons, and styles for development — from asset grouping to text, effect, fill, and layout-grid styles.",
+      "How to prepare illustrations, icons, and styles for development, from asset grouping to text, effect, fill, and layout-grid styles.",
     tags: ["Design Systems", "Assets", "Styles"],
     publishedAt: "2025-07-20",
     publishedLabel: "Jul 20, 2025",
@@ -23,7 +23,7 @@ export const blogPosts = [
     slug: "design-system-best-practices-variables",
     title: "Design system best practices: Variables",
     excerpt:
-      "How to sync Figma variables with code tokens — colors, spacing, type, radius, and motion — so designers and developers share one system.",
+      "How to sync Figma variables with code tokens (colors, spacing, type, radius, and motion) so designers and developers share one system.",
     tags: ["Design Systems", "Variables", "Tokens"],
     publishedAt: "2025-07-18",
     publishedLabel: "Jul 18, 2025",
@@ -33,7 +33,7 @@ export const blogPosts = [
     slug: "how-to-optimize-conversion-in-your-funnels",
     title: "How to Optimize Conversion in Your Funnels",
     excerpt:
-      "Use AIDA and UX fundamentals to cut friction across awareness, interest, desire, and action — plus analytics practices that reveal where funnels leak.",
+      "Use AIDA and UX fundamentals to cut friction across awareness, interest, desire, and action, plus analytics practices that reveal where funnels leak.",
     tags: ["Conversion", "UX", "Funnels"],
     publishedAt: "2025-06-26",
     publishedLabel: "Jun 26, 2025",
@@ -53,7 +53,7 @@ export const blogPosts = [
     slug: "how-to-do-the-heuristic-evaluation-ux-audit",
     title: "How to do the Heuristic Evaluation/UX Audit. The 10 Nielsen Heuristics.",
     excerpt:
-      "A step-by-step UX audit using Nielsen’s 10 heuristics — from goals and evaluators to severity scoring, synthesis, and actionable reporting.",
+      "A step-by-step UX audit using Nielsen’s 10 heuristics, from goals and evaluators to severity scoring, synthesis, and actionable reporting.",
     tags: ["UX Audit", "Heuristics", "Research"],
     publishedAt: "2025-06-12",
     publishedLabel: "Jun 12, 2025",

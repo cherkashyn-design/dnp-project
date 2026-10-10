@@ -38,11 +38,11 @@ export function PrivacyPage() {
       <p>We process personal data only for specified, explicit, and legitimate purposes, including:</p>
       <ul>
         <li>
-          Responding to contact requests and discussing potential design work — based on steps prior
+          Responding to contact requests and discussing potential design work, based on steps prior
           to entering into a contract, and/or your consent where required
         </li>
         <li>
-          Operating, securing, and improving our website — based on our legitimate interests, balanced
+          Operating, securing, and improving our website, based on our legitimate interests, balanced
           against your rights and freedoms
         </li>
         <li>Complying with legal obligations under Georgian law</li>

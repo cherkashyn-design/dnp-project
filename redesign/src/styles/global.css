@@ -48,6 +48,7 @@
   --section-horiz: 16px;
   --section-vert-l: 76px;
   --section-vert-m: 16px;
+  --header-offset: 72px;
 }
 
 * {
@@ -2238,7 +2239,42 @@ textarea.field {
 }
 
 main {
-  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  /* Keep footer below the first screen while Suspense/shell is empty. */
+  min-height: calc(100vh - var(--header-offset));
+  min-height: calc(100dvh - var(--header-offset));
+  /* Translate only — opacity fade exposed the footer during first paint. */
+  animation: rise-y 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.page-shell {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: calc(100vh - var(--header-offset));
+  min-height: calc(100dvh - var(--header-offset));
+  padding: var(--section-vert-l) var(--section-horiz);
+}
+
+.page-shell-bar {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  height: 18px;
+  max-width: 280px;
+  width: 42%;
+}
+
+.page-shell-bar.is-wide {
+  height: 48px;
+  max-width: 520px;
+  width: 68%;
+}
+
+.page-shell-bar.is-block {
+  flex: 1;
+  max-width: none;
+  min-height: 220px;
+  width: 100%;
 }
 
 [data-reveal] {
@@ -2249,6 +2285,16 @@ main {
 
 [data-reveal].is-in {
   animation-play-state: running;
+}
+
+@keyframes rise-y {
+  from {
+    transform: translateY(16px);
+  }
+
+  to {
+    transform: none;
+  }
 }
 
 @keyframes rise {

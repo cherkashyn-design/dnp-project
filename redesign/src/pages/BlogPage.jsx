@@ -28,7 +28,7 @@ export function BlogPage({ onNavigate }) {
       <header className="blog-hero">
         <h1>Blog</h1>
         <p>
-          Notes on design systems, conversion, and complex product UX from Do Not Press design —
+          Notes on design systems, conversion, and complex product UX from Do Not Press design,
           written from shipping work with startups and larger teams
         </p>
       </header>

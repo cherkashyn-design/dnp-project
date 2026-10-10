@@ -46,7 +46,7 @@ function BlogInfoPanel({ onCopied }) {
           <h1 id="blog-title">Blog</h1>
           <div className="intro-copy">
             <p>
-              Notes on design systems, conversion, and complex product UX —
+              Notes on design systems, conversion, and complex product UX,
               written from shipping work with startups and larger teams.
             </p>
             <ul className="services" aria-label="Topics">

@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 
 import { appHref, stripBase } from "./base.js";
+import { PageShell } from "./components/PageShell.jsx";
 import { SiteFooter } from "./components/SiteFooter.jsx";
 import { SiteHeader } from "./components/SiteHeader.jsx";
 import { getBlogPost } from "./data/blog.js";
@@ -189,7 +190,7 @@ export default function App() {
     <div className={pathname === "/contact" ? "page is-ink" : "page"}>
       <SiteHeader path={pathname} onNavigate={navigate} />
       <main key={pathname}>
-        <Suspense fallback={null}>{page}</Suspense>
+        <Suspense fallback={<PageShell />}>{page}</Suspense>
       </main>
       <SiteFooter onNavigate={navigate} />
     </div>

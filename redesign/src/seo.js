@@ -45,7 +45,7 @@ export function resolvePageSeo(pathname, { project, post } = {}) {
     return {
       title: "Cases | Do Not Press Design Studio",
       description:
-        "Selected product, brand, and landing work from Do Not Press studio — design for startups that need to ship.",
+        "Selected product, brand, and landing work from Do Not Press studio, for startups that need to ship.",
       path: "/cases",
     };
   }
@@ -63,7 +63,7 @@ export function resolvePageSeo(pathname, { project, post } = {}) {
     return {
       title: "Blog | Do Not Press Design",
       description:
-        "Design systems, conversion, and UX writing from Do Not Press — a product design studio and agency.",
+        "Design systems, conversion, and UX writing from Do Not Press, a product design studio and agency.",
       path: "/blog",
     };
   }
