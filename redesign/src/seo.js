@@ -3,7 +3,7 @@ export const SITE_NAME = "Do Not Press";
 export const DEFAULT_TITLE = "Do Not Press | Product Design Studio & Agency";
 export const DEFAULT_DESCRIPTION =
   "Do Not Press is a product design studio and agency for startups. Hire Do Not Press design for SaaS UI, brand identity, and websites that ship.";
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.gif`;
 
 function upsertMeta(selector, attrs) {
   let node = document.head.querySelector(selector);
@@ -115,6 +115,10 @@ export function applyPageSeo({ title, description, path, type = "website", image
   upsertMeta('meta[property="og:description"]', { property: "og:description", content: nextDescription });
   upsertMeta('meta[property="og:url"]', { property: "og:url", content: url });
   upsertMeta('meta[property="og:image"]', { property: "og:image", content: image });
+  upsertMeta('meta[property="og:image:type"]', {
+    property: "og:image:type",
+    content: image.endsWith(".gif") ? "image/gif" : "image/png",
+  });
   upsertMeta('meta[name="twitter:card"]', { name: "twitter:card", content: "summary_large_image" });
   upsertMeta('meta[name="twitter:title"]', { name: "twitter:title", content: nextTitle });
   upsertMeta('meta[name="twitter:description"]', { name: "twitter:description", content: nextDescription });
