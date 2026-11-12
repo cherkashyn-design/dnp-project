@@ -4,6 +4,11 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/cases/nodify",
+      "destination": "/cases/nodity",
+      "permanent": true
+    },
+    {
       "source": "/v2",
       "destination": "/",
       "permanent": true

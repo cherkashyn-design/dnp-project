@@ -13,9 +13,9 @@ export const cases = [
     summary: "Brand and product surface moms can trust at a glance.",
   },
   {
-    slug: "nodify",
-    name: "Nodify - node based AI editor",
-    title: "Nodify",
+    slug: "nodity",
+    name: "Nodity - node based AI editor",
+    title: "Nodity",
     tags: ["SaaS", "App"],
     image: nodify,
     summary:

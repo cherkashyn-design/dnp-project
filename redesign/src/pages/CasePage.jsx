@@ -32,7 +32,7 @@ import {
 
 const legacyCases = {
   "yummo-food-guide-for-moms": yummoCase,
-  nodify: genieCase,
+  nodity: genieCase,
   "sales-driver-ads-tool": salesDriverCase,
 };
 

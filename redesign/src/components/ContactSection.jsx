@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { track } from "@vercel/analytics";
 
 import successCheck from "../assets/contact/success-check.png";
 import checkIcon from "../assets/icons/check.svg";
@@ -189,6 +190,7 @@ export function ContactSection({ page = false }) {
     setSubmitting(true);
     try {
       await submitContact(payload);
+      track("contact_submit", { budget: payload.budget });
       setShowErrors(false);
       setValues({ name: "", email: "", project: "", message: "" });
       form.reset();

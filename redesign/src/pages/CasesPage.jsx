@@ -7,7 +7,7 @@ const listingOrder = [
   "drumkit-logistic-saas",
   "yummo-food-guide-for-moms",
   "sales-driver-ads-tool",
-  "nodify",
+  "nodity",
 ];
 
 export function CasesPage({ onNavigate }) {

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 
-import yc from "../assets/brand/yc.svg";
 import plus from "../assets/icons/plus.svg";
 import minus from "../assets/icons/minus.svg";
 import arrowLight from "../assets/icons/arrow-light.svg";
@@ -220,14 +219,7 @@ export function HomePage({ onNavigate }) {
               </h1>
               <p className="hero-subtitle">
                 <span className="hero-subtitle-line">Product design studio &amp; agency</span>
-                <span className="hero-subtitle-line">
-                  experienced with{" "}
-                  <span className="yc-badge">
-                    <img src={yc} alt="" />
-                    Backed
-                  </span>{" "}
-                  startups
-                </span>
+                <span className="hero-subtitle-line">for B2B and AI startups</span>
               </p>
             </div>
             <a className="button-l" href="#contact">
@@ -422,7 +414,7 @@ export function HomePage({ onNavigate }) {
           <div className="founder-portrait" ref={portraitRef}>
           <SoftImage src={maksym} alt="Maksym C." />
           <p className="founder-bio">
-            Product designer for 20+ YC-backed startups.
+            I’ve personally designed for 20+ YC-backed startups.
             <br />
             Design systems, conversion, and complex professional UI, from Figma to ship
           </p>

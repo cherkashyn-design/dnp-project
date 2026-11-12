@@ -37,10 +37,10 @@ import genieSecurity from "../../portfolio/Genie/Slide-8/Security.webp";
 import genieApiSettings from "../../portfolio/Genie/Slide-8/API-Settings.webp";
 
 export const genieCase = {
-  title: "Nodify - node based AI editor",
+  title: "Nodity - node based AI editor",
   subtitle:
     "It's a US startup which is providing full control on AI models with nodes system",
-  heroAlt: "Nodify node based AI editor on a laptop mockup",
+  heroAlt: "Nodity node based AI editor on a laptop mockup",
   heroImage: geniePreview,
   tags: ["SaaS", "App"],
   // Nav thumbs: Preview + Slide-1…9 in numeric order.

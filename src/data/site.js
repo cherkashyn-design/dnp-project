@@ -18,7 +18,7 @@ export const cases = [
     href: "/cases/yummo-food-guide-for-moms",
   },
   {
-    name: "Nodify - node based AI editor",
+    name: "Nodity - node based AI editor",
     image: geniePreview,
     lqImage: geniePreviewLq,
     tags: ["SaaS", "App"],

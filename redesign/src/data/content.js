@@ -22,7 +22,7 @@ export const services = [
     title: "Product design",
     description:
       "Ship-ready flows and UI for complex SaaS, structured for development, not just Figma polish",
-    shot: caseShot("nodify"),
+    shot: caseShot("nodity"),
   },
   {
     number: "02",
@@ -45,14 +45,14 @@ export const testimonials = [
     name: "Dhruv G.",
     role: "Founder, Drumkit & Axle Technologies",
     quote:
-      "DNP is excellent and incredibly talented. They are rapid and pretty detail-oriented. They also got a very positive attitude, is persistent through design changes/requests, and thoughtful throughout. They a pleasure to work with and I would gladly work with they again.",
+      "DNP is excellent and incredibly talented. They move fast, sweat the details, and stay positive and persistent through every round of design changes. Thoughtful throughout and a pleasure to work with. I would gladly work with them again.",
     avatar: dhruv,
     logo: drumkitLogo,
     logoAlt: "Drumkit",
   },
   {
     name: "Orkhan M.",
-    role: "Founder, Nodify",
+    role: "Founder, Nodity",
     quote:
       "DNP is sharp and surprisingly fast. They dig into complex AI product detail without losing the big picture. Great attitude through iterations, and they stay thoughtful about UX even when the scope moves. A pleasure to partner with. I’d bring them in again without hesitation.",
     avatar: orkhan,
@@ -63,7 +63,7 @@ export const testimonials = [
     name: "Vasyl F.",
     role: "Founder, TemplateRocket",
     quote:
-      "DNP is excellent, talented and rapid. They’re detail-oriented and keep a positive attitude when requirements change. Thoughtful throughout the process and easy to collaborate with. I’d gladly work with them again.",
+      "DNP delivered quickly and got the details right the first time. When our requirements changed, they adapted without friction and kept the process easy on our side. I’d gladly work with them again.",
     avatar: vasyl,
     logo: templateRocketLogo,
     logoAlt: "TemplateRocket",
@@ -74,22 +74,22 @@ export const faqs = [
   {
     question: "What do I need to get started?",
     answer:
-      "We have design system and docs in each project, so that’s easy to personalize to your project with agentic AI",
+      "A link to your product or prototype and a rough deadline. No deck or brief required: we start with a 30-minute call and reply within one business day",
   },
   {
-    question: "Where can I find more information?",
+    question: "How much does a project cost?",
     answer:
-      "We have design system and docs in each project, so that’s easy to personalize to your project with agentic AI",
+      "Projects start at $8k. The price depends on scope, and you get both the scope and the price in writing before any work starts",
   },
   {
-    question: "Who should I contact for support?",
+    question: "How do we work together?",
     answer:
-      "We have design system and docs in each project, so that’s easy to personalize to your project with agentic AI",
+      "In a shared Slack channel. You see progress as it happens and give feedback directly, without waiting on a weekly status deck",
   },
   {
-    question: "How long will the setup process take?",
+    question: "What do I get at the end?",
     answer:
-      "We have design system and docs in each project, so that’s easy to personalize to your project with agentic AI",
+      "Figma files structured for development, plus a design system, guidelines, and prompts, so your team and AI tools stay consistent after we leave",
   },
 ];
 

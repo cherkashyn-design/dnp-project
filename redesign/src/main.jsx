@@ -1,5 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { inject } from "@vercel/analytics";
 
 import App from "./App.jsx";
 import { startFaviconCycle } from "./faviconCycle.js";
@@ -13,6 +14,7 @@ if (!window.location.hash) {
 }
 
 startFaviconCycle();
+inject();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
