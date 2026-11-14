@@ -1,0 +1,266 @@
+/* Ringproof brand slides. Every slide is drawn on a fixed 1600 x 1200 canvas and scaled to fit. */
+:root {
+  --ink: #09090b; --graphite: #18181b; --signal: #5b6b93; --mist: #c3cde6; --stone: #b4b2a8; --paper: #f4f4f2;
+  --pass: #46a758; --fail: #e5484d; --line: #27272a;
+  --sans: "Geist", system-ui, sans-serif; --mono: "Geist Mono", ui-monospace, monospace;
+}
+* { box-sizing: border-box; margin: 0; }
+body { background: var(--paper); color: #0f0f0f; font-family: var(--sans); }
+
+/* ---------- gallery page, same proportions as the DNP case page ---------- */
+.page { max-width: 1800px; margin: 0 auto; padding: 80px 32px; display: flex; flex-direction: column; gap: 8px; }
+.page h1 { font-size: 82px; font-weight: 400; letter-spacing: -0.02em; line-height: 0.95; }
+.page > p { margin: 16px 0 40px; font-size: 16px; color: #55554f; }
+.row { display: grid; gap: 8px; }
+.row.two { grid-template-columns: 1fr 1fr; }
+.frame { position: relative; aspect-ratio: 4 / 3; border-radius: 20px; overflow: hidden; background: var(--ink); }
+.frame .s { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.frame .num { position: absolute; left: 12px; top: 12px; z-index: 5; padding: 4px 8px; border-radius: 6px; background: rgba(0, 0, 0, 0.6); color: #fff; font: 500 12px var(--mono); }
+body.only { background: var(--ink); overflow: hidden; }
+
+/* ---------- slide basics ---------- */
+.s { position: relative; width: 1600px; height: 1200px; overflow: hidden; background: var(--ink); color: #fafafa; font-family: var(--sans); }
+.s.paper { background: var(--paper); color: var(--ink); }
+.tag { position: absolute; font: 400 16px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.6; }
+.tl { left: 48px; top: 44px; } .tr { right: 48px; top: 44px; } .bl { left: 48px; bottom: 44px; } .br { right: 48px; bottom: 44px; }
+.center { position: absolute; inset: 0; display: grid; place-items: center; }
+.mark { display: block; }
+.lock { display: inline-flex; align-items: center; gap: 0.3em; font-weight: 600; letter-spacing: -0.04em; line-height: 1; white-space: nowrap; }
+.lock .mark { width: 1.08em; height: 1.08em; }
+
+/* Picture backgrounds: a layer that fills its parent; whatever follows it sits on top. */
+.art { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; }
+.art ~ * { position: relative; z-index: 1; }
+.art ~ .tag, .art ~ .mood, .art ~ .addr, .art ~ .center { position: absolute; }
+.art .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; } /* cover: a picture is cropped, never squeezed */
+.art .blue { background: radial-gradient(90% 110% at 0% 0%, #8fa0cc 0%, transparent 70%), radial-gradient(85% 100% at 100% 100%, #3b4768 0%, transparent 70%), radial-gradient(60% 70% at 100% 0%, #a9b7dc 0%, transparent 70%), #5b6b93; }
+.art .mistbg { background: radial-gradient(90% 110% at 100% 0%, #eef1fa 0%, transparent 70%), radial-gradient(85% 100% at 0% 100%, #8fa0cc 0%, transparent 70%), #c3cde6; }
+.art .streak { position: absolute; left: -20%; top: -20%; width: 140%; height: 140%; object-fit: cover; }
+.art .streak.across { transform: rotate(-17deg) scale(1.25); }
+.cover .art .streak.across { transform: rotate(-17deg) scale(1.7); } /* a 3:1 box: the turned picture needs more room to reach the corners */
+
+/* dot-matrix numerals */
+.dm { display: inline-flex; gap: calc(var(--d) * 1.6); }
+.dm .gl { display: grid; gap: var(--g); }
+.dm i { width: var(--d); height: var(--d); border-radius: 50%; }
+.dm i.on { background: currentColor; }
+
+/* lens bars as a pattern */
+.lenses { display: flex; align-items: center; justify-content: space-between; }
+.lenses i { display: block; border-radius: 50%; background: currentColor; }
+
+/* ---------- logo slideshow: eight frames, half a second each ---------- */
+.fr { position: absolute; inset: 0; overflow: hidden; }
+.show .loop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.grain { position: absolute; inset: 0; mix-blend-mode: overlay; opacity: 0.55; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0' intercept='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.fr > .bg { position: absolute; inset: 0; }
+.lcard { position: absolute; width: 1120px; height: 640px; border-radius: 22px; overflow: hidden; box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6); color: #fafafa; }
+.lcard.signal { background: linear-gradient(135deg, #7384b0, #5b6b93 45%, #46547a); }
+.lcard.paper { background: linear-gradient(135deg, #fbfbfa, #e9e9e4); color: var(--ink); }
+.lcard.mist { background: linear-gradient(160deg, #dfe5f5, #9fb0d8); color: var(--ink); }
+.lcard.dark { background: #141418; color: var(--mist); }
+.lc-text { position: absolute; inset: 56px; display: flex; flex-direction: column; gap: 8px; }
+.lcard.mid { left: 50%; top: 50%; margin: -320px 0 0 -560px; }
+.dmname { display: flex !important; flex-direction: column; gap: 0.5em; opacity: 1 !important; margin-bottom: 0.6em; }
+.lc-text > span:not(.lock) { font: 400 24px/1.6 var(--mono); letter-spacing: 0.04em; opacity: 0.7; }
+.lc-text .low { margin-top: auto; }
+
+/* ---------- colours ---------- */
+.swatches { display: flex; height: 940px; }
+.swatches > div { position: relative; flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; }
+.swatches b { font-size: 34px; font-weight: 500; letter-spacing: -0.02em; }
+.swatches span, .grad span { font: 400 16px var(--mono); letter-spacing: 0.04em; opacity: 0.7; }
+.grad { display: flex; height: 260px; }
+.grad > div { position: relative; padding: 32px 40px; display: flex; align-items: flex-end; justify-content: space-between; }
+
+/* ---------- typography ---------- */
+.type { display: grid; grid-template-columns: 1fr 1fr; height: 860px; border-bottom: 1px solid var(--line); }
+.type > div { position: relative; padding: 110px 64px 56px; }
+.type > div + div { border-left: 1px solid var(--line); }
+.aa { font-size: 520px; font-weight: 500; letter-spacing: -0.06em; line-height: 0.8; margin-top: 120px; }
+.weights { display: flex; flex-direction: column; gap: 6px; font-size: 76px; letter-spacing: -0.04em; line-height: 1.05; }
+.monoline { margin-top: 64px; font: 400 30px/1.5 var(--mono); color: var(--mist); }
+.numerals { position: relative; height: 340px; padding: 0 64px; display: flex; align-items: center; justify-content: space-between; }
+.numerals p { max-width: 300px; font-size: 20px; line-height: 1.4; color: #a1a1aa; }
+
+/* ---------- graphic language ---------- */
+.tri { display: grid; grid-template-columns: repeat(3, 1fr); height: 100%; }
+.tri > div { position: relative; overflow: hidden; display: grid; place-items: center; }
+.tri > div + div { border-left: 1px solid var(--line); }
+
+/* ---------- icons ---------- */
+.icons { position: absolute; inset: 150px 110px 110px; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.icons > div { position: relative; display: grid; place-items: center; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.icons svg { width: 132px; height: 132px; }
+/* The bars change their own width (rx), not a transform: transformed bars were drawn on separate layers, whose edges showed as stray lines. */
+.ic .ib { animation: icon 6s cubic-bezier(0.6, 0, 0.2, 1) calc(var(--i) * 90ms) infinite both; }
+@keyframes icon { 0% { rx: 0; } 9%, 22% { rx: var(--r); } 38%, 92% { rx: calc(var(--r) * 12); } 100% { rx: 0; } }
+.icons span { position: absolute; left: 20px; bottom: 16px; font: 400 14px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: #71717a; }
+
+/* ---------- mood ---------- */
+.mood { position: absolute; left: 110px; right: 110px; bottom: 150px; font-size: 148px; font-weight: 500; letter-spacing: -0.05em; line-height: 0.95; }
+
+/* ---------- business cards ---------- */
+.cards { position: absolute; left: 50%; top: 50%; width: 7248px; display: flex; flex-direction: column; gap: 44px; transform: translate(-50%, -50%) rotate(-27deg); }
+/* --ox is how far a row has slid. It is a registered length, so it can be animated together with the row itself. */
+@property --ox { syntax: "<length>"; inherits: true; initial-value: 0px; }
+.cards { --lx: 3338px; } /* where the lamp hangs, measured along a row */
+.crow { display: flex; animation: slide 44s linear infinite; }
+.crow.rev { animation-direction: reverse; }
+@keyframes slide { to { transform: translateX(-2416px); --ox: 2416px; } }
+/* --dx, --dy: which way the lamp lies from this card, as a small offset (at most 1.5 px each way). Everything pressed
+   into the card and the card's own edge use it: shade on the lamp's side of a dent, light on the far side. */
+.bcard { --dx: clamp(-1.5px, calc((var(--lx) - var(--cx) + var(--ox) - 280px) / 260), 1.5px); --dy: clamp(-1.5px, calc((var(--ly) - 160px) / 260), 1.5px);
+  position: relative; flex: none; width: 560px; height: 320px; margin-right: 44px; border-radius: 14px; overflow: hidden; box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5); }
+/* A person's card: dark ink pressed into Signal-coloured stock. The light edge under each mark is the dent catching light. */
+.bcard.who { background: var(--signal); color: #161c30; padding: 34px; display: flex; flex-direction: column; justify-content: space-between; }
+.bcard.who > span, .bcard.who > div > span { position: relative; font: 500 13px/1.7 var(--mono); letter-spacing: 0.04em; display: block; text-shadow: calc(var(--dx) * -0.7) calc(var(--dy) * -0.7) 0 rgba(255, 255, 255, 0.22); }
+.bcard.who .dm i.on { box-shadow: calc(var(--dx) * -0.7) calc(var(--dy) * -0.7) 0 rgba(255, 255, 255, 0.26); }
+/* the drawing has no ink: only the dent */
+.bcard.who .role { position: absolute; right: 30px; bottom: 30px; width: 150px; height: 150px; stroke: #55648b; filter: drop-shadow(calc(var(--dx) * -1) calc(var(--dy) * -1) 0 rgba(255, 255, 255, 0.3)) drop-shadow(calc(var(--dx) * 0.8) calc(var(--dy) * 0.8) 0 rgba(0, 0, 0, 0.3)); }
+.ptex { position: absolute; inset: 0; z-index: 2; pointer-events: none; mix-blend-mode: multiply; opacity: 0.5; border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' seed='3' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='1.7'%3E%3CfeDistantLight azimuth='135' elevation='55'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23p)'/%3E%3C/svg%3E"); }
+.lcard .ptex { background-size: 800px 800px; }
+.bcard.front { display: grid; place-items: center; color: #fff; }
+/* The logo keeps its ink and is pressed into the card: shade falls in from the top edge of the dent, the bottom edge catches the light.
+   On light and pictured cards the dent is only hinted at; on the dark card it is deep. */
+.lcard .lc-text > .lock { filter: drop-shadow(0 -1px 0 rgba(0, 0, 0, 0.16)) drop-shadow(0 1px 0 rgba(255, 255, 255, 0.16)); }
+.bcard.front .lock { filter: drop-shadow(calc(var(--dx) * 0.7) calc(var(--dy) * 0.7) 0 rgba(0, 0, 0, 0.16)) drop-shadow(calc(var(--dx) * -0.7) calc(var(--dy) * -0.7) 0 rgba(255, 255, 255, 0.16)); }
+.bcard.front.dark { color: #fff; }
+.lcard.dark .center .mark { filter: drop-shadow(0 -1.6px 0 rgba(0, 0, 0, 0.9)) drop-shadow(0 1.4px 0 rgba(255, 255, 255, 0.22)); }
+.bcard.front.dark .lock { filter: drop-shadow(calc(var(--dx) * 1.1) calc(var(--dy) * 1.1) 0 rgba(0, 0, 0, 0.9)) drop-shadow(calc(var(--dx) * -0.9) calc(var(--dy) * -0.9) 0 rgba(255, 255, 255, 0.22)); }
+/* Light on card stock: a thin lit edge, a shaded one opposite. */
+.bcard::after, .lcard::after { content: ""; position: absolute; inset: 0; z-index: 3; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 -1px 0 rgba(0, 0, 0, 0.3); }
+/* on a sliding card the lit edge is the one that faces the lamp */
+.bcard::after { box-shadow: inset calc(var(--dx) * -0.8) calc(var(--dy) * -0.8) 0 rgba(255, 255, 255, 0.3), inset calc(var(--dx) * 0.8) calc(var(--dy) * 0.8) 0 rgba(0, 0, 0, 0.3); }
+/* loose cards on the logo slide do not move: brighter towards the top left, shade towards the bottom right */
+.lcard::after { background: linear-gradient(125deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 40%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.2) 100%); }
+/* sliding cards: a glow centred on the lamp, as seen from this card, fading into shade far from it */
+.bcard::after { background: radial-gradient(circle at calc(var(--lx) - var(--cx) + var(--ox)) var(--ly), rgba(255, 255, 255, 0.3) 0, rgba(255, 255, 255, 0.1) 420px, rgba(0, 0, 0, 0) 800px, rgba(0, 0, 0, 0.42) 1700px); }
+
+/* ---------- badge ---------- */
+/* The badge is glossy plastic: a lit rim and two bands of reflected light across it. */
+.badge::after { content: ""; position: absolute; inset: 0; z-index: 3; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.05) 24%, transparent 25%, transparent 52%, rgba(255, 255, 255, 0.13) 53%, rgba(255, 255, 255, 0.02) 68%, transparent 69%, rgba(0, 0, 0, 0.22) 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22), inset 0 2px 1px rgba(255, 255, 255, 0.45), inset 0 -2px 1px rgba(0, 0, 0, 0.35); }
+/* The badges hang in the air and drift slowly up and down. */
+.badge { position: absolute; width: 520px; height: 760px; border-radius: 28px; padding: 44px; display: flex; flex-direction: column; box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5); animation: drift 7s ease-in-out infinite; }
+@keyframes drift { 50% { translate: 0 -18px; } }
+.badge .slot { align-self: center; width: 120px; height: 20px; border-radius: 10px; background: #000; margin-bottom: 60px; box-shadow: inset 0 3px 4px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(255, 255, 255, 0.9), 0 -1px 0 rgba(0, 0, 0, 0.18); }
+.badge h3 { font-size: 72px; font-weight: 600; letter-spacing: -0.04em; line-height: 0.95; }
+.badge p { margin-top: 18px; font: 400 18px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.7; }
+.badge .foot { margin-top: auto; display: flex; align-items: flex-end; justify-content: space-between; }
+
+/* ---------- letterhead ---------- */
+.sheet { position: absolute; left: 150px; top: 110px; width: 760px; height: 1075px; background: var(--paper); color: var(--ink); padding: 72px; box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5); display: flex; flex-direction: column; transform: rotate(-3deg); }
+.sheet p { font-size: 17px; line-height: 1.65; color: #3f3f46; margin-top: 18px; }
+.sheet .date { margin-top: 110px; font: 400 14px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: #71717a; }
+.sheet h4 { margin-top: 22px; font-size: 30px; font-weight: 600; letter-spacing: -0.03em; }
+.sheet .foot { margin-top: auto; display: flex; justify-content: space-between; font: 400 13px var(--mono); letter-spacing: 0.04em; color: #71717a; }
+/* Soft light on the letter: brighter at the top, a little shade towards the bottom. */
+.sheet::before { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 45%, rgba(0, 0, 0, 0.1) 100%); }
+.sheet .ptex, .envelope .ptex, .poster .ptex { opacity: 0.28; }
+.envelope::after, .poster::after { content: ""; position: absolute; inset: 0; z-index: 3; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 42%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.22) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(0, 0, 0, 0.3); }
+.post, .story, .cover, .poster { color: #fafafa; }
+.envelope { position: absolute; right: 110px; bottom: 150px; width: 700px; height: 440px; border-radius: 10px; overflow: hidden; box-shadow: 0 40px 80px rgba(0, 0, 0, 0.55); transform: rotate(5deg); display: grid; place-items: center; color: #fff; }
+.envelope .addr { position: absolute; left: 36px; bottom: 30px; font: 400 14px/1.6 var(--mono); letter-spacing: 0.04em; opacity: 0.8; }
+
+/* ---------- posts, covers ---------- */
+.posts { position: absolute; left: 68px; top: 96px; display: grid; grid-template-columns: repeat(3, 476px); gap: 18px; }
+.post { position: relative; width: 476px; height: 476px; border-radius: 18px; overflow: hidden; padding: 34px; display: flex; flex-direction: column; justify-content: space-between; }
+.post h3 { font-size: 50px; font-weight: 500; letter-spacing: -0.04em; line-height: 1; }
+.post small, .story small, .cover small { font: 400 14px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.7; }
+.cover { position: absolute; left: 110px; top: 110px; width: 1380px; height: 400px; border-radius: 18px; overflow: hidden; padding: 48px; display: flex; flex-direction: column; justify-content: space-between; color: #fff; }
+.cover h3 { font-size: 84px; font-weight: 500; letter-spacing: -0.05em; line-height: 0.95; max-width: 900px; }
+.stories { position: absolute; left: 110px; top: 540px; display: grid; grid-template-columns: repeat(4, 318px); gap: 36px; }
+.story { position: relative; width: 318px; height: 565px; border-radius: 18px; overflow: hidden; padding: 30px; display: flex; flex-direction: column; justify-content: space-between; }
+.story h3 { font-size: 44px; font-weight: 500; letter-spacing: -0.04em; line-height: 1; }
+
+/* ---------- posters ---------- */
+.posters { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 32px; }
+.poster { position: relative; width: 480px; height: 736px; overflow: hidden; padding: 40px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5); }
+.poster h3 { font-size: 132px; font-weight: 600; letter-spacing: -0.06em; line-height: 0.82; }
+.poster h4 { font-size: 62px; font-weight: 500; letter-spacing: -0.045em; line-height: 0.98; }
+.poster > *:not(.art):not(.pphoto):not(.tint):not(.grain):not(.ptex) { position: relative; z-index: 1; }
+.pphoto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 46% 50%; filter: grayscale(1) contrast(1.15) brightness(0.8); }
+.tint { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(91, 107, 147, 0.75), rgba(40, 50, 80, 0.85)); mix-blend-mode: multiply; }
+.tint.deep { background: linear-gradient(180deg, rgba(60, 72, 108, 0.9), rgba(14, 18, 34, 0.95)); }
+.poster small { font: 400 13px/1.6 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.75; }
+/* the poster made of pieces of the product: a status pill, the caller's checklist and the score card, overlapping */
+.uis { position: relative; flex: 1; margin: 30px 0 26px; }
+.uis > * { position: absolute; box-shadow: 0 20px 44px rgba(5, 8, 20, 0.45); }
+.ui-pill { right: 0; top: 0; z-index: 2; display: flex; align-items: center; gap: 11px; height: 46px; padding: 0 20px; border-radius: 23px; background: var(--ink); border: 1px solid #34343a; font: 500 13px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+.ui-pill i { width: 8px; height: 8px; border-radius: 50%; background: var(--pass); }
+.ui-list { left: 0; top: 24px; width: 350px; padding: 30px 22px 8px; border-radius: 18px; background: #0c0c0e; border: 1px solid #27272a; }
+.ui-list div { display: flex; align-items: center; gap: 12px; height: 46px; border-top: 1px solid #1f1f23; font-size: 15px; }
+.ui-list small + div { margin-top: 14px; }
+.ui-list svg { flex: none; width: 22px; height: 22px; padding: 4px; border-radius: 6px; background: var(--pass); fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.ui-list .no svg { background: var(--fail); }
+.ui-list em { margin-left: auto; font: 400 12px var(--mono); color: #a1a1aa; }
+.ui-score { right: 0; top: 222px; z-index: 1; width: 214px; padding: 22px 24px 20px; border-radius: 18px; background: var(--paper); color: var(--ink); display: flex; flex-direction: column; gap: 16px; }
+
+/* ---------- 1.12: the two editors, as small working apps side by side (brand-tools.js) ---------- */
+/* The editors' slide is low and wide (1800 x 740), so the whole of it fits a laptop screen under the site header. */
+/* The two editors are two separate dark cards with a gap between them; the slide and its frame have no colour of their own. */
+.s.tool { width: 1800px; height: 740px; background: none; }
+.frame.toolbox { aspect-ratio: 1800 / 740; background: none; border-radius: 0; }
+.ttabs { display: none; }
+.twin { position: absolute; top: 0; bottom: 0; border-radius: 26px; overflow: hidden; background: #0c0c0e; }
+.twin.bg { left: 0; width: 1388px; }
+.twin.logo { left: 1400px; right: 0; }
+.tbar { position: absolute; left: 0; right: 0; top: 0; height: 56px; display: flex; align-items: center; gap: 18px; padding: 0 24px; border-bottom: 1px solid var(--line); }
+.twin.bg .tbar { padding-left: 84px; } /* room for the slide number in the corner */
+.tbar b { padding-left: 18px; border-left: 1px solid var(--line); font-size: 17px; font-weight: 500; white-space: nowrap; }
+.tbar em { margin-left: auto; font: 400 13px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: #71717a; }
+/* the settings are one column that scrolls; the two main buttons stay at the bottom */
+.tpanel { position: absolute; left: 0; top: 56px; bottom: 0; width: 310px; padding: 22px 24px 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #3f3f46 transparent; border-right: 1px solid var(--line); }
+.tgroup, .tcolors { display: block; margin-bottom: 20px; break-inside: avoid; }
+.tcolors .tgroup { margin-bottom: 0; }
+.tgroup small { display: flex; justify-content: space-between; margin-bottom: 10px; font: 400 12px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: #a1a1aa; }
+.tgroup em { font-style: normal; color: #fafafa; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.tool button { padding: 9px 13px; border: 1px solid var(--line); border-radius: 9px; background: #18181b; color: #d4d4d8; font: 500 14px var(--sans); cursor: pointer; }
+.tool button:hover { border-color: #52525b; }
+.tool button.on { border-color: var(--signal); background: var(--signal); color: #fff; }
+.tool button.main { border-color: #fafafa; background: #fafafa; color: #09090b; }
+.tool button.wide { display: block; width: 100%; margin-top: 6px; }
+.tool input[type="range"] { display: block; width: 100%; margin: 0; accent-color: var(--signal); cursor: pointer; }
+.upload { display: block; padding: 12px 13px; border: 1px dashed #52525b; border-radius: 9px; text-align: center; font: 500 14px var(--sans); color: #d4d4d8; cursor: pointer; }
+.upload:hover { border-color: #a1a1aa; }
+.tacts { margin-top: auto; display: flex; gap: 8px; }
+.tpanel .tacts { position: sticky; bottom: 0; margin: 0 -24px; padding: 14px 24px 22px; background: #0c0c0e; border-top: 1px solid var(--line); }
+.tacts button { flex: 1; padding: 13px; }
+/* the picture fills all the room next to the panel, whatever its shape */
+.tstage { position: absolute; left: 310px; right: 0; top: 56px; bottom: 0; padding: 20px; display: flex; }
+.tview { position: relative; flex: 1; border-radius: 12px; overflow: hidden; background: #000; }
+.tview canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hexes { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px; }
+.hex { display: flex; align-items: center; gap: 8px; padding: 5px 8px 5px 5px; border: 1px solid var(--line); border-radius: 9px; background: #18181b; }
+.hex input[type="color"] { flex: none; width: 30px; height: 30px; padding: 0; border: 0; background: none; cursor: pointer; }
+.hex input[type="text"] { width: 100%; min-width: 0; border: 0; outline: 0; background: none; color: #fafafa; font: 500 14px var(--mono); text-transform: uppercase; }
+/* the narrow logo editor: the mark on top, three sliders under it */
+.lview { position: absolute; left: 20px; right: 20px; top: 76px; height: 286px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; }
+.lview > svg { width: 150px; height: 150px; fill: currentColor; }
+.lview .mark { fill: currentColor; }
+.lpanel { position: absolute; left: 0; right: 0; top: 362px; bottom: 0; padding: 20px 24px 22px; display: flex; flex-direction: column; gap: 0; }
+/* narrow screens: a 400 px wide column, one editor at a time, two tabs on top */
+.frame.mobtool { aspect-ratio: 400 / 1200; }
+.s.tool.mob { width: 400px; height: 1200px; background: #0c0c0e; }
+.frame.mobtool { background: var(--ink); border-radius: 20px; }
+.mob .twin { border-radius: 0; }
+.mob .ttabs { position: absolute; left: 0; right: 0; top: 0; height: 68px; display: flex; gap: 8px; padding: 12px 16px 12px 68px; border-bottom: 1px solid var(--line); }
+.mob .ttabs button { flex: 1; }
+.mob .twin { display: none; left: 0; right: 0; top: 68px; width: auto; border: 0; }
+.mob .twin.cur { display: block; }
+.mob .tbar { display: none; }
+.mob .tstage { left: 0; top: 0; bottom: auto; height: 330px; padding: 16px; }
+.mob .tpanel { top: 330px; right: 0; width: auto; padding: 20px 16px; column-count: 1; border-right: 0; border-top: 1px solid var(--line); }
+.mob .tpanel .tacts { position: static; margin: 4px 0 0; padding: 0; border: 0; }
+.mob .lview > svg { width: 210px; height: 210px; }
+.mob .lview { gap: 44px; }
+.mob .lview { left: 16px; right: 16px; top: 16px; height: 360px; }
+.mob .lpanel { top: 392px; padding: 20px 16px; }

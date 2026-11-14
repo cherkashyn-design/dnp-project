@@ -1,0 +1,121 @@
+/* Case page additions on top of brand.css. Proportions follow the DNP case page. */
+.page { padding: 0; gap: 0; }
+.page section { display: flex; flex-direction: column; gap: 8px; padding: 80px 32px; }
+.hero { display: flex; padding-top: 32px; }
+.hero .media { flex: 1; min-width: 0; padding: 0 0 32px 32px; }
+.hero .info { flex: 0 0 496px; padding: 0 32px 32px; display: flex; flex-direction: column; gap: 24px; }
+.page h2 { font-size: 82px; font-weight: 400; letter-spacing: -0.02em; line-height: 0.95; }
+.sub { font-size: 16px; line-height: 1.4; color: #55554f; }
+.heading { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tags span { padding: 6px 12px; border: 1px solid #cfcfca; border-radius: 999px; font-size: 13px; }
+.overview { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.overview b { font: 500 13px var(--mono); }
+.overview p { margin-top: 12px; max-width: 620px; font-size: 20px; line-height: 1.4; }
+.others { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.frame.wide { aspect-ratio: 16 / 9; }
+/* a slide that is off screen pauses its animations (case.js sets .off) */
+.frame.off *, .frame.off *::before { animation-play-state: paused !important; }
+/* two slides stacked on the left, one tall slide on the right */
+.stack { display: grid; gap: 8px; }
+.frame.tall { aspect-ratio: auto; }
+body.only .s.show { height: 100vh; }
+body.only .frame { width: 100vw; height: 100vh; border-radius: 0; aspect-ratio: auto; }
+body.embed { background: none; } /* the page that frames the slide shows through around the editors */
+
+/* showreel: will-change keeps every picture drawn and in memory, so a cut is only a change of opacity */
+.reel { background: #000; }
+.reel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; will-change: opacity; }
+.reel img.on { opacity: 1; }
+
+/* slides made from exported pictures */
+.s .fill { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.s .dk { position: absolute; left: 90px; top: 200px; width: 1420px; height: 799px; border-radius: 10px; }
+.win { position: absolute; left: 110px; width: 1380px; border-radius: 14px; border: 1px solid #27272a; overflow: hidden; }
+.win img { display: block; width: 100%; }
+
+/* A very plain browser window for the website slides */
+.browser { position: absolute; left: 110px; top: 90px; width: 1380px; height: 1020px; border: 1px solid #27272a; border-radius: 16px; overflow: hidden; background: #000; }
+.browser .bar { position: relative; height: 52px; display: flex; align-items: center; gap: 9px; padding: 0 22px; border-bottom: 1px solid #27272a; background: #0c0c0e; }
+.browser .bar i { width: 11px; height: 11px; border-radius: 50%; background: #3f3f46; }
+.browser .bar span { position: absolute; left: 50%; transform: translateX(-50%); width: 460px; padding: 7px 0; border-radius: 8px; background: #18181b; text-align: center; font: 400 14px var(--mono); color: #71717a; }
+.browser .view { position: relative; height: 966px; overflow: hidden; }
+.phone { position: absolute; left: 570px; top: 90px; width: 460px; height: 1020px; padding: 12px; border: 1px solid #3f3f46; border-radius: 58px; background: #0c0c0e; }
+.phone .view { position: relative; height: 100%; border-radius: 46px; overflow: hidden; background: #000; }
+
+/* 3.2 and 3.3: one section of the page, centred in the window */
+.steps { position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden; }
+.steps i { display: block; }
+/* 3.4 and 3.5: the page itself in a frame; it scrolls by itself, so the pointer passes through */
+iframe.tour { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; pointer-events: none; background: #000; }
+
+/* 2.6 and 4.7: rows of pictures sliding sideways. Each row holds its pictures twice; moving it by half its length loops. */
+.belt { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; gap: 24px; }
+.belt .lane { display: flex; gap: 24px; width: max-content; animation: belt 90s linear infinite; }
+.belt .lane.rev { animation-direction: reverse; }
+.belt.screens .lane { animation-duration: 120s; }
+@keyframes belt { to { transform: translateX(calc(-50% - 12px)); } }
+/* every picture is shown whole: fixed height, width follows the picture */
+.belt img { flex: none; height: 336px; width: auto; border-radius: 10px; border: 1px solid #27272a; }
+
+/* ---------- 4.5 and 4.6: elements of the product, enlarged (see case-live.js) ---------- */
+.live .tile, .live .card { position: absolute; border: 1px solid #27272a; border-radius: 24px; background: #0c0c0e; padding: 40px; overflow: hidden; }
+.live .tile { display: flex; flex-direction: column; }
+.live .tile.accent { background: var(--signal); border-color: transparent; }
+.live small { position: relative; display: flex; justify-content: space-between; font: 400 20px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: #a1a1aa; }
+.live p { position: relative; margin-top: 26px; font: 400 22px var(--mono); color: #a1a1aa; }
+.live .accent small, .live .accent p { color: rgba(255, 255, 255, 0.85); }
+.live .val { position: relative; margin-top: auto; }
+.live .dm i { background: rgba(255, 255, 255, 0.045); } /* unlit dots: barely there */
+.live .accent .dm i { background: rgba(255, 255, 255, 0.09); }
+.live .dm i.on { background: currentColor; }
+.live .deco { position: absolute; right: -110px; top: -70px; width: 580px; height: 580px; fill: none; stroke: rgba(255, 255, 255, 0.4); stroke-width: 0.25; }
+.live .deco path { transform-origin: 50px 50px; }
+/* the score ring stands left of the number, exactly as tall as its digits (127 px) */
+.live .val.row { display: flex; align-items: center; gap: 30px; }
+.live .meter { flex: none; width: 127px; height: 127px; transform: rotate(-90deg); fill: none; stroke-width: 9; }
+.live .meter .track { stroke: #27272a; }
+.live .meter .fill { stroke: var(--signal); stroke-linecap: round; }
+.live .checks { display: flex; gap: 14px; margin-top: auto; }
+.live .checks i { width: 48px; height: 48px; border-radius: 50%; border: 2px solid #3f3f46; transition: background 0.2s, border-color 0.2s; }
+.live .checks .yes { background: var(--pass); border-color: var(--pass); }
+.live .checks .no { background: var(--fail); border-color: var(--fail); }
+
+.live .head { display: flex; justify-content: space-between; align-items: center; }
+.live h5 { font-size: 30px; font-weight: 500; letter-spacing: -0.02em; }
+.live .mono { font: 400 20px var(--mono); color: #a1a1aa; }
+.live .legend { display: flex; gap: 32px; font-size: 19px; color: #a1a1aa; }
+.live .legend i { display: inline-block; width: 12px; height: 12px; margin-right: 12px; border-radius: 50%; }
+.rec .lanes { position: relative; margin: 90px 0 0 150px; }
+.rec .lane { position: relative; height: 106px; }
+.rec .lane b { position: absolute; left: -150px; top: 50%; transform: translateY(-50%); font: 400 16px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: #71717a; }
+.rec .bars { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; }
+.rec .bars i { width: 4px; border-radius: 2px; background: #3f3f46; }
+.rec .bars.lit { clip-path: inset(0 calc(100% - var(--p)) 0 0); }
+.rec .caller .lit i { background: #7b8cc0; }
+.rec .agent .lit i { background: #e4e4e7; }
+.rec .zone { position: absolute; top: 0; bottom: 0; border-radius: 6px; background: rgba(229, 72, 77, 0.2); }
+.rec .flag { position: absolute; top: -62px; padding: 8px 16px; border-radius: 8px; font-size: 19px; white-space: nowrap; opacity: 0; transform: translateY(10px); transition: opacity 0.25s, transform 0.25s; }
+.rec .flag.on { opacity: 1; transform: none; }
+.rec .flag.bad { background: #3a1719; color: #ff8a8e; }
+.rec .flag.good { background: #14301b; color: #6fd183; }
+.rec .goodline { position: absolute; top: -22px; bottom: 0; width: 2px; background: var(--pass); opacity: 0; }
+.rec .goodline.on { opacity: 1; }
+.rec .playhead { position: absolute; left: var(--p); top: -12px; bottom: 0; width: 2px; background: #fff; }
+.rec .playhead::before { content: ""; position: absolute; left: -5px; top: -6px; width: 12px; height: 12px; border-radius: 50%; background: #fff; }
+.rec .transport { display: flex; align-items: center; gap: 26px; margin-top: 34px; padding-top: 30px; border-top: 1px solid #27272a; font: 400 20px var(--mono); color: #a1a1aa; }
+.rec .pause { width: 48px; height: 48px; border: 1px solid #27272a; border-radius: 10px; background: linear-gradient(#fff, #fff) 18px 50% / 3px 16px no-repeat, linear-gradient(#fff, #fff) 26px 50% / 3px 16px no-repeat; }
+.rec .progress { position: relative; flex: 1; height: 6px; background: radial-gradient(circle, #3f3f46 2.5px, transparent 3px) 0 0 / 12px 6px; }
+.rec .progress i { position: absolute; inset: 0; background: radial-gradient(circle, #fff 2.5px, transparent 3px) 0 0 / 12px 6px; clip-path: inset(0 calc(100% - var(--p)) 0 0); }
+.live .rows { margin-top: 18px; }
+.live .rows div { display: flex; align-items: center; gap: 20px; height: 62px; font-size: 23px; color: #71717a; transition: color 0.25s; }
+.live .rows div + div { border-top: 1px solid #1f1f23; }
+.live .rows i { width: 30px; height: 30px; border-radius: 8px; border: 2px solid #3f3f46; transition: background-color 0.2s, border-color 0.2s; }
+.live .rows em { margin-left: auto; font: 400 18px var(--mono); }
+.live .rows .yes, .live .rows .no { color: #fafafa; }
+.live .rows .yes i { border-color: var(--pass); background: var(--pass) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3'%3E%3Cpath d='m6 12 4 4 8-9'/%3E%3C/svg%3E") center / 22px no-repeat; }
+.live .rows .no i { border-color: var(--fail); background: var(--fail) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3'%3E%3Cpath d='M7 7l10 10M17 7 7 17'/%3E%3C/svg%3E") center / 22px no-repeat; }
+.live .say { display: flex; flex-direction: column; justify-content: flex-end; gap: 14px; height: 384px; }
+.live .say div { max-width: 86%; padding: 16px 22px; border-radius: 18px; font-size: 22px; line-height: 1.35; background: #1c1c20; }
+.live .say .caller { align-self: flex-end; background: var(--signal); }
+.live .say div:not(:last-child) { opacity: 0.55; }

@@ -1,9 +1,10 @@
 import { appHref } from "../base.js";
-import { SoftImage } from "../components/SoftMedia.jsx";
+import { ProjectMedia } from "../components/ProjectMedia.jsx";
 import { cases } from "../data/cases.js";
 import { ContactSection } from "../components/ContactSection.jsx";
 
 const listingOrder = [
+  "ringproof",
   "drumkit-logistic-saas",
   "yummo-food-guide-for-moms",
   "sales-driver-ads-tool",
@@ -39,7 +40,7 @@ export function CasesPage({ onNavigate }) {
               key={project.slug}
               onClick={(event) => open(event, `/cases/${project.slug}`)}
             >
-              <SoftImage src={project.image} alt="" />
+              <ProjectMedia project={project} />
               <span className="project-hover">
                 <span className="project-title">{project.title}</span>
                 <span className="project-tags">

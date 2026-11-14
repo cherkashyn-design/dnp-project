@@ -7,11 +7,14 @@ import { appHref } from "../base.js";
 import { ContactSection } from "../components/ContactSection.jsx";
 import { LottieFrame } from "../components/LottieFrame.jsx";
 import { LottieStrip } from "../components/LottieStrip.jsx";
+import { LiveSlide, ProjectMedia } from "../components/ProjectMedia.jsx";
+import { RingproofCover } from "../components/RingproofCover.jsx";
 import { SoftImage, SoftVideo } from "../components/SoftMedia.jsx";
 import { SidebarReel } from "../components/SidebarReel.jsx";
 import { cases } from "../data/cases.js";
 import { spawnPressRipple } from "../pressRipple.js";
 import { genieCase } from "../../../src/data/genie.js";
+import { ringproofCase } from "../../../src/data/ringproof.js";
 import { salesDriverCase } from "../../../src/data/salesDriver.js";
 import { yummoCase } from "../../../src/data/yummo.js";
 import {
@@ -31,6 +34,7 @@ import {
 } from "../../../src/data/drumkit.js";
 
 const legacyCases = {
+  ringproof: ringproofCase,
   "yummo-food-guide-for-moms": yummoCase,
   nodity: genieCase,
   "sales-driver-ads-tool": salesDriverCase,
@@ -109,9 +113,11 @@ function CaseVideo({ src, srcMobile, poster }) {
 
 function Shot({ media }) {
   return (
-    <figure className="case-shot">
+    <figure className={media.shape ? `case-shot is-${media.shape}` : "case-shot"}>
       {media.type === "video" ? (
         <CaseVideo src={media.src} srcMobile={media.srcMobile} poster={media.poster} />
+      ) : media.type === "embed" ? (
+        <LiveSlide slide={media.embed} poster={media.src} label={media.label} interactive={media.interactive} />
       ) : (
         <SoftImage src={media.src} alt="" />
       )}
@@ -232,7 +238,7 @@ function OtherProjects({ slug, onNavigate }) {
               onNavigate(`/cases/${item.slug}`);
             }}
           >
-            <SoftImage src={item.image} alt="" />
+            <ProjectMedia project={item} />
             <span className="project-hover">
               <span className="project-title">{item.title}</span>
               <span className="project-tags">
@@ -455,7 +461,7 @@ function LegacyCase({ project, data, onNavigate }) {
           {data.subtitle ? <p>{data.subtitle}</p> : null}
         </div>
         <figure className="case-shot">
-          <SoftImage src={data.heroImage} alt={data.heroAlt || ""} />
+          {data.heroCover === "ringproof" ? <RingproofCover /> : <SoftImage src={data.heroImage} alt={data.heroAlt || ""} />}
         </figure>
       </section>
 

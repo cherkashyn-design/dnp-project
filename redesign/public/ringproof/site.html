@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ringproof — Proof that the call worked</title>
+<meta name="description" content="Ringproof calls your bank's support line the way a customer would, tries to get a real task done, and reports whether it worked.">
+<link rel="icon" href="logo/ringproof-mark-white.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<!-- ---------- Announcement + navigation ---------- -->
+<a class="announce" href="#chat">
+  <span class="tagchip">New</span>
+  <span>Ringproof now tests chat as well as voice</span>
+  <span class="arrow">→</span>
+</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="Ringproof home"><span data-lock></span></a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#product">Product</a>
+      <a href="#how">How it works</a>
+      <a href="#channels">Channels</a>
+      <a href="#customers">Customers</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#security">Security</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="link" href="#cta">Log in</a>
+      <a class="btn btn-solid btn-s" href="#cta">Book a demo</a>
+      <button class="burger" aria-label="Menu"><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ---------- Hero ---------- -->
+<section class="hero" id="hero">
+  <div class="wrap">
+    <h1>Proof that the<br>call worked.</h1>
+    <p class="lede">Ringproof phones your support line the way a customer would, tries to get a real task done, and tells you whether it worked. Every morning, before your customers find out.</p>
+    <div class="cta-row">
+      <a class="btn btn-solid" href="#cta">Book a demo</a>
+      <a class="btn btn-ghost" href="#pricing">Start a free pilot</a>
+    </div>
+    <p class="label fine">14-day pilot · 100 test calls · no card needed</p>
+
+    <div class="stage">
+      <div data-art="blue"></div>
+      <div class="window">
+        <div class="window-bar"><i></i><i></i><i></i><span>app.ringproof.example / dashboard</span></div>
+        <img src="shots/dashboard.webp" alt="Ringproof dashboard: pass rate 78% over seven days, experience score 7.6, latest runs by campaign and the scenarios that need attention" width="2880" height="2200">
+      </div>
+      <div class="float float-pill"><i class="dot pass"></i>Card blocked · 03:48</div>
+      <div class="float float-score">
+        <span class="label">Experience score</span>
+        <span data-dm="8.4" class="dm-l"></span>
+        <span class="label">Block a lost card · run 9</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Logo strip ---------- -->
+<section class="logos" id="logos">
+  <div class="wrap">
+    <p class="label">Support teams that start the day with a Ringproof report</p>
+    <ul class="logo-row">
+      <li class="w1">Halden Bank</li>
+      <li class="w2">NORTHGATE</li>
+      <li class="w3">Meridian Trust</li>
+      <li class="w4">Calder &amp; Wye</li>
+      <li class="w5">tallis savings</li>
+      <li class="w6">BRACKENFIELD</li>
+      <li class="w7">Lowmoor</li>
+      <li class="w8">Osprey Mutual</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ---------- Featured customer ---------- -->
+<section class="spot" id="story">
+  <div class="wrap">
+    <div class="spot-card">
+      <div class="spot-quote">
+        <p class="label"><span class="idx">Customer story</span>Halden Bank · Card support line</p>
+        <blockquote>“Our queue numbers looked fine, so we assumed the fraud line was fine. The first week of test calls showed that half of them never reached the right team.”</blockquote>
+        <div class="person">
+          <span class="avatar">PR</span>
+          <span><b>Priya Raman</b><small>Head of Customer Operations, Halden Bank</small></span>
+          <a class="textlink" href="#customers">Read the story <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="spot-art">
+        <div data-art="forest"></div>
+        <span class="label">Report suspected fraud · pass rate</span>
+        <div class="spot-num">
+          <span class="was"><span data-dm="48%" class="dm-m"></span><small class="label">Week 1</small></span>
+          <span class="arrow">→</span>
+          <span><span data-dm="91%" class="dm-xl"></span><small class="label">Week 6</small></span>
+        </div>
+        <span class="label">Figures from an illustrative case</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Problem ---------- -->
+<section class="sec" id="problem">
+  <div class="wrap">
+    <div class="sec-head"><span class="label"><span class="idx">01</span>The gap</span><span class="label right">Why test calls</span></div>
+    <div class="problem">
+      <figure class="poster">
+        <img src="photo/call-a.jpg" alt="">
+        <i class="tint"></i><i class="grain"></i>
+        <span data-lock></span>
+        <figcaption>Hear what your customers hear.</figcaption>
+      </figure>
+      <div class="problem-body">
+        <h2>Your reports say the call was answered. They don't say the card was blocked.</h2>
+        <p class="body">Queue time and handle time describe the call centre. They say nothing about whether the customer got what they rang for. Ringproof checks the outcome, on a real call, from the customer's side of the line.</p>
+        <div class="versus">
+          <div class="versus-head"><span class="label">Your report says</span><span class="label">The caller heard</span></div>
+          <div class="versus-row"><span>Answered in 18 seconds</span><span><i class="dot pass"></i>Reached an agent at 00:04</span></div>
+          <div class="versus-row"><span>Handle time 5:32</span><span><i class="dot fail"></i>Interrupted mid-sentence at 01:21</span></div>
+          <div class="versus-row"><span>Resolved on first contact</span><span><i class="dot pass"></i>Card blocked at 03:48</span></div>
+          <div class="versus-row"><span>No complaint logged</span><span><i class="dot fail"></i>Confirmation SMS never sent</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Product: runs ---------- -->
+<section class="sec" id="product">
+  <div class="wrap">
+    <div class="sec-head"><span class="label"><span class="idx">02</span>Runs</span><span class="label right">Product · 1 / 4</span></div>
+    <div class="split-head">
+      <h2>One test call.<br>Everything that was said.</h2>
+      <p class="body">Each run ends with a plain answer: did the task get done? Behind it sit the recording, the transcript and the six checks the caller worked through, so nobody has to argue about what was said.</p>
+    </div>
+    <div class="shot shot-run">
+      <img src="shots/run.webp" alt="A Ringproof run: task outcome Blocked, experience score 8.4, call recording with an interruption marked at 01:21, the caller's checklist and the transcript">
+    </div>
+    <div class="notes">
+      <div><span class="label">Outcome</span><h3>Pass or fail, with the minute it happened</h3><p>“Card frozen at 03:48” is a fact you can replay. So is “Call dropped at 0:42”.</p></div>
+      <div><span class="label">Checklist</span><h3>Six checks per run</h3><p>Reach an agent, explain the problem, pass identity, block the card, order a replacement, get the SMS.</p></div>
+      <div><span class="label">Recording</span><h3>Interruptions and slow replies marked</h3><p>Jump to the second the agent talked over the caller, or took 620 ms to answer.</p></div>
+      <div><span class="label">What to fix</span><h3>A short list, not a report</h3><p>Three things to change before the next run, each linked to its moment in the call.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Product: scenarios ---------- -->
+<section class="sec" id="scenarios">
+  <div class="wrap">
+    <div class="sec-head"><span class="label"><span class="idx">03</span>Scenarios</span><span class="label right">Product · 2 / 4</span></div>
+    <div class="feature">
+      <div class="feature-text">
+        <h2>Write the task the way a customer would say it.</h2>
+        <p class="body">A scenario is a goal, the checks that prove it was reached, and the test data the caller needs. Add a few phrasings and the caller asks in different words each time, like real people do.</p>
+        <ul class="ticks">
+          <li><span class="label">01</span>Six checks define what “passed” means</li>
+          <li><span class="label">02</span>Test customers and card numbers, never real ones</li>
+          <li><span class="label">03</span>Reuse one scenario across several campaigns</li>
+        </ul>
+        <a class="textlink" href="#how">See how a scenario is built <span class="arrow">→</span></a>
+      </div>
+      <div class="shot shot-scenario">
+        <img src="shots/scenario.webp" alt="Scenario 'Block a lost card': 92% pass rate over 30 days, the six checks, the test data it uses and the campaigns it runs in">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Product: campaigns ---------- -->
+<section class="sec" id="campaigns">
+  <div class="wrap">
+    <div class="sec-head"><span class="label"><span class="idx">04</span>Campaigns</span><span class="label right">Product · 3 / 4</span></div>
+    <div class="feature flip">
+      <div class="shot-stack">
+        <div class="shot shot-campaigns">
+          <img src="shots/campaigns.webp" alt="Campaign list with channel, number of scenarios, pass rate, status and schedule for each campaign">
+        </div>
+        <div class="shot shot-inset">
+          <img src="shots/campaign.webp" alt="Schedule card: Monday, Wednesday, Friday at 08:30 UTC">
+        </div>
+      </div>
+      <div class="feature-text">
+        <h2>Set the schedule once. Read the result with your coffee.</h2>
+        <p class="body">Group scenarios into a campaign, pick the line and the days, and Ringproof places the calls on its own. If the fraud line starts failing at 14:00, you know at 14:01.</p>
+        <ul class="ticks">
+          <li><span class="label">01</span>Hourly, daily or on the days you choose</li>
+          <li><span class="label">02</span>Production and staging lines kept apart</li>
+          <li><span class="label">03</span>An alert the moment a campaign turns red</li>
+        </ul>
+        <a class="textlink" href="#pricing">See what a campaign costs <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Product: chat + metrics ---------- -->
+<section class="sec" id="chat">
+  <div class="wrap">
+    <div class="sec-head"><span class="label"><span class="idx">05</span>Chat and metrics</span><span class="label right">Product · 4 / 4</span></div>
+    <div class="split-head">
+      <h2>Voice and chat,<br>held to the same standard.</h2>
+      <p class="body">The same scenario runs against your phone line and your chatbot. Both get a pass or fail, a score out of 10 and the same six checks, so you can compare them honestly.</p>
+    </div>
+    <div class="duo">
+      <figure>
+        <div class="shot shot-chat"><img src="shots/chat.webp" alt="A chat run: transcript between the simulated customer and the bank chatbot, with a slow reply of 4.8 seconds flagged"></div>
+        <figcaption><span class="label">Chat</span><h3>Slow replies flagged in the transcript</h3><p>The chatbot took 4.8 s to answer one message. That line is outlined in red; the rest is left alone.</p></figcaption>
+      </figure>
+      <figure>
+        <div class="shot shot-metrics"><img src="shots/run-metrics.webp" alt="Metrics for one call: reply speed 240 ms, speech recognition 94%, talking over the caller 0.6 s, caller mood 7.8"></div>
+        <figcaption><span class="label">Metrics</span><h3>Six measurements along the call</h3><p>Reply speed, speech recognition, talking over the caller, mood, clarity and silence, second by second.</p></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- How it works ---------- -->
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="sec-head"><span class="label"><span class="idx">06</span>How it works</span><span class="label right">Three steps · about an hour to set up</span></div>
+    <h2 class="wide">Ring. Listen. Score.</h2>
+    <div class="steps">
+      <article class="step">
+        <div class="step-top"><span data-dm="01" class="dm-l"></span><span class="label">Connect</span></div>
+        <h3>Give us a number or a chat widget</h3>
+        <p>Point Ringproof at the line your customers already use. Nothing to install in your contact centre.</p>
+        <div class="mini">
+          <div class="mini-row"><span>Line</span><b>Card support line</b></div>
+          <div class="mini-row"><span>Number</span><b class="mono">+44 20 7946 0142</b></div>
+          <div class="mini-row"><span>Environment</span><b>Production</b></div>
+          <div class="mini-row"><span>Status</span><em class="pill pass">Answering</em></div>
+        </div>
+      </article>
+      <article class="step">
+        <div class="step-top"><span data-dm="02" class="dm-l"></span><span class="label">Describe</span></div>
+        <h3>Say what the customer is trying to do</h3>
+        <p>Pick a task, list the checks that prove it was done, and choose when the calls go out.</p>
+        <div class="mini">
+          <div class="mini-title"><b>Block a lost card</b><span class="label">6 checks</span></div>
+          <ol class="mini-list">
+            <li>Reach an agent</li><li>Explain the problem</li><li>Pass identity check</li><li>Block the card</li><li>Order a replacement</li><li>Get a confirmation SMS</li>
+          </ol>
+        </div>
+      </article>
+      <article class="step">
+        <div class="step-top"><span data-dm="03" class="dm-l"></span><span class="label">Read</span></div>
+        <h3>Get the result before the morning stand-up</h3>
+        <p>A simulated caller rings, does the task and hangs up. You get the outcome, the score and the recording.</p>
+        <div class="mini mini-result">
+          <div class="mini-title"><em class="pill pass"><i class="dot pass"></i>Card blocked · 03:48</em><span class="label">Run 9</span></div>
+          <div class="mini-score"><span data-dm="8.4" class="dm-l"></span><span class="label">Experience score<br>5 of 6 checks passed</span></div>
+          <div class="mini-row"><span><i class="dot fail"></i>Get a confirmation SMS</span><b class="mono dim">Not sent</b></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Numbers ---------- -->
+<section class="sec paper" id="numbers">
+  <div class="wrap">
+    <div class="sec-head"><span class="label"><span class="idx">07</span>Numbers</span><span class="label right">Sample week · demo data from the product tour</span></div>
+    <div class="split-head">
+      <h2>One week of the Card services campaign.</h2>
+      <p class="body">Twelve scenarios, three mornings, one phone line. This is what the campaign page shows on Friday.</p>
+    </div>
+    <div class="nums">
+      <div><span data-dm="96" class="dm-xl"></span><h3>Test calls placed</h3><p>8 calls for each of 12 scenarios, Monday, Wednesday and Friday at 08:30.</p></div>
+      <div><span data-dm="82%" class="dm-xl"></span><h3>Pass rate</h3><p>10 of 12 scenarios reached the goal. Two need attention.</p></div>
+      <div><span data-dm="7.9" class="dm-xl"></span><h3>Experience score</h3><p>Out of 10, averaged across all 96 calls.</p></div>
+      <div><span data-dm="4:51" class="dm-xl"></span><h3>Average call</h3><p>Against a target of under six minutes.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Channels ---------- -->
+<section class="sec" id="channels">
+  <div class="wrap">
+    <div class="sec-head"><span class="label"><span class="idx">08</span>Channels</span><span class="label right">Works with the lines you already run</span></div>
+    <div class="split-head">
+      <h2>It dials in like any customer. Results go where your team already looks.</h2>
+      <p class="body">Ringproof sits outside your contact centre. There is no agent desktop plug-in and no change to your telephony.</p>
+    </div>
+    <div class="flow">
+      <p class="label flow-label">What it contacts</p>
+      <div class="tiles">
+        <div class="tile"><i data-icon="Call"></i><h3>Phone line</h3><p>Any number your customers can dial, including keypad menus.</p></div>
+        <div class="tile"><i data-icon="Caller"></i><h3>SIP trunk</h3><p>For staging lines that are not reachable from the public network.</p></div>
+        <div class="tile"><i data-icon="Chat"></i><h3>Website chat</h3><p>The widget on your site, bot or human on the other end.</p></div>
+        <div class="tile"><i data-icon="Card"></i><h3>In-app chat</h3><p>Chat inside your mobile banking app, through its messaging API.</p></div>
+      </div>
+      <div class="core">
+        <div data-art="ripples" data-big></div>
+        <i data-mark class="core-mark"></i>
+        <div class="core-text"><span class="label">Ringproof</span><b>The simulated caller</b></div>
+        <div class="core-chips"><span>Scenario</span><span>Test data</span><span>4 phrasings</span><span>6 checks</span><span>Recording</span></div>
+      </div>
+      <p class="label flow-label">Where results go</p>
+      <div class="tiles">
+        <div class="tile"><i data-icon="Metrics"></i><h3>Dashboard</h3><p>Pass rate, score and what is failing right now.</p></div>
+        <div class="tile"><i data-icon="Alert"></i><h3>Alerts</h3><p>Email or webhook when a campaign starts failing.</p></div>
+        <div class="tile"><i data-icon="Run"></i><h3>JSON export</h3><p>Every run with checks, timings and transcript.</p></div>
+        <div class="tile"><i data-icon="Scenario"></i><h3>API</h3><p>Start a campaign from your release pipeline.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Testimonials ---------- -->
+<section class="sec" id="customers">
+  <div class="wrap">
+    <div class="sec-head"><span class="label"><span class="idx">09</span>Customers</span><span class="label right">In their words</span></div>
+    <h2 class="wide">What changes when you can replay the call.</h2>
+    <div class="quotes">
+      <figure class="quote">
+        <blockquote>“The recording with the interruption marked at 01:21 did more in one meeting than six months of QA scorecards.”</blockquote>
+        <figcaption><span class="avatar">TW</span><span><b>Tomasz Wieczorek</b><small>Contact Centre Lead, Northgate</small></span></figcaption>
+      </figure>
+      <figure class="quote">
+        <blockquote>“We changed the phone menu on a Tuesday. Wednesday's 06:00 campaign showed fraud callers landing in the wrong queue. It was fixed before lunch.”</blockquote>
+        <figcaption><span class="avatar">IS</span><span><b>Ingrid Solberg</b><small>Director of Service, Meridian Trust</small></span></figcaption>
+      </figure>
+      <figure class="quote">
+        <blockquote>“I stopped asking how the lines are doing. I open the dashboard and see which tasks fail and since when.”</blockquote>
+        <figcaption><span class="avatar">DA</span><span><b>Daniel Achterberg</b><small>Chief Operating Officer, Calder &amp; Wye</small></span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Pricing ---------- -->
+<section class="sec" id="pricing">
+  <div class="wrap">
+    <div class="sec-head"><span class="label"><span class="idx">10</span>Pricing</span><span class="label right">Billed monthly · cancel any time</span></div>
+    <h2 class="wide">Pay for the calls you place.</h2>
+    <div class="plans">
+      <article class="plan">
+        <header><h3>Pilot</h3><span class="label">14 days</span></header>
+        <div class="price"><span data-dm="$0" class="dm-l"></span></div>
+        <p>Find out what one line really sounds like.</p>
+        <ul>
+          <li>100 test calls or chats</li>
+          <li>1 channel, 5 scenarios</li>
+          <li>Recordings and transcripts</li>
+          <li>Experience score and six checks</li>
+        </ul>
+        <a class="btn btn-ghost" href="#cta">Start a free pilot</a>
+      </article>
+      <article class="plan featured">
+        <header><h3>Team</h3><span class="label">Most banks start here</span></header>
+        <div class="price"><span data-dm="$1,450" class="dm-l"></span><span class="label">per month</span></div>
+        <p>Every important task, tested on a schedule.</p>
+        <ul>
+          <li>10,000 test calls and chats a month</li>
+          <li>Unlimited channels and scenarios</li>
+          <li>Scheduled campaigns and alerts</li>
+          <li>JSON export and API</li>
+          <li>Extra calls at $0.19 each</li>
+        </ul>
+        <a class="btn btn-ink" href="#cta">Book a demo</a>
+      </article>
+      <article class="plan">
+        <header><h3>Enterprise</h3><span class="label">Annual</span></header>
+        <div class="price"><span data-dm="CUSTOM" class="dm-l"></span></div>
+        <p>For several lines, brands or countries.</p>
+        <ul>
+          <li>From 40,000 calls and chats a month</li>
+          <li>Staging and production environments</li>
+          <li>Single sign-on and audit log</li>
+          <li>UK or EU data residency</li>
+          <li>A named support engineer</li>
+        </ul>
+        <a class="btn btn-ghost" href="#cta">Talk to sales</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Security ---------- -->
+<section class="sec" id="security">
+  <div class="wrap">
+    <div class="sec-head"><span class="label"><span class="idx">11</span>Security</span><span class="label right">Built for regulated teams</span></div>
+    <div class="split-head">
+      <h2>No real customers.<br>No real accounts.</h2>
+      <p class="body">Ringproof only ever uses the test customers you create for it. It never touches production customer data, and every recording is of our caller and your agent or bot.</p>
+    </div>
+    <div class="tiles secure">
+      <div class="tile"><i data-icon="Secure"></i><h3>Test data only</h3><p>Calls use test customers and test cards you define.</p></div>
+      <div class="tile"><i data-icon="Locked"></i><h3>Encrypted recordings</h3><p>In transit and at rest. You set how long they are kept.</p></div>
+      <div class="tile"><i data-icon="Caller"></i><h3>Single sign-on</h3><p>SAML sign-on, roles and a full audit log.</p></div>
+      <div class="tile"><i data-icon="Passed"></i><h3>UK or EU hosting</h3><p>Choose the region where recordings are stored.</p></div>
+    </div>
+    <div class="badges">
+      <span>SOC 2 Type II controls</span><span>ISO 27001 controls</span><span>GDPR and UK GDPR</span><span>Annual penetration test</span><a class="textlink" href="#cta">Security overview <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Final CTA ---------- -->
+<section class="final" id="cta">
+  <div class="wrap">
+    <div class="final-card">
+      <div data-art="marble" data-big></div>
+      <p class="label">Start this week</p>
+      <h2>Call your own support before your customers do.</h2>
+      <div class="final-foot">
+        <div class="cta-row">
+          <a class="btn btn-solid" href="#cta">Book a demo</a>
+          <a class="btn btn-glass" href="#pricing">Start a free pilot</a>
+        </div>
+        <div data-lenses="9" class="final-lenses"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ---------- Footer ---------- -->
+<footer class="footer" id="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span data-lock></span>
+        <p>Proof that the call worked.</p>
+        <p class="label">hello@ringproof.example<br>+44 20 7946 0155<br>14 Example Street, London</p>
+      </div>
+      <nav><span class="label">Product</span><a href="#product">Runs</a><a href="#scenarios">Scenarios</a><a href="#campaigns">Campaigns</a><a href="#chat">Chat testing</a><a href="#channels">Channels</a></nav>
+      <nav><span class="label">Learn</span><a href="#how">How it works</a><a href="#numbers">Sample report</a><a href="#customers">Customer stories</a><a href="#top">Documentation</a><a href="#top">Changelog</a></nav>
+      <nav><span class="label">Company</span><a href="#top">About</a><a href="#top">Careers</a><a href="#security">Security</a><a href="#pricing">Pricing</a><a href="#cta">Contact</a></nav>
+      <nav><span class="label">Legal</span><a href="#top">Terms</a><a href="#top">Privacy</a><a href="#top">Data processing</a><a href="#top">Status</a></nav>
+    </div>
+    <div class="foot-word"><span data-dm="RINGPROOF" class="dm-word"></span></div>
+    <div class="foot-base">
+      <span class="label">© 2026 Ringproof Ltd</span>
+      <span class="label"><i class="dot pass"></i>All systems answering</span>
+      <span class="label">ringproof.example</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Phones only: the main button stays at the bottom of the screen -->
+<div class="dock"><a class="btn btn-solid" href="#cta">Book a demo</a></div>
+
+<script src="site.js"></script>
+</body>
+</html>

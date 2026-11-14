@@ -3470,3 +3470,142 @@ main {
     padding-top: 24px;
   }
 }
+
+/* ---------- Ringproof case ---------- */
+/* Slides of the case are 4:3; the two editors are one low, wide slide, or a tall column on a phone. */
+.case-shot.is-slide {
+  aspect-ratio: 4 / 3;
+}
+
+.case-shot.is-editors {
+  aspect-ratio: 1800 / 740;
+  border-radius: 0;
+}
+
+@media (max-width: 791px) {
+  .case-shot.is-editors {
+    aspect-ratio: 400 / 1200;
+  }
+}
+
+/* A slide running live in a frame, over its poster picture. */
+.live-slide > iframe {
+  border: 0;
+  height: 100%;
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+}
+
+.live-slide.is-interactive > iframe {
+  pointer-events: auto;
+}
+
+/* Animated cover: the Signal blue with three soft lights that drift, grain, and the logo whose bars swell in a wave.
+   Every animation runs there and back (alternate) or in a full cycle, so the loop has no seam. */
+.rp-cover {
+  background: #5b6b93;
+  container-type: inline-size;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-card:hover .rp-cover {
+  transform: scale(1.05);
+}
+
+.rp-glow {
+  inset: -35%;
+  position: absolute;
+}
+
+.rp-glow-a {
+  animation: rp-drift-a 9s ease-in-out infinite alternate;
+  background: radial-gradient(42% 48% at 28% 30%, #9fb0dc 0%, transparent 70%);
+}
+
+.rp-glow-b {
+  animation: rp-drift-b 12s ease-in-out infinite alternate;
+  background: radial-gradient(44% 50% at 74% 72%, #36415f 0%, transparent 70%);
+}
+
+.rp-glow-c {
+  animation: rp-drift-c 7s ease-in-out infinite alternate;
+  background: radial-gradient(30% 34% at 76% 24%, #b9c5e6 0%, transparent 70%);
+}
+
+@keyframes rp-drift-a {
+  to {
+    transform: translate(18%, 14%) scale(1.2);
+  }
+}
+
+@keyframes rp-drift-b {
+  to {
+    transform: translate(-16%, -12%) scale(1.15);
+  }
+}
+
+@keyframes rp-drift-c {
+  to {
+    transform: translate(-22%, 16%) scale(0.85);
+  }
+}
+
+.rp-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0' intercept='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
+  inset: 0;
+  mix-blend-mode: overlay;
+  opacity: 0.55;
+  position: absolute;
+}
+
+.rp-lock {
+  align-items: center;
+  color: #fff;
+  display: flex;
+  font-family: "Geist", var(--font-sans);
+  font-size: 9.4cqw;
+  font-weight: 600;
+  gap: 0.3em;
+  inset: 0;
+  justify-content: center;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  position: absolute;
+  white-space: nowrap;
+}
+
+.rp-lock svg {
+  fill: currentColor;
+  height: 1.08em;
+  overflow: visible;
+  width: 1.08em;
+}
+
+.rp-lock ellipse {
+  animation: rp-bar 2.4s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.2s);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes rp-bar {
+  0%,
+  100% {
+    transform: scaleX(0.55);
+  }
+
+  50% {
+    transform: scaleX(1.3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rp-glow,
+  .rp-lock ellipse {
+    animation: none;
+  }
+}

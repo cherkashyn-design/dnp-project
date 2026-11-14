@@ -14,6 +14,7 @@ import ycBadge from "../assets/standards/yc.svg";
 import maksym from "../assets/people/maksym.webp";
 import { appHref } from "../base.js";
 import { ContactSection } from "../components/ContactSection.jsx";
+import { ProjectMedia } from "../components/ProjectMedia.jsx";
 import { SoftImage, SoftVideo } from "../components/SoftMedia.jsx";
 import { cases } from "../data/cases.js";
 import { faqs, services, testimonials } from "../data/content.js";
@@ -282,7 +283,7 @@ export function HomePage({ onNavigate }) {
               style={{ "--reveal": `${index * 80}ms` }}
               onClick={(event) => openCase(event, project.slug)}
             >
-              <SoftImage src={project.image} alt="" />
+              <ProjectMedia project={project} />
               <span className="project-hover">
                 <span className="project-title">{project.title}</span>
                 <span className="project-tags">

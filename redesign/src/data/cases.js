@@ -2,8 +2,18 @@ import yummo from "../assets/cases/yummo.webp";
 import nodify from "../assets/cases/nodify.webp";
 import salesDriver from "../assets/cases/sales-driver.webp";
 import drumkit from "../assets/cases/drumkit.webp";
+import ringproof from "../../../portfolio/Ringproof/Preview.webp";
 
 export const cases = [
+  {
+    slug: "ringproof",
+    name: "Ringproof - Support testing for banks",
+    title: "Ringproof",
+    tags: ["Branding", "Landing", "SaaS"],
+    image: ringproof,
+    cover: "ringproof", // cards show the animated cover (ProjectMedia) instead of the picture
+    summary: "Brand, website and product design for a tool that tests bank support lines with simulated calls.",
+  },
   {
     slug: "yummo-food-guide-for-moms",
     name: "Yummo - Food guide for moms",
