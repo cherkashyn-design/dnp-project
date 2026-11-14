@@ -1,0 +1,90 @@
+/* The Wardgrid sales deck. A slide (.d) is 1600 x 900 px with 80 px margins on every side; all sizes are in px. */
+.d { position: relative; flex: none; width: 1600px; height: 900px; overflow: hidden; padding: 80px; background-color: var(--paper); color: var(--ink); font-family: var(--sans); }
+.d h1 { position: absolute; left: 80px; bottom: 150px; font-size: 190px; font-weight: 600; letter-spacing: -0.06em; line-height: 0.88; white-space: nowrap; }
+.d h2 { max-width: 1100px; font-size: 76px; font-weight: 600; letter-spacing: -0.05em; line-height: 0.98; }
+.d-lbl { display: flex; gap: 12px; margin-bottom: 30px; font: 500 16px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; }
+.d-lbl::before { content: "+"; }
+.d-top { position: absolute; left: 80px; right: 80px; top: 80px; display: flex; justify-content: space-between; align-items: center; font: 400 18px var(--mono); }
+.d-sub { position: absolute; left: 80px; bottom: 80px; max-width: 760px; font-size: 28px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.25; }
+.d-foot { position: absolute; left: 80px; right: 80px; bottom: 80px; display: flex; justify-content: space-between; align-items: center; font: 400 16px var(--mono); }
+.d-foot span { color: var(--blue); }
+.d-foot em { font-style: normal; opacity: 0.6; }
+.d-note { margin-top: 28px; max-width: 620px; font-size: 24px; line-height: 1.35; letter-spacing: -0.015em; }
+.d1, .d10 { color: #fff; }
+.d.grain { background-color: #1d3be3; }
+
+.d2 h2 { max-width: 760px; }
+.d-cells { position: absolute; right: 80px; top: 150px; width: 560px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.d-cells i { height: 100px; border-radius: 22px; background: var(--blue); color: #fff; font: 500 14px var(--mono); font-style: normal; display: flex; align-items: flex-end; padding: 12px; }
+.d-cells i.l { background: var(--lilac); color: var(--blue); }
+.d-cells i.n { background: var(--ink); }
+.d-cells i.o { background: none; border: 3px dashed var(--signal); color: var(--signal); }
+.d-cells i.x { background: none; }
+
+.d3 { background: var(--ink); color: #fff; }
+.d3 .d-foot span { color: #fff; }
+.d-nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 70px; }
+.d-strip { position: absolute; left: 80px; right: 80px; bottom: 170px; display: grid; grid-template-columns: repeat(24, 1fr); gap: 8px; }
+.d-strip i { aspect-ratio: 1; border-radius: 30%; background: #1d3be3; }
+.d-strip i.o { background: none; border: 2.5px dashed var(--signal); }
+.d-nums b { display: block; font-size: 150px; font-weight: 600; letter-spacing: -0.06em; line-height: 0.9; color: var(--lilac); white-space: nowrap; }
+.d-nums span { display: block; margin-top: 26px; max-width: 340px; font-size: 24px; line-height: 1.3; letter-spacing: -0.015em; }
+
+.d4 { background: var(--blue); color: #fff; }
+.d4 h2 { position: absolute; left: 80px; top: 126px; max-width: 330px; font-size: 56px; }
+.d4 .d-foot span { color: #fff; }
+.d-win { position: absolute; left: 460px; top: 80px; width: 1060px; border-radius: 18px; overflow: hidden; background: var(--paper); box-shadow: 0 40px 100px rgba(5, 10, 74, 0.5); }
+.d-win img { display: block; width: 100%; }
+.d-bar { display: flex; align-items: center; gap: 7px; height: 40px; padding: 0 16px; background: #fff; border-bottom: 1px solid var(--line); }
+.d-bar i { width: 10px; height: 10px; border-radius: 50%; background: #d3d6e4; }
+.d-bar span { margin-left: 14px; font: 400 13px var(--mono); color: var(--mute); }
+
+.d5 { background: var(--lilac); }
+.d-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 50px; }
+.d-steps div { height: 400px; padding: 30px; border-radius: 30px; background: #fff; display: flex; flex-direction: column; gap: 10px; }
+.d-steps span { align-self: flex-start; padding: 5px 10px; border-radius: 9px; background: var(--ink); color: #fff; font: 500 13px var(--mono); }
+.d-steps i { margin-top: auto; color: var(--blue); font-style: normal; }
+.d-steps b { font-size: 37px; font-weight: 600; letter-spacing: -0.035em; line-height: 1.05; }
+.d-steps em { font-style: normal; font-size: 22px; line-height: 1.3; color: #3a3f58; }
+
+.d6 h2 { max-width: 640px; }
+.d6 .d-note { max-width: 560px; color: #3a3f58; }
+.d-rules { position: absolute; right: 80px; top: 126px; width: 680px; display: flex; flex-direction: column; gap: 12px; }
+.d-rules div.bad { box-shadow: 0 0 0 3px var(--signal); }
+.d-rules div.bad svg { color: var(--signal); }
+.d-rules div.bad span { background: #ffe6dc; color: #c63d0a; }
+.d-rules div { display: flex; align-items: center; gap: 18px; height: 104px; padding: 0 28px; border-radius: 28px; background: #fff; }
+.d-rules svg { color: var(--blue); }
+.d-rules b { flex: 1; font-size: 26px; font-weight: 600; letter-spacing: -0.03em; }
+.d-rules span { padding: 9px 16px; border-radius: 12px; background: var(--paper); font: 500 20px var(--mono); }
+
+.d7 { background: #05060f; color: #fff; }
+.d7 .d-foot span { color: #fff; }
+.d7 h2 { font-size: 64px; }
+.d7 .d-note { max-width: 440px; color: #b9bfe6; }
+.d-phones { position: absolute; right: 80px; top: 80px; display: flex; gap: 22px; }
+.d-phone { width: 270px; height: 584px; border-radius: 22px; background-color: var(--paper); background-size: 346.2px auto; background-position: left top; background-repeat: no-repeat; box-shadow: 0 0 0 2px #2a2e4d; }
+.d-phone:nth-child(2) { margin-top: 38px; }
+.d-phone:nth-child(3) { margin-top: 76px; }
+
+.d-proof { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: 50px; padding-top: 30px; border-top: 1.5px solid rgba(10, 12, 28, 0.15); }
+.d-proof b { display: block; font-size: 132px; font-weight: 600; letter-spacing: -0.06em; line-height: 0.9; color: var(--blue); white-space: nowrap; }
+.d-proof span { display: block; margin-top: 18px; max-width: 260px; font-size: 21px; line-height: 1.3; }
+.d8 blockquote { margin-top: 76px; max-width: 1200px; font-size: 84px; font-weight: 500; letter-spacing: -0.045em; line-height: 1; }
+.d8 blockquote span { display: block; margin-top: 18px; font: 400 17px var(--mono); letter-spacing: 0; color: var(--mute); }
+
+.d-plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 60px; }
+.d-plans div { height: 390px; padding: 30px; border-radius: 30px; background: #fff; display: flex; flex-direction: column; }
+.d-plans span { font: 500 15px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); }
+.d-plans b { margin-top: 22px; font-size: 96px; font-weight: 600; letter-spacing: -0.055em; line-height: 1; white-space: nowrap; }
+.d-plans em { font-style: normal; font-size: 19px; color: var(--mute); }
+.d-plans p { margin-top: auto; font-size: 24px; font-weight: 500; letter-spacing: -0.02em; }
+.d-plans .main { background: var(--blue); color: #fff; }
+.d-plans .main span, .d-plans .main em { color: #b9c3ff; }
+
+/* deck.html itself */
+body.deckpage { margin: 0; background: #000; }
+body.deckpage #deck { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 24px; }
+body.deckpage.only { overflow: hidden; }
+body.deckpage.only #deck { padding: 0; }
+.d10 h1 { bottom: 200px; }

@@ -7,7 +7,7 @@ import { appHref } from "../base.js";
 import { ContactSection } from "../components/ContactSection.jsx";
 import { LottieFrame } from "../components/LottieFrame.jsx";
 import { LottieStrip } from "../components/LottieStrip.jsx";
-import { LiveSlide, ProjectMedia } from "../components/ProjectMedia.jsx";
+import { LiveSlide, ProjectMedia, WardgridCover } from "../components/ProjectMedia.jsx";
 import { RingproofCover } from "../components/RingproofCover.jsx";
 import { SoftImage, SoftVideo } from "../components/SoftMedia.jsx";
 import { SidebarReel } from "../components/SidebarReel.jsx";
@@ -16,6 +16,7 @@ import { spawnPressRipple } from "../pressRipple.js";
 import { genieCase } from "../../../src/data/genie.js";
 import { ringproofCase } from "../../../src/data/ringproof.js";
 import { salesDriverCase } from "../../../src/data/salesDriver.js";
+import { wardgridCase } from "../../../src/data/wardgrid.js";
 import { yummoCase } from "../../../src/data/yummo.js";
 import {
   drumkitPreview,
@@ -35,6 +36,7 @@ import {
 
 const legacyCases = {
   ringproof: ringproofCase,
+  wardgrid: wardgridCase,
   "yummo-food-guide-for-moms": yummoCase,
   nodity: genieCase,
   "sales-driver-ads-tool": salesDriverCase,
@@ -117,7 +119,7 @@ function Shot({ media }) {
       {media.type === "video" ? (
         <CaseVideo src={media.src} srcMobile={media.srcMobile} poster={media.poster} />
       ) : media.type === "embed" ? (
-        <LiveSlide slide={media.embed} poster={media.src} label={media.label} interactive={media.interactive} />
+        <LiveSlide slide={media.embed} poster={media.src} label={media.label} interactive={media.interactive} folder={media.folder} />
       ) : (
         <SoftImage src={media.src} alt="" />
       )}
@@ -461,7 +463,13 @@ function LegacyCase({ project, data, onNavigate }) {
           {data.subtitle ? <p>{data.subtitle}</p> : null}
         </div>
         <figure className="case-shot">
-          {data.heroCover === "ringproof" ? <RingproofCover /> : <SoftImage src={data.heroImage} alt={data.heroAlt || ""} />}
+          {data.heroCover === "ringproof" ? (
+            <RingproofCover />
+          ) : data.heroCover === "wardgrid" ? (
+            <WardgridCover poster={data.heroImage} />
+          ) : (
+            <SoftImage src={data.heroImage} alt={data.heroAlt || ""} />
+          )}
         </figure>
       </section>
 

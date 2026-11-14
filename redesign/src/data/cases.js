@@ -3,9 +3,19 @@ import nodify from "../assets/cases/nodify.webp";
 import salesDriver from "../assets/cases/sales-driver.webp";
 import drumkit from "../assets/cases/drumkit.webp";
 import ringproof from "../../../portfolio/Ringproof/Preview.webp";
+import wardgrid from "../../../portfolio/Wardgrid/Preview.webp";
 
 // A case with hidden: true stays in the code but is not shown anywhere: no card, no page, no link.
 const allCases = [
+  {
+    slug: "wardgrid",
+    name: "Wardgrid - Shift cover for hospital wards",
+    title: "Wardgrid",
+    tags: ["Concept", "Branding", "Landing", "SaaS"],
+    image: wardgrid,
+    cover: "wardgrid", // cards show the animated cover (ProjectMedia) instead of the picture
+    summary: "Brand, website and product design for a platform that builds a hospital ward's rota and finds cover for open shifts.",
+  },
   {
     slug: "ringproof",
     name: "Ringproof - Support testing for banks",

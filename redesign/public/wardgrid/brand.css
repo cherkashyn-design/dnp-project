@@ -1,0 +1,179 @@
+/* Wardgrid brand: the tokens every page uses (colour, type, logo, grain picture), then the branding slides 1.1–1.12.
+   Slides are 1600 x 1200 px; everything inside them is placed in px. */
+:root {
+  --blue: #1d3be3; --blue-deep: #0a1463; --blue-soft: #4f6bff;
+  --paper: #f1f2f6; --ink: #0a0c1c; --lilac: #cbc6ff; --signal: #ff5a1f;
+  --line: #d9dbe6; --mute: #6b7088;
+  --sans: "Instrument Sans", system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, monospace;
+}
+.wg-mark { display: block; flex: none; overflow: visible; }
+.wg-logo { display: inline-flex; align-items: center; gap: 0.3em; font-family: var(--sans); font-weight: 600; letter-spacing: -0.04em; line-height: 1; white-space: nowrap; } /* the name never breaks */
+.wg-logo b { font-weight: 600; }
+canvas.pic { display: block; width: 100%; height: 100%; }
+[data-lucide] { flex: none; }
+
+/* The soft, grainy blue picture: three lights on blue, with film grain over it. */
+.grain { position: relative; overflow: hidden; background-image:
+  radial-gradient(62% 52% at 12% 108%, #f1f2f6 0%, rgba(241, 242, 246, 0) 72%),
+  radial-gradient(52% 62% at 92% 30%, #050a4a 0%, rgba(5, 10, 74, 0) 72%),
+  radial-gradient(70% 60% at 28% 12%, #5a74ff 0%, rgba(90, 116, 255, 0) 70%); background-color: #1d3be3; }
+.grain::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 2.6 -1'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.grain > * { position: relative; z-index: 1; }
+
+/* A printed surface: a soft light from the top left, a darker far corner, film grain, a lit top edge.
+   Put on every coloured carrier (cards, posts, badge, paper) so none of them is a flat fill. */
+.mat { position: relative; overflow: hidden; box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.32), inset 0 -2px 0 rgba(0, 0, 20, 0.28); }
+.mat::before { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; background: radial-gradient(95% 75% at 16% 0%, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0) 62%), linear-gradient(155deg, rgba(0, 0, 30, 0) 45%, rgba(0, 0, 30, 0.26)); }
+.mat::after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0.09; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 2.6 -1'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+.s { font-family: var(--sans); color: var(--paper); }
+.s .abs { position: absolute; }
+.s .mono { font-family: var(--mono); letter-spacing: 0.02em; }
+
+/* ---------- 1.1 The logo on every brand background; the logo itself never moves ---------- */
+.s11 .l { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; animation: s11 3s step-end infinite; animation-delay: calc(var(--i) * 0.5s - 3s - var(--at, 0s)); }
+.s11 .l canvas { position: absolute; inset: 0; }
+.s11 .l .wg-logo { position: relative; z-index: 1; }
+@keyframes s11 { 0% { opacity: 1; } 16.666% { opacity: 0; } 100% { opacity: 0; } }
+
+/* ---------- 1.2 Colour ---------- */
+.s12 .sw { position: absolute; border-radius: 28px; padding: 36px 40px; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; }
+.s12 .sw b { font-size: 40px; font-weight: 500; letter-spacing: -0.03em; white-space: nowrap; }
+.s12 .sw span { font: 400 20px var(--mono); opacity: 0.75; white-space: nowrap; }
+.s12 .sw.big b { font-size: 84px; }
+.s12 .sw.big .wg-mark { position: absolute; left: 40px; top: 40px; }
+
+/* ---------- 1.3 Type ---------- */
+.s13 { color: var(--ink); }
+.s13 .aa { left: 72px; top: 10px; font-size: 440px; font-weight: 600; letter-spacing: -0.06em; line-height: 1; color: var(--blue); }
+.s13 .name { right: 80px; top: 96px; text-align: right; font-size: 44px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.25; }
+.s13 .name span { display: block; color: var(--mute); }
+.s13 .line { left: 80px; top: 540px; font-size: 148px; font-weight: 600; letter-spacing: -0.05em; line-height: 0.98; white-space: nowrap; }
+.s13 .rule { left: 80px; right: 80px; top: 880px; height: 1px; background: var(--ink); opacity: 0.18; }
+.s13 .monoline { left: 80px; top: 920px; font: 500 30px var(--mono); line-height: 1.55; white-space: nowrap; }
+.s13 .monoline span { color: var(--mute); font-weight: 400; }
+.s13 .glyphs { right: 80px; top: 920px; text-align: right; font-size: 30px; line-height: 1.55; color: var(--mute); white-space: nowrap; }
+
+/* ---------- 1.4 Icons (Lucide), drawn one after another ---------- */
+.s14 .icons { position: absolute; left: 200px; top: 150px; width: 1200px; height: 900px; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); place-items: center; }
+.s14 svg { width: 128px; height: 128px; stroke-width: 1.25; }
+.s14 svg * { stroke-dasharray: 1; stroke-dashoffset: 1; animation: s14 9s linear infinite; animation-delay: calc(var(--i) * 0.32s - 9s - var(--at, 0s)); }
+/* One wave draws the icons, a second wave in the same order takes them away; some are always on the slide. */
+@keyframes s14 { 0% { stroke-dashoffset: 1; opacity: 0; } 0.5% { opacity: 1; } 8% { stroke-dashoffset: 0; } 56% { stroke-dashoffset: 0; } 63.5% { opacity: 1; } 64% { stroke-dashoffset: 1; opacity: 0; } 100% { stroke-dashoffset: 1; opacity: 0; } }
+
+/* ---------- 1.5 Tone of voice: what the product says, on a moving picture ---------- */
+.s15 canvas { position: absolute; inset: 0; }
+.s15 .says { position: absolute; right: 80px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; align-items: flex-end; gap: 22px; }
+.say { display: flex; align-items: center; color: var(--ink); }
+.say i.dot { position: relative; z-index: 1; display: grid; place-items: center; width: 108px; height: 108px; border-radius: 50%; background: var(--paper); font-style: normal; }
+.say i.dot svg { width: 44px; height: 44px; color: var(--blue); }
+.say .neck { flex: none; width: 110px; height: 108px; margin: 0 -40px; fill: var(--paper); }
+.say p { height: 108px; padding: 0 48px; display: flex; align-items: center; border-radius: 54px; background: var(--paper); font-size: 44px; font-weight: 500; letter-spacing: -0.03em; white-space: nowrap; }
+.say.blue i.dot, .say.blue p { background: var(--blue); color: var(--paper); }
+.say.blue .neck { fill: var(--blue); }
+.say.blue i.dot svg { color: var(--paper); }
+
+/* ---------- 1.6 Business cards drifting under one light ---------- */
+@property --ox { syntax: "<number>"; inherits: true; initial-value: 0; }
+.s16 { --lx: 800; }
+.s16 .rowc { position: absolute; left: 0; display: flex; gap: 48px; will-change: transform; animation: s16 70s linear infinite, s16light 70s steps(140) infinite; animation-delay: calc(-12s - var(--at, 0s)); }
+.s16 .rowc.back { animation-direction: reverse; }
+@keyframes s16 { to { transform: translateX(-2272px); } }
+@keyframes s16light { from { --ox: 0; } to { --ox: -2272; } }
+.bcard { position: relative; flex: none; width: 520px; height: 330px; border-radius: 22px; overflow: hidden; padding: 34px 36px; display: flex; flex-direction: column; justify-content: space-between;
+  --dx: clamp(-2.5, (var(--cx) + var(--ox) - var(--lx)) / 300, 2.5);
+  box-shadow: inset calc(var(--dx) * -1px) 1.5px 0 rgba(255, 255, 255, 0.28), inset calc(var(--dx) * 1px) -1.5px 0 rgba(0, 0, 0, 0.3); }
+.bcard.ka { background: var(--blue); align-items: center; justify-content: center; color: #2648f2; }
+.bcard.ka .wg-mark, .bcard.kd .wg-mark { filter: drop-shadow(calc(var(--dx) * -1px) -1.5px 0 rgba(255, 255, 255, 0.34)) drop-shadow(calc(var(--dx) * 1px) 2px 1px rgba(0, 0, 20, 0.5)); }
+.bcard.kb { background: var(--paper); color: var(--ink); }
+.bcard.kb .wg-logo { color: var(--blue); }
+.bcard.kb b.n { display: block; font-size: 34px; font-weight: 600; letter-spacing: -0.03em; }
+.bcard.kb div span { display: block; font: 400 17px/1.6 var(--mono); color: var(--mute); }
+.bcard.kc { padding: 0; }
+/* On a card the light of the surface follows the one lamp of the scene (--dx). */
+.bcard.mat::before { background: radial-gradient(80% 90% at calc(50% - var(--dx) * 16%) 0%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 60%), linear-gradient(180deg, rgba(0, 0, 30, 0) 50%, rgba(0, 0, 30, 0.24)); }
+.bcard.kc .wg-logo { position: absolute; left: 36px; bottom: 34px; color: var(--blue); background: var(--lilac); padding: 6px 12px 6px 8px; border-radius: 12px; }
+.bcard.kd { background: #0b0d1d; color: #12152b; align-items: flex-end; justify-content: flex-end; }
+.bcard.kd .wg-mark { position: absolute; left: -40px; top: -50px; }
+.bcard.kd span { font: 400 17px var(--mono); color: var(--paper); }
+
+/* ---------- 1.7 Badge, 1.8 Letterhead and envelope ---------- */
+.s17 .badge { position: absolute; left: 520px; top: 180px; width: 560px; height: 840px; border-radius: 40px; overflow: hidden; background: var(--paper); color: var(--ink); animation: s17 11s ease-in-out infinite alternate; animation-delay: calc(-3s - var(--at, 0s)); }
+@keyframes s17 { from { transform: rotate(-1.3deg) translateY(-7px); } to { transform: rotate(1.3deg) translateY(7px); } }
+.s17 .top { position: absolute; left: 0; top: 0; width: 560px; height: 470px; }
+.s17 .slot { position: absolute; left: 230px; top: 30px; width: 100px; height: 20px; border-radius: 10px; background: #000; z-index: 2; }
+.s17 .who { position: absolute; left: 44px; top: 514px; }
+.s17 .who b { display: block; font-size: 60px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; white-space: nowrap; }
+.s17 .who span { display: block; margin-top: 16px; font: 500 20px var(--mono); color: var(--blue); }
+.s17 .foot { position: absolute; left: 44px; right: 44px; bottom: 40px; display: flex; justify-content: space-between; align-items: center; color: var(--blue); }
+.s17 .foot > span:not(.wg-logo) { font: 400 17px var(--mono); color: var(--mute); }
+
+.s18 .sheet { position: absolute; left: 150px; top: 120px; width: 680px; height: 962px; background: var(--paper); color: var(--ink); padding: 64px 60px; transform: rotate(-2deg); font-size: 17px; line-height: 1.6; }
+.s18 .sheet .head { display: flex; justify-content: space-between; align-items: flex-start; color: var(--blue); }
+.s18 .sheet .head > span:not(.wg-logo) { font: 400 12.5px/1.6 var(--mono); color: var(--mute); text-align: right; }
+.s18 .sheet .to { margin-top: 110px; font: 400 14px/1.6 var(--mono); color: var(--mute); }
+.s18 .sheet h4 { margin: 40px 0 18px; font-size: 30px; font-weight: 600; letter-spacing: -0.03em; }
+.s18 .sheet p { margin-bottom: 14px; max-width: 520px; }
+.s18 .sheet .sign { position: absolute; left: 60px; bottom: 64px; }
+.s18 .sheet .sign b { display: block; font-weight: 600; }
+.s18 .sheet .cells { position: absolute; right: 60px; bottom: 64px; width: 132px; height: 132px; }
+.s18 .env { position: absolute; left: 760px; top: 600px; width: 720px; height: 440px; border-radius: 10px; background: var(--blue); transform: rotate(3deg); padding: 44px 48px; overflow: hidden; }
+.s18 .env .flap { position: absolute; left: -40px; right: -40px; top: -330px; height: 520px; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, 0.2); box-shadow: 0 3px 0 rgba(0, 0, 30, 0.26); }
+.s18 .env .addr { position: absolute; left: 330px; top: 236px; font: 400 18px/1.65 var(--mono); }
+
+/* ---------- 1.9 Social posts, 1.10 Profile cover ---------- */
+.s19 .post { position: absolute; top: 300px; width: 460px; height: 600px; border-radius: 26px; overflow: hidden; padding: 40px; display: flex; flex-direction: column; justify-content: space-between; }
+.s19 .post h4 { font-size: 62px; font-weight: 600; letter-spacing: -0.045em; line-height: 1.02; }
+.s19 .post .big { font-size: 132px; font-weight: 600; letter-spacing: -0.06em; line-height: 0.9; white-space: nowrap; }
+.s19 .post p { margin-top: 18px; font-size: 26px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.25; }
+.s19 .post .pp { position: absolute; left: 0; right: 0; top: 0; height: 490px; }
+.s19 .post canvas { position: absolute; inset: 0; }
+.s19 .post .tag { position: relative; align-self: flex-start; margin-top: auto; color: var(--blue); }
+
+.s110 .card { position: absolute; left: 100px; top: 150px; width: 1400px; height: 900px; border-radius: 30px; overflow: hidden; background: #0c0e1c; }
+.s110 .cover { position: absolute; left: 0; top: 0; width: 1400px; height: 480px; display: grid; place-items: center; }
+.s110 .av { position: absolute; left: 64px; top: 370px; width: 220px; height: 220px; border-radius: 50%; background: var(--blue); border: 8px solid #0c0e1c; display: grid; place-items: center; z-index: 2; }
+.s110 .info { position: absolute; left: 72px; top: 620px; right: 72px; }
+.s110 .info b { display: block; font-size: 52px; font-weight: 600; letter-spacing: -0.04em; }
+.s110 .info .at { font: 400 22px var(--mono); color: #8188ab; }
+.s110 .info p { margin-top: 22px; font-size: 30px; letter-spacing: -0.02em; line-height: 1.3; max-width: 900px; }
+.s110 .info .meta { margin-top: 26px; display: flex; gap: 36px; font: 400 20px var(--mono); color: #8188ab; }
+.s110 .info .meta b { display: inline; font: 500 20px var(--mono); color: var(--paper); letter-spacing: 0; }
+.s110 .follow { position: absolute; right: 72px; top: 520px; height: 64px; padding: 0 40px; border-radius: 32px; background: var(--paper); color: var(--ink); display: grid; place-items: center; font-size: 24px; font-weight: 600; }
+
+/* ---------- 1.11 Posters ---------- */
+.s111 .poster { position: absolute; top: 70px; width: 705px; height: 1060px; overflow: hidden; padding: 52px; }
+.s111 .p1 { left: 80px; }
+.s111 .p1 .small { display: flex; justify-content: space-between; font-size: 24px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.25; }
+.s111 .p1 h4 { position: absolute; left: 52px; top: 300px; font-size: 138px; font-weight: 600; letter-spacing: -0.055em; line-height: 0.92; }
+.s111 .p1 .wg-logo { position: absolute; left: 52px; bottom: 52px; }
+.s111 .p2 { left: 815px; background: var(--paper); color: var(--ink); }
+.s111 .p2 .cells { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.s111 .p2 .cells i { height: 86px; border-radius: 20px; background: var(--blue); color: var(--paper); font: 500 15px var(--mono); font-style: normal; display: flex; align-items: flex-end; padding: 12px 14px; }
+.s111 .p2 .cells i.l { background: var(--lilac); color: var(--blue); }
+.s111 .p2 .cells i.n { background: var(--ink); }
+.s111 .p2 .cells i.o { background: none; border: 3px dashed var(--signal); color: var(--signal); }
+.s111 .p2 .cells i.x { background: none; }
+.s111 .p2 h4 { position: absolute; left: 52px; bottom: 170px; font-size: 104px; font-weight: 600; letter-spacing: -0.05em; line-height: 0.94; }
+.s111 .p2 .wg-logo { position: absolute; left: 52px; bottom: 52px; color: var(--blue); }
+.s111 .p2 .url { position: absolute; right: 52px; bottom: 62px; font: 400 20px var(--mono); color: var(--mute); }
+
+/* ---------- 1.12 The picture editor ---------- */
+.s112 .stage { position: absolute; left: 80px; top: 80px; width: 1000px; height: 1040px; border-radius: 28px; overflow: hidden; }
+.s112 .panel { position: absolute; left: 1128px; top: 80px; width: 392px; height: 1040px; display: flex; flex-direction: column; gap: 34px; }
+.s112 .panel .wg-logo { margin-bottom: 26px; }
+.s112 label { display: flex; flex-direction: column; gap: 14px; font: 500 16px var(--mono); color: #8188ab; text-transform: uppercase; letter-spacing: 0.06em; }
+.s112 .chips { display: flex; gap: 12px; }
+.s112 .chips button { width: 64px; height: 64px; border-radius: 20px; border: 2px solid #23263a; cursor: pointer; padding: 0; position: relative; }
+.s112 .chips button.on { outline: 3px solid var(--paper); outline-offset: 4px; }
+.s112 .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.s112 .seg button, .s112 .acts button { height: 60px; border-radius: 30px; border: 1.5px solid #2c3050; background: none; color: var(--paper); font: 500 20px var(--sans); cursor: pointer; }
+.s112 .seg button.on { background: var(--paper); border-color: var(--paper); color: var(--ink); }
+.s112 input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 8px; border-radius: 4px; background: #23263a; outline: none; }
+.s112 input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 34px; height: 34px; border-radius: 11px; background: var(--blue); border: 3px solid var(--paper); cursor: pointer; }
+.s112 input[type="range"]::-moz-range-thumb { width: 28px; height: 28px; border-radius: 11px; background: var(--blue); border: 3px solid var(--paper); cursor: pointer; }
+.s112 .acts { margin-top: auto; display: grid; gap: 12px; }
+.s112 .acts button.save { background: var(--blue); border-color: var(--blue); display: flex; align-items: center; justify-content: center; gap: 10px; }
+
+@media (prefers-reduced-motion: reduce) { .s *, .s *::before, .s *::after { animation: none !important; } .s11 .l:first-child { opacity: 1; } .s14 svg * { stroke-dashoffset: 0; } }

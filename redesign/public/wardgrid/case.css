@@ -1,0 +1,96 @@
+/* The case page: sections of rows, each row one slide or two side by side.
+   A slide (.s) is always drawn 1600 x 1200 px and scaled to its frame by case.js, so every size inside a slide is in px.
+   Brand slides are styled in brand.css, deck slides in deck.css; this file holds the page and the slides of sections 2–4. */
+* { box-sizing: border-box; margin: 0; }
+body { background: #f1f2f6; color: #0a0c1c; font: 400 16px/1.4 "Instrument Sans", system-ui, sans-serif; }
+.page { max-width: 1800px; margin: 0 auto; }
+.page section { display: flex; flex-direction: column; gap: 8px; padding: 80px 32px; }
+.heading { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+.heading h2 { font-size: 82px; font-weight: 400; letter-spacing: -0.02em; line-height: 0.95; }
+.heading p { color: #6b7088; }
+
+.row { display: grid; gap: 8px; }
+.row.two { grid-template-columns: 1fr 1fr; }
+.frame { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 16px; background: #000; }
+.s { position: absolute; left: 0; top: 0; width: 1600px; height: 1200px; overflow: hidden; transform-origin: 0 0; }
+/* The slide number, for feedback ("1.2: make the logo bigger"). It is on the draft page only, never on a single slide. */
+.num { position: absolute; left: 12px; top: 12px; z-index: 5; padding: 3px 8px; border-radius: 6px; background: rgba(0, 0, 0, 0.6); color: #fff; font: 500 12px ui-monospace, monospace; }
+/* A slide that is off screen pauses its animations (case.js sets .off). */
+.frame.off *, .frame.off *::before, .frame.off *::after { animation-play-state: paused !important; }
+
+/* ?only=1.2 shows one slide alone at its own size; &embed scales it to the window, for a frame on another site. */
+body.only { background: #000; overflow: hidden; }
+body.only .num { display: none; }
+body.only .frame { width: 100vw; height: 100vh; border-radius: 0; aspect-ratio: auto; }
+body.embed { background: none; }
+body.frozen *, body.frozen *::before, body.frozen *::after { animation-play-state: paused !important; }
+
+@media (max-width: 800px) {
+  .row.two { grid-template-columns: 1fr; }
+  .page section { padding: 48px 16px; }
+  .heading h2 { font-size: 48px; }
+}
+
+/* ---------- The top of the page: cover, title, tags, goal and idea ---------- */
+.intro { display: flex; gap: 32px; padding: 32px; }
+.intro .frame { flex: 1; align-self: flex-start; }
+.about { flex: 0 0 464px; display: flex; flex-direction: column; gap: 28px; }
+.about h1 { font-size: 82px; font-weight: 400; letter-spacing: -0.02em; line-height: 0.95; white-space: nowrap; }
+.about .sub, .about p { color: #55596e; }
+.about b { display: block; margin-bottom: 6px; font: 500 13px "JetBrains Mono", monospace; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags span { padding: 6px 12px; border: 1px solid #c9cddd; border-radius: 999px; font-size: 13px; }
+@media (max-width: 800px) { .intro { flex-direction: column; padding: 16px; } .about { flex: none; } .about h1 { font-size: 48px; } }
+
+/* ---------- 2 · Deck slides on case slides ---------- */
+.dk { position: absolute; left: 80px; top: 195px; width: 1600px; height: 900px; transform: scale(0.9); transform-origin: 0 0; }
+.drift { position: absolute; left: 0; display: flex; gap: 20px; will-change: transform; animation: drift 90s linear infinite; animation-delay: calc(-20s - var(--at, 0s)); }
+.drift.back { animation-direction: reverse; }
+@keyframes drift { to { transform: translateX(var(--half)); } }
+.thumb { position: relative; flex: none; width: 544px; height: 306px; overflow: hidden; border-radius: 10px; }
+.thumb > .d { position: absolute; left: 0; top: 0; transform: scale(0.34); transform-origin: 0 0; }
+.thumb.app { width: 480px; height: 300px; border-radius: 12px; }
+.s410 .drift { gap: 24px; }
+
+/* ---------- 3, 4 · A plain browser window and a plain phone ---------- */
+.win { position: absolute; left: 80px; top: 128px; width: 1440px; height: 944px; border-radius: 16px; overflow: hidden; background: #f1f2f6; box-shadow: 0 0 0 1.5px #262a44; }
+.win .bar { display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; background: #0c0e1c; }
+.win .bar i { width: 11px; height: 11px; border-radius: 50%; background: #343958; }
+.win .bar span { margin-left: 16px; font: 400 14px "JetBrains Mono", monospace; color: #8188ab; }
+.win iframe { display: block; width: 1440px; height: 900px; border: 0; pointer-events: none; }
+.ph { position: absolute; width: 390px; height: 844px; border-radius: 32px; overflow: hidden; transform-origin: 0 0; background: #f1f2f6; box-shadow: 0 0 0 2px #262a44; }
+.ph iframe { display: block; width: 390px; height: 844px; border: 0; pointer-events: none; }
+
+/* ---------- 0.1 · Cover: "Take this shift" ---------- */
+.cov canvas { position: absolute; inset: 0; }
+.cov-card { position: absolute; left: 480px; top: 250px; width: 640px; height: 700px; padding: 52px; border-radius: 56px; background: #fff; color: #0a0c1c; display: flex; flex-direction: column; box-shadow: 0 60px 120px rgba(5, 10, 74, 0.45); }
+.cov-tags { position: relative; height: 40px; }
+.cov-tags span { position: absolute; left: 0; top: 0; padding: 8px 14px; border-radius: 12px; font: 500 17px "JetBrains Mono", monospace; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; }
+.cov-tags .t1 { background: #ffe6dc; color: #c63d0a; }
+.cov-tags .t2 { background: #e3e8ff; color: #1d3be3; }
+.cov-card > b { margin-top: 26px; font-size: 60px; font-weight: 600; letter-spacing: -0.045em; line-height: 1; white-space: nowrap; }
+.cov-card > em { margin-top: 14px; font: 400 19px "JetBrains Mono", monospace; font-style: normal; color: #6b7088; white-space: nowrap; }
+.cov-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 44px; }
+.cov-week div { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.cov-week i { position: relative; width: 100%; height: 70px; border-radius: 20px; background: #f1f2f6; }
+.cov-week i.E { background: #e3e8ff; }
+.cov-week i.L { background: #cbc6ff; }
+.cov-week i.o { background: #fff5f0; box-shadow: inset 0 0 0 3px #ff5a1f; }
+.cov-week i u { position: absolute; inset: 0; border-radius: 20px; background: #1d3be3; }
+.cov-week span { font: 500 15px "JetBrains Mono", monospace; color: #6b7088; }
+.cov-facts { display: flex; gap: 8px; margin-top: 30px; }
+.cov-facts span { padding: 10px 16px; border-radius: 14px; background: #f1f2f6; font-size: 19px; font-weight: 500; white-space: nowrap; }
+.cov-btn { position: relative; margin-top: auto; height: 104px; border-radius: 30px; background: #1d3be3; color: #fff; overflow: hidden; }
+.cov-btn span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 34px; font-weight: 600; letter-spacing: -0.03em; }
+.cov-btn .tap { position: absolute; left: 50%; top: 50%; width: 520px; height: 520px; margin: -260px; border-radius: 50%; background: rgba(255, 255, 255, 0.28); }
+/* One timeline, ten seconds: pressed at 3 s, covered until 8.8 s, back to open by 9.6 s. */
+.cov .t1, .cov .b1 { animation: cov-a 10s linear infinite; }
+.cov .t2, .cov .b2, .cov-week u { animation: cov-b 10s cubic-bezier(0.2, 0.9, 0.2, 1) infinite; }
+.cov .tap { animation: cov-tap 10s ease-out infinite; }
+.cov-btn { animation: cov-press 10s ease-in-out infinite; }
+.cov .t1, .cov .b1, .cov .t2, .cov .b2, .cov-week u, .cov .tap, .cov-btn { animation-delay: calc(-10s - var(--at, 0s)); }
+@keyframes cov-a { 0%, 32% { opacity: 1; } 35%, 90% { opacity: 0; } 96%, 100% { opacity: 1; } }
+@keyframes cov-b { 0%, 33% { opacity: 0; transform: scale(0.7); } 39%, 90% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; transform: none; } }
+@keyframes cov-tap { 0%, 29% { transform: scale(0); opacity: 1; } 40% { transform: scale(1); opacity: 0; } 100% { transform: scale(1); opacity: 0; } }
+@keyframes cov-press { 0%, 28% { transform: none; } 31% { transform: scale(0.965); } 36%, 100% { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .cov * { animation: none !important; } .cov .t2, .cov .b2, .cov-week u, .cov .tap { opacity: 0; } }

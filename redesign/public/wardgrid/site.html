@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Wardgrid — every shift covered</title>
+<!-- The marketing website of Wardgrid (a concept). One page; desktop at 1440 px, phone at 390 px.
+     ?still  every section visible at once      ?still&go=pricing  jump to a section (for a picture of it)
+     ?tour   the page scrolls itself, section by section; &at=9 freezes the tour at that second, &lead=7 starts it later -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="brand.css" />
+<link rel="stylesheet" href="site.css" />
+</head>
+<body>
+<header class="hd">
+  <a class="hd-logo" data-logo="24"></a>
+  <nav class="hd-nav"><a>Product</a><a>How it works</a><a>Pricing</a><a>Questions</a></nav>
+  <a class="split"><span>Book a demo</span><i data-lucide="arrow-right"></i></a>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <h1 class="rv">Every shift<br />covered.</h1>
+  <div class="hero-row rv">
+    <p>Wardgrid builds the ward rota, checks every change against your rules and finds cover for an open shift in minutes. Nobody is phoned at home.</p>
+    <div class="btns"><a class="split"><span>Book a demo</span><i data-lucide="arrow-right"></i></a><a class="ghost">See how it works</a></div>
+  </div>
+  <div class="hero-pic rv">
+    <canvas class="pic" data-set="blue" data-field="blobs" data-cell="26" data-live data-level="0.54"></canvas>
+    <div class="shot"><i class="br a"></i><i class="br b"></i><i class="br c"></i><i class="br d"></i>
+      <span class="tag hot">Open shift</span>
+      <b>Night · Thu 19 Nov</b><em>21:00–07:30 · Ward 4B Cardiology</em>
+      <div class="p"><span class="av">AO</span><span>Amara Okafor</span><u>Declined</u></div>
+      <div class="p yes"><span class="av">DR</span><span>Daniel Reyes</span><u>Accepted</u></div>
+      <div class="p"><span class="av">PN</span><span>Priya Nair</span><u>Seen</u></div>
+      <small><i data-lucide="check"></i>Covered four minutes after it opened</small>
+    </div>
+  </div>
+  <div class="trust rv"><span>On 212 wards in 31 hospitals</span><b>Northmere General</b><b>Calder Vale Infirmary</b><b>Harbourside Children's</b><b>Kingsmoor Trust</b><b>Eastfen University Hospital</b></div>
+</section>
+
+<section class="how" id="how">
+  <div class="how-left">
+    <p class="lbl rv">How it works</p>
+    <h2 class="rv">From an empty cell to a covered shift.</h2>
+    <div class="iso rv" aria-hidden="true">
+      <div class="plane"><i></i><i></i><i></i><i></i><i></i><i class="e"></i><i></i><i></i><i></i><i class="l"></i><i class="o"></i><i></i><i></i><i></i><i class="n"></i><i></i></div>
+      <span class="pin" style="left:39%;top:10%">07:00–15:00</span><span class="pin" style="left:17%;top:33%">13:00–21:00</span><span class="pin hot" style="left:57%;top:27%">Open · 21:00–07:30</span>
+    </div>
+  </div>
+  <div class="steps">
+    <div class="step open rv"><div><i data-lucide="plus"></i><b>A shift opens</b><span>001</span></div><p>Someone calls in sick. Wardgrid marks the cell open and works out who could take it: rested, inside their hours, with the right skills.</p></div>
+    <div class="step rv"><div><i data-lucide="plus"></i><b>The right people are asked</b><span>002</span></div></div>
+    <div class="step rv"><div><i data-lucide="plus"></i><b>One of them says yes</b><span>003</span></div></div>
+    <div class="step rv"><div><i data-lucide="plus"></i><b>The rota closes the gap</b><span>004</span></div></div>
+  </div>
+</section>
+
+<section class="feat" id="product">
+  <p class="lbl rv">What is inside</p>
+  <h2 class="rv">A rota that checks itself, on the ward computer and in every pocket.</h2>
+  <div class="cards">
+    <article class="card rv"><div class="mini rules"><div><i data-lucide="bed"></i>Rest between shifts<b>11 h</b></div><div><i data-lucide="moon"></i>Nights in a row<b>2</b></div><div class="bad"><i data-lucide="triangle-alert"></i>Leila, Fri night<b>3rd</b></div></div><h3>Rules that never sleep</h3><p>Rest, hours, nights in a row, skill mix. Every change is checked the moment you make it.</p></article>
+    <article class="card rv"><div class="mini phone"><div class="ph"><span class="tag hot">Open shift</span><b>Tonight, 21:00–07:30</b><em>Can you take it?</em><u>Take this shift</u></div></div><h3>One tap from the phone</h3><p>The people who can take a shift get a push, not a call. They see what it means for their week before they answer.</p></article>
+    <article class="card rv"><div class="mini swap"><div><span class="av">PN</span>Sat · Late</div><i data-lucide="repeat"></i><div><span class="av">TZ</span>Sun · Early</div><b><i data-lucide="shield-check"></i>All rules pass</b></div><h3>Swaps without the corridor</h3><p>Two people agree, Wardgrid checks the rules, the ward manager approves with one click.</p></article>
+  </div>
+</section>
+
+<section class="nums" id="numbers">
+  <p class="lbl rv">Key numbers</p>
+  <h2 class="rv">A year on real rotas shapes every default we ship.</h2>
+  <div class="numrow">
+    <div class="rv"><span>Median time to cover</span><b>4 min</b><em>From open to accepted</em></div>
+    <div class="rv"><span>Filled by the ward's own team</span><b>96%</b><em>Without agency staff</em></div>
+    <div class="rv"><span>Calls to people at home</span><b>0</b><em>Push first, then a text</em></div>
+    <div class="rv"><span>Wards on Wardgrid</span><b>212</b><em>In 31 hospitals</em></div>
+  </div>
+</section>
+
+<section class="quote" id="quote">
+  <canvas class="pic" data-set="ink" data-field="wave" data-cell="24" data-live data-level="0.76" data-dots="off"></canvas>
+  <blockquote class="rv">“We used to start every morning on the phone. Now I open the rota and it is already whole.”</blockquote>
+  <p class="rv"><span class="av">CD</span><b>Claire Donovan</b>Ward manager, Northmere General</p>
+</section>
+
+<section class="price" id="pricing">
+  <p class="lbl rv">Pricing</p>
+  <h2 class="rv">Priced per ward. Everyone on the ward is included.</h2>
+  <div class="plans">
+    <article class="plan rv"><h3>Ward</h3><b>£190<small> per ward / month</small></b><p>For one to nine wards.</p><ul><li>Rota, rules and open shifts</li><li>Phone app for every member of staff</li><li>Swaps with approval</li><li>Email support</li></ul><a class="ghost">Start with one ward</a></article>
+    <article class="plan main rv"><h3>Hospital</h3><b>£150<small> per ward / month</small></b><p>For ten wards or more.</p><ul><li>Everything in Ward</li><li>Cover across wards</li><li>Bank staff requests</li><li>Reports for the board</li><li>Single sign-on</li></ul><a class="split"><span>Book a demo</span><i data-lucide="arrow-right"></i></a></article>
+    <article class="plan rv"><h3>Trust</h3><b>Let's talk</b><p>For a group of hospitals.</p><ul><li>Everything in Hospital</li><li>Rules shared between sites</li><li>Roster system integration</li><li>A named customer lead</li></ul><a class="ghost">Talk to us</a></article>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div><p class="lbl rv">Questions</p><h2 class="rv">Asked by ward managers before they start.</h2></div>
+  <div class="steps">
+    <div class="step open rv"><div><i data-lucide="plus"></i><b>Does Wardgrid hold any patient data?</b><span>001</span></div><p>No. Wardgrid knows who works when, their contract and their skills. It never sees patients, beds or notes.</p></div>
+    <div class="step rv"><div><i data-lucide="plus"></i><b>Can a rule stop me publishing?</b><span>002</span></div></div>
+    <div class="step rv"><div><i data-lucide="plus"></i><b>What if nobody can take the shift?</b><span>003</span></div></div>
+    <div class="step rv"><div><i data-lucide="plus"></i><b>How long does a ward take to set up?</b><span>004</span></div></div>
+    <div class="step rv"><div><i data-lucide="plus"></i><b>Do staff need a work phone?</b><span>005</span></div></div>
+  </div>
+</section>
+</main>
+
+<footer class="ft grain">
+  <div class="ft-top"><h2>Next week's rota,<br />already whole.</h2><a class="split light"><span>Book a demo</span><i data-lucide="arrow-right"></i></a></div>
+  <div class="ft-cols"><div><span>Product</span><a>Rota</a><a>Open shifts</a><a>Swaps</a><a>Rules</a></div><div><span>Company</span><a>About</a><a>Customers</a><a>Careers</a><a>Security</a></div><div><span>Contact</span><a>hello@wardgrid.example</a><a>+44 20 7946 0142</a><a>14 Harbour Road, Northmere</a></div></div>
+  <div class="ft-mark" data-logo="210"></div>
+  <div class="ft-low"><span>© 2026 Wardgrid Ltd</span><span>Privacy · Terms · Status</span></div>
+</footer>
+
+<a class="split fixed-cta"><span>Book a demo</span><i data-lucide="arrow-right"></i></a>
+
+<script src="vendor/lucide.min.js"></script>
+<script src="brand-show.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

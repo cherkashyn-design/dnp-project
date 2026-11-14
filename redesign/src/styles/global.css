@@ -3590,3 +3590,22 @@ main {
     animation: none;
   }
 }
+
+/* Animated cover of the Wardgrid case: its "Take this shift" slide running live in a frame, over a poster picture.
+   The slide scales itself to fill the frame (case.html?...&cover), so the frame only has to be stretched over the shell. */
+.wg-cover {
+  background: #1d3be3;
+}
+
+.wg-cover > img {
+  object-fit: cover;
+}
+
+.wg-cover > iframe {
+  border: 0;
+  height: 100%;
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+}
