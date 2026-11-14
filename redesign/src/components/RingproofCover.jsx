@@ -55,7 +55,7 @@ function marble(canvas) {
   };
 }
 
-/** Animated cover of the Ringproof case: the logo on the brand's marble wave, which flows slowly and loops for ever. */
+/** Animated cover of the Ringproof case: the logo on the brand's marble wave, which flows slowly, while a low wave runs through the bars of the mark. Loops for ever. */
 export function RingproofCover() {
   const shellRef = useRef(null);
   const canvasRef = useRef(null);
@@ -99,7 +99,7 @@ export function RingproofCover() {
         <span className="rp-lock" aria-hidden="true">
           <svg viewBox="0 0 48 48">
             {BARS.map((bar, n) => (
-              <ellipse key={n} cx={bar.cx.toFixed(2)} cy={bar.cy.toFixed(2)} rx={bar.rx.toFixed(2)} ry={bar.ry.toFixed(2)} />
+              <ellipse key={n} style={{ "--i": bar.i }} cx={bar.cx.toFixed(2)} cy={bar.cy.toFixed(2)} rx={bar.rx.toFixed(2)} ry={bar.ry.toFixed(2)} />
             ))}
           </svg>
           <span>Ringproof</span>

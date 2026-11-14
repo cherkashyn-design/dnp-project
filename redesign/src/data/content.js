@@ -29,7 +29,7 @@ export const services = [
     title: "Websites",
     description:
       "Landing pages and product sites built to convert, with message and visual aligned end to end",
-    shot: caseShot("yummo-food-guide-for-moms"),
+    shot: caseShot("ringproof"),
   },
   {
     number: "03",

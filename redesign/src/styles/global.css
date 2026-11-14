@@ -3565,3 +3565,28 @@ main {
   overflow: visible;
   width: 1.08em;
 }
+
+/* A slow, low wave runs through the bars of the mark: each bar swells a little later than the one before it. */
+.rp-lock ellipse {
+  animation: rp-bar 5s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.4s);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes rp-bar {
+  0%,
+  100% {
+    transform: scaleX(0.72);
+  }
+
+  50% {
+    transform: scaleX(1.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rp-lock ellipse {
+    animation: none;
+  }
+}

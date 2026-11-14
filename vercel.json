@@ -4,6 +4,16 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/cases/drumkit-logistic-saas",
+      "destination": "/cases",
+      "permanent": false
+    },
+    {
+      "source": "/cases/yummo-food-guide-for-moms",
+      "destination": "/cases",
+      "permanent": false
+    },
+    {
       "source": "/cases/nodify",
       "destination": "/cases/nodity",
       "permanent": true
