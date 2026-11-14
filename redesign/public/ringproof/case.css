@@ -21,7 +21,8 @@
 .frame.tall { aspect-ratio: auto; }
 body.only .s.show { height: 100vh; }
 body.only .frame { width: 100vw; height: 100vh; border-radius: 0; aspect-ratio: auto; }
-body.embed { background: none; } /* the page that frames the slide shows through around the editors */
+body.embed { background: none; }
+body.embed .s.show { height: 1200px; } /* the frame scales the slide, so it keeps its own height */ /* the page that frames the slide shows through around the editors */
 
 /* showreel: will-change keeps every picture drawn and in memory, so a cut is only a change of opacity */
 .reel { background: #000; }

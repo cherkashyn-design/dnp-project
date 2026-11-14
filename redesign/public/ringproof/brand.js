@@ -101,7 +101,7 @@ const SLIDES = {
       <div style="flex:3.4;background:linear-gradient(90deg,#09090b,#5b6b93 58%,#c3cde6)"><span>Signal gradient</span><span>#09090B → #5B6B93 → #C3CDE6</span></div>
       <div style="flex:1;background:var(--pass)"><span>Pass · #46A758</span></div>
       <div style="flex:1;background:var(--fail)"><span>Fail · #E5484D</span></div>
-    </div>${tag("tl", "Colour")}</div>`;
+    </div></div>`;
   },
 
   "1.3": () => `<div class="s"><div class="type">
@@ -110,11 +110,11 @@ const SLIDES = {
         <div class="monoline">GEIST MONO<br>RUN 9 · 12 NOV 2026, 14:36 UTC<br>REPLY 620 MS · OVERLAP 0.6 S</div></div>
     </div><div class="numerals">${dm("0123456789", 13, 6)}<p>Dot-matrix numerals for every number that matters.</p></div></div>`,
 
-  "1.4": () => `<div class="s" style="background:#000">${tag("tl", "Iconography")}${tag("tr", "12 icons · 48 px grid")}
+  "1.4": () => `<div class="s" style="background:#000">
     <div class="icons">${ICONS.map(([name, body], i) => `<div>${icon(body, i)}<span>${name}</span></div>`).join("")}</div></div>`,
 
   // The waves on this slide move outwards from their sources (data-live, see flowWaves in brand-show.js).
-  "1.5": () => `<div class="s"><div class="art"><canvas class="bg" data-wave="ripples" data-live width="800" height="600"></canvas>${GRAIN}</div>${tag("tl", "Ringproof")}${tag("tr", "Tone of voice")}
+  "1.5": () => `<div class="s"><div class="art"><canvas class="bg" data-wave="ripples" data-live width="800" height="600"></canvas>${GRAIN}</div>${tag("tl", "Ringproof")}
     <div class="mood">Call your own support before your customers do.</div>${tag("bl", "ringproof.example")}</div>`,
 
   // Rows of cards slide along their own line, every other row the opposite way, and loop.
@@ -149,7 +149,7 @@ const SLIDES = {
     return `<div class="s" style="background:#000"><div class="cards">${[0, 1, 2, 3, 4].map(row).join("")}</div></div>`;
   },
 
-  "1.7": () => `<div class="s" style="background:#000">${tag("tl", "Badge")}
+  "1.7": () => `<div class="s" style="background:#000">
     <div class="badge" style="left:660px;top:235px;transform:rotate(9deg);animation-delay:-3.5s;align-items:center;justify-content:center;color:#fff;overflow:hidden">${art("marble")}${mark("", 260)}</div>
     <div class="badge" style="left:500px;top:205px;transform:rotate(-3deg);background:var(--paper);color:var(--ink)">
       <div class="slot"></div>${lock(40)}
@@ -165,7 +165,7 @@ const SLIDES = {
       <p>The attached summary lists each scenario with its pass rate, the experience score and the exact moment in the call where things went wrong.</p>
       <p>Kind regards,<br>Anna Lindqvist</p>
       <div class="foot"><span>Ringproof Ltd · 14 Example Street, London</span><span>ringproof.example</span></div>${PAPER}</div>
-    <div class="envelope">${art("blue")}${lock(70)}<div class="addr">Ringproof Ltd<br>14 Example Street, London</div>${PAPER}</div>${tag("br", "Letterhead and envelope")}</div>`,
+    <div class="envelope">${art("blue")}${lock(70)}<div class="addr">Ringproof Ltd<br>14 Example Street, London</div>${PAPER}</div></div>`,
 
   "1.9": () => `<div class="s" style="background:#000"><div class="posts">
     <div class="post" style="align-items:center;justify-content:center;color:#fff">${art("forest")}${mark("", 236)}</div>
@@ -177,7 +177,7 @@ const SLIDES = {
   </div></div>`,
 
   "1.10": () => `<div class="s" style="background:#000">
-    <div class="cover">${art("forest")}${lock(40)}<div style="display:flex;justify-content:space-between;align-items:flex-end"><h3>Hear what your customers hear.</h3><small>Profile cover · 3:1</small></div></div>
+    <div class="cover">${art("forest")}${lock(40)}<h3>Hear what your customers hear.</h3></div>
     <div class="stories">
       <div class="story" style="align-items:center;justify-content:center;color:#fff">${art("ripples")}${mark("", 190)}</div>
       <div class="story">${photo("call-c", "24% 50%")}<small>Ringproof</small><h3>Did the card actually get blocked?</h3></div>
@@ -202,7 +202,7 @@ const SLIDES = {
 };
 
 // ---------- Page ----------
-const ROWS = [["1.1"], ["1.2", "1.3"], ["1.4", "1.5"], ["1.6"], ["1.7", "1.8"], ["1.9", "1.10"], ["1.11"], ["1.12"]];
+const ROWS = [["1.1"], ["1.2", "1.3"], ["1.4", "1.5"], ["1.6"], ["1.7", "1.8"], ["1.12"], ["1.9", "1.10"], ["1.11"]];
 const brandQuery = new URLSearchParams(location.search), only = brandQuery.get("only"), frame = Number(brandQuery.get("f")) || 0;
 if (window.BRAND_EMBED) {
   // case.html draws the slides itself and only needs the definitions above.

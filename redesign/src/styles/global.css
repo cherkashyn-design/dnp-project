@@ -3482,8 +3482,26 @@ main {
   border-radius: 0;
 }
 
-@media (max-width: 791px) {
+/* One column (980 px and down): the site gives the shape to the media inside the figure, not to the figure. */
+@media (max-width: 980px) {
+  .case-shot.is-slide,
   .case-shot.is-editors {
+    aspect-ratio: auto;
+  }
+
+  .case-shot.is-slide > .media-shell {
+    aspect-ratio: 4 / 3;
+  }
+
+  .case-shot.is-editors > .media-shell {
+    aspect-ratio: 1800 / 740;
+    border-radius: 0;
+  }
+}
+
+/* The frame of the editors is narrower than 760 px here, so they switch to their tall phone layout. */
+@media (max-width: 791px) {
+  .case-shot.is-editors > .media-shell {
     aspect-ratio: 400 / 1200;
   }
 }

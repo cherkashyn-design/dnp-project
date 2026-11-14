@@ -51,7 +51,7 @@ const ALL = { ...SLIDES, ...CASE_SLIDES };
 // ---------- Page ----------
 // A row is one slide, two slides side by side, or { stack, tall }: two slides stacked on the left and a tall one on the right.
 const SECTIONS = [
-  ["1 · Branding", "A mark built from bars of sound, and the pictures, type and carriers around it.", [{ stack: ["1.2", "1.3"], tall: "1.1" }, ["1.4", "1.5"], ["1.6"], ["1.7", "1.8"], ["1.9", "1.10"], ["1.11"], ["1.12"]]],
+  ["1 · Branding", "A mark built from bars of sound, and the pictures, type and carriers around it.", [{ stack: ["1.2", "1.3"], tall: "1.1" }, ["1.4", "1.5"], ["1.6"], ["1.7", "1.8"], ["1.12"], ["1.9", "1.10"], ["1.11"]]],
   ["2 · Pitch deck", "The deck Ringproof shows to a bank's head of customer experience.", [["2.1"], ["2.2", "2.3"], ["2.4", "2.5"], ["2.6"]]],
   ["3 · Website", "A marketing site that explains the product in one scroll.", [["3.1"], ["3.2", "3.3"], ["3.4", "3.5"]]],
   ["4 · Platform", "The product itself: 22 screens for campaigns, scenarios and single test calls.", [["4.1"], ["4.2", "4.3"], ["4.4"], ["4.5", "4.6"], ["4.7"]]],

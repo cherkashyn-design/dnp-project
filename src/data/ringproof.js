@@ -35,10 +35,10 @@ export const ringproofCase = {
         [live("1.4", "Icons"), live("1.5", "Tone of voice")],
         [live("1.6", "Business cards")],
         [live("1.7", "Badges"), still("1.8")],
-        [still("1.9"), still("1.10")],
-        [still("1.11")],
         // the two editors can be used, and they have their own shape and no poster
         [{ id: "case-ringproof-1-12", type: "embed", embed: "1.12", label: "Background and logo editors", shape: "editors", interactive: true }],
+        [still("1.9"), still("1.10")],
+        [still("1.11")],
       ],
     },
     {
