@@ -486,6 +486,14 @@ function LegacyCase({ project, data, onNavigate }) {
                 ))}
               </dd>
             </div>
+            {data.concept ? (
+              <div>
+                <dt>Type</dt>
+                <dd>
+                  <span className="case-chip">Concept</span>
+                </dd>
+              </div>
+            ) : null}
           </dl>
         </section>
       ) : null}

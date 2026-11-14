@@ -9,7 +9,7 @@ export const cases = [
     slug: "ringproof",
     name: "Ringproof - Support testing for banks",
     title: "Ringproof",
-    tags: ["Branding", "Landing", "SaaS"],
+    tags: ["Concept", "Branding", "Landing", "SaaS"],
     image: ringproof,
     cover: "ringproof", // cards show the animated cover (ProjectMedia) instead of the picture
     summary: "Brand, website and product design for a tool that tests bank support lines with simulated calls.",

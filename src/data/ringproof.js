@@ -10,10 +10,11 @@ const live = (id, label) => ({ ...still(id), type: "embed", embed: id, label });
 export const ringproofCase = {
   title: "Ringproof",
   subtitle: "Brand, website and product design for a tool that tests bank support lines with simulated calls.",
-  heroAlt: "Ringproof logo on a blue gradient",
+  heroAlt: "Ringproof logo on a dark blue marble wave",
   heroImage: pictures["../../portfolio/Ringproof/Preview.webp"],
   heroCover: "ringproof", // the animated cover instead of the picture
   tags: ["Branding", "Landing", "SaaS"],
+  concept: true, // not a client project: the case page says so next to the services
   overview: [
     [
       "[ GOAL ]",
