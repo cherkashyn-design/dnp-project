@@ -11,6 +11,7 @@ import { DraftlexCover, LiveSlide, OneGallonCover, ProjectMedia, WardgridCover }
 import { RingproofCover } from "../components/RingproofCover.jsx";
 import { SoftImage, SoftVideo } from "../components/SoftMedia.jsx";
 import { SidebarReel } from "../components/SidebarReel.jsx";
+import { blogPosts } from "../data/blog.js";
 import { cases } from "../data/cases.js";
 import { spawnPressRipple } from "../pressRipple.js";
 import { genieCase } from "../../../src/data/genie.js";
@@ -211,6 +212,38 @@ function MotionBand({ text, animations }) {
     <section className="case-motion">
       <h2>{text}</h2>
       <LottieStrip animations={animations} />
+    </section>
+  );
+}
+
+// The blog article that uses this case as its worked example, if there is one.
+function CaseArticle({ slug, onNavigate }) {
+  const post = blogPosts.find((item) => item.case === slug && item.content);
+  if (!post) return null;
+  const href = `/blog/${post.slug}`;
+  return (
+    <section className="case-block">
+      <div className="case-more-head">
+        <h2 data-reveal>From the blog</h2>
+      </div>
+      <a
+        className="article-case"
+        href={appHref(href)}
+        onClick={(event) => {
+          event.preventDefault();
+          onNavigate(href);
+        }}
+      >
+        <div className="article-case-media">
+          <SoftImage alt="" src={post.cover} />
+        </div>
+        <div className="article-case-copy">
+          <span className="article-kicker">{post.tags[0]}</span>
+          <strong>{post.title}</strong>
+          <p>{post.excerpt}</p>
+          <span className="pill is-dark">Read the article</span>
+        </div>
+      </a>
     </section>
   );
 }
@@ -546,6 +579,7 @@ function LegacyCase({ project, data, onNavigate }) {
         </>
       ) : null}
 
+      <CaseArticle slug={project.slug} onNavigate={onNavigate} />
       <OtherProjects slug={project.slug} onNavigate={onNavigate} />
       <ContactSection />
     </article>

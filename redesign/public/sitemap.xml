@@ -2,81 +2,97 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.donotpress.studio/</loc>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.donotpress.studio/cases</loc>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.donotpress.studio/cases/draftlex</loc>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.donotpress.studio/cases/one-gallon</loc>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.donotpress.studio/cases/wardgrid</loc>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.donotpress.studio/cases/ringproof</loc>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.donotpress.studio/cases/sales-driver-ads-tool</loc>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.donotpress.studio/cases/nodity</loc>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.donotpress.studio/blog</loc>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.donotpress.studio/blog/design-system-best-practices-components-and-documentation</loc>
+    <loc>https://www.donotpress.studio/blog/how-to-design-ai-drafting-tool-lawyers-trust</loc>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.donotpress.studio/blog/design-system-best-practices-assets-and-styles</loc>
+    <loc>https://www.donotpress.studio/blog/mobile-app-launch-checklist-brand-screenshots-website</loc>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.donotpress.studio/blog/design-system-best-practices-variables</loc>
+    <loc>https://www.donotpress.studio/blog/design-for-the-worst-day-b2b-software-ux</loc>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.donotpress.studio/blog/how-to-optimize-conversion-in-your-funnels</loc>
+    <loc>https://www.donotpress.studio/blog/b2b-saas-brand-from-logo-to-dashboard</loc>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.donotpress.studio/blog/how-to-design-complex-professional-software-highload-interface</loc>
+    <loc>https://www.donotpress.studio/blog/aida-landing-page-structure-b2b-example</loc>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.donotpress.studio/blog/how-to-do-the-heuristic-evaluation-ux-audit</loc>
+    <loc>https://www.donotpress.studio/blog/node-based-editor-ux-design</loc>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.donotpress.studio/contact</loc>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

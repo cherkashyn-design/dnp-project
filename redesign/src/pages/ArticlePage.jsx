@@ -7,6 +7,7 @@ import xIcon from "../assets/icons/share-x.svg";
 import { appHref } from "../base.js";
 import { SoftImage } from "../components/SoftMedia.jsx";
 import { getBlogPost } from "../data/blog.js";
+import { getCase } from "../data/cases.js";
 
 function slugify(value) {
   return value
@@ -15,7 +16,7 @@ function slugify(value) {
     .replace(/(^-|-$)/g, "");
 }
 
-function readingMinutes(content) {
+function readingMinutes(content = []) {
   const words = content.reduce((count, block) => {
     const bits = [block.text, block.caption, ...(block.items || [])];
     if (block.parts) {
@@ -118,7 +119,11 @@ function ArticleBody({ content, onNavigate }) {
         }
         if (block.type === "image") {
           return (
-            <figure className="article-figure" key={key}>
+            <figure
+              className="article-figure"
+              key={key}
+              style={block.ratio ? { "--figure-ratio": block.ratio } : undefined}
+            >
               <SoftImage alt={block.alt || block.caption || ""} src={block.src} />
               {block.caption ? <figcaption>{block.caption}</figcaption> : null}
             </figure>
@@ -146,6 +151,31 @@ function ArticleBody({ content, onNavigate }) {
         );
       })}
     </div>
+  );
+}
+
+// The case the article uses as its worked example, at the end of the text.
+function CaseCard({ project, onNavigate }) {
+  const href = `/cases/${project.slug}`;
+  return (
+    <a
+      className="article-case"
+      href={appHref(href)}
+      onClick={(event) => {
+        event.preventDefault();
+        onNavigate(href);
+      }}
+    >
+      <div className="article-case-media">
+        <SoftImage alt="" src={project.image} />
+      </div>
+      <div className="article-case-copy">
+        <span className="article-kicker">The worked example</span>
+        <strong>{project.title}</strong>
+        <p>{project.summary}</p>
+        <span className="pill is-dark">See the case</span>
+      </div>
+    </a>
   );
 }
 
@@ -195,6 +225,22 @@ export function ArticlePage({ slug, onNavigate }) {
     );
   }
 
+  // Older articles have no text on the site yet: show where they live instead of an empty page.
+  if (!post.content) {
+    return (
+      <header className="blog-hero">
+        <h1>{post.title}</h1>
+        <p>{post.excerpt}</p>
+        <p>
+          <a className="pill is-dark" href={post.href} rel="noreferrer" target="_blank">
+            Read on Medium
+          </a>
+        </p>
+      </header>
+    );
+  }
+
+  const project = post.case ? getCase(post.case) : null;
   const share = (href) => window.open(href, "_blank", "noopener,noreferrer");
   const pageUrl = () => window.location.href;
 
@@ -294,7 +340,10 @@ export function ArticlePage({ slug, onNavigate }) {
             </div>
           </div>
         </aside>
-        <ArticleBody content={post.content} onNavigate={onNavigate} />
+        <div className="article-main">
+          <ArticleBody content={post.content} onNavigate={onNavigate} />
+          {project ? <CaseCard project={project} onNavigate={onNavigate} /> : null}
+        </div>
       </div>
     </article>
   );

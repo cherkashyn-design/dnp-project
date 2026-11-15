@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>DNP blog illustrations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Ubuntu:wght@400;500&family=Ubuntu+Mono&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #0f0f0f;
+    --grey: #6b6b6b;
+    --grey-2: #9a9a9a;
+    --line: #e2e2e2;
+    --ground: #ebebeb;
+    --card: #ffffff;
+    --blue: #4951fb;
+    --blue-soft: #e4e5ff;
+    --orange: #ff6a2b;
+    --orange-soft: #ffe7dc;
+    --green: #2fb565;
+    --red: #e5484d;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    width: 1600px; height: 1000px; overflow: hidden;
+    background: var(--ground); color: var(--ink);
+    font-family: "Ubuntu", sans-serif; letter-spacing: -0.02em;
+  }
+  .frame { position: relative; width: 1600px; height: 1000px; padding: 72px 80px; }
+  .label { font-family: "Ubuntu Mono", monospace; font-size: 18px; color: var(--grey); letter-spacing: 0.04em; text-transform: uppercase; }
+  h1 { font-family: "Instrument Serif", serif; font-weight: 400; font-size: 76px; line-height: 0.95; margin: 14px 0 0; letter-spacing: -0.02em; }
+  h1 em { font-style: italic; color: var(--blue); padding-right: 0.08em; }
+  .lead { font-size: 22px; line-height: 1.4; color: var(--grey); max-width: 560px; margin-top: 18px; }
+  .card { background: var(--card); border-radius: 28px; }
+  .ic { display: block; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 16px; border-radius: 12px; font-size: 17px; background: var(--ground); color: var(--ink); white-space: nowrap; }
+  .chip.blue { background: var(--blue); color: #fff; }
+  .chip.soft { background: var(--blue-soft); color: var(--blue); }
+  .mono { font-family: "Ubuntu Mono", monospace; }
+  .head { display: flex; justify-content: space-between; align-items: flex-start; }
+  .mark { font-family: "Instrument Serif", serif; font-size: 30px; color: var(--grey-2); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="icons.js"></script>
+<script>
+const which = new URLSearchParams(location.search).get("i") || "draftlex";
+const root = document.getElementById("root");
+const head = (label, title, lead = "") => `
+  <div class="head">
+    <div><div class="label">${label}</div><h1>${title}</h1>${lead ? `<div class="lead">${lead}</div>` : ""}</div>
+    <div class="mark">Do Not Press</div>
+  </div>`;
+
+const scenes = {};
+
+/* 1. Draftlex: review-first flow */
+scenes.draftlex = () => {
+  const steps = [
+    ["01", "file-text", "Basic settings", "Document, country, language"],
+    ["02", "list-ordered", "More details", "The facts of this deal"],
+    ["03", "stamp", "Review structure", "The outline, section by section"],
+    ["04", "pen-line", "Final edits", "Every clause, checked"],
+  ];
+  // who acts at each step: [person, ai]
+  const lanes = [
+    ["Person", "user", ["Sets it up", "Adds details", "Approves outline", "Checks each clause"], [1, 1, 1, 1]],
+    ["AI", "sparkles", ["", "", "Proposes sections", "Writes the clauses"], [0, 0, 1, 1]],
+  ];
+  return `<div class="frame">
+    ${head("[ Method ]", "Review <em>first</em>, then write", "The person approves the outline before the AI writes a word, then checks every clause it wrote.")}
+    <div style="position:absolute;left:80px;right:80px;top:330px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+      ${steps.map(([n, ic, t, s], i) => `
+        <div class="card" style="padding:28px;height:230px;display:flex;flex-direction:column;justify-content:space-between;${i === 2 ? "outline:3px solid var(--blue);outline-offset:-3px" : ""}">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span class="mono" style="font-size:20px;color:var(--grey)">${n}</span>
+            <span style="width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:${i === 2 ? "var(--blue)" : "var(--ground)"};color:${i === 2 ? "#fff" : "var(--ink)"}">${icon(ic, 26)}</span>
+          </div>
+          <div><div style="font-family:'Instrument Serif',serif;font-size:36px;line-height:1">${t}</div><div style="font-size:18px;color:var(--grey);margin-top:10px">${s}</div></div>
+        </div>`).join("")}
+    </div>
+    <div style="position:absolute;left:80px;right:80px;top:614px;height:1px"></div>
+    ${lanes.map(([name, ic, notes, on], li) => `
+      <div style="position:absolute;left:80px;right:80px;top:${588 + li * 116}px;height:100px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+        ${notes.map((note, i) => `
+          <div style="border-radius:20px;height:100px;padding:0 22px;display:flex;align-items:center;gap:14px;${on[i] ? (li === 0 ? "background:#fff" : "background:var(--blue-soft);color:var(--blue)") : "border:2px dashed #d4d4d4;color:var(--grey-2)"}">
+            <span style="width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none;${on[i] ? (li === 0 ? "background:var(--ink);color:#fff" : "background:var(--blue);color:#fff") : "background:transparent"}">${icon(ic, 22)}</span>
+            <span style="font-size:20px;line-height:1.2">${on[i] ? `<span class="mono" style="font-size:15px;display:block;opacity:.6;text-transform:uppercase;letter-spacing:.05em">${name}</span>${note}` : `<span class="mono" style="font-size:15px;text-transform:uppercase;letter-spacing:.05em">${name}</span> not yet`}</span>
+          </div>`).join("")}
+      </div>`).join("")}
+    <div style="position:absolute;top:866px;left:calc(80px + (1440px - 60px) / 4 * 2 + 40px + 10px);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px">
+    </div>
+    <div style="position:absolute;left:80px;right:80px;top:852px;display:flex;align-items:center;gap:16px">
+      <span class="chip blue">${icon("check", 18)} Nothing is written before the outline is approved</span>
+      <span class="chip" style="background:#fff">AI text is marked until a person accepts it</span>
+    </div>
+  </div>`;
+};
+
+/* 2. One Gallon: launch kit */
+scenes.onegallon = () => {
+  const items = [
+    ["shapes", "Icon and logo", "Tested at real sizes"],
+    ["store", "Store screenshots", "One message each"],
+    ["message-square", "Tone of voice", "Lines for moments that repeat"],
+    ["image", "Post templates", "Filled in without a designer"],
+    ["globe", "Website", "One screen, one button"],
+    ["blocks", "Icon set", "The same in app, site, posts"],
+  ];
+  const pos = [[0, 0], [0, 1], [0, 2], [2, 0], [2, 1], [2, 2]];
+  const card = ([ic, t, s], n) => `
+    <div class="card" style="height:150px;padding:24px 26px;display:flex;gap:20px;align-items:flex-start">
+      <span style="width:56px;height:56px;border-radius:18px;display:grid;place-items:center;background:var(--ground);flex:none">${icon(ic, 28)}</span>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between"><div style="font-family:'Instrument Serif',serif;font-size:36px;line-height:1">${t}</div><span class="mono" style="color:var(--grey-2);font-size:18px">0${n + 1}</span></div>
+        <div style="font-size:19px;color:var(--grey);margin-top:12px">${s}</div>
+        <div style="margin-top:14px;display:flex;gap:8px"><span style="width:22px;height:22px;border-radius:7px;border:2px solid #cfcfcf"></span><span class="mono" style="font-size:15px;color:var(--grey-2);line-height:22px">OWNER · DATE</span></div>
+      </div>
+    </div>`;
+  return `<div class="frame">
+    ${head("[ Checklist ]", "The launch <em>kit</em>", "What has to be ready around a finished app design on launch day.")}
+    <div style="position:absolute;left:80px;right:80px;top:396px;display:grid;grid-template-columns:1fr 330px 1fr;grid-template-rows:repeat(3,150px);gap:20px 28px">
+      ${items.map((it, i) => `<div style="grid-column:${pos[i][0] + 1};grid-row:${pos[i][1] + 1}">${card(it, i)}</div>`).join("")}
+      <div style="grid-column:2;grid-row:1 / span 3;display:grid;place-items:center;position:relative">
+        <svg width="330" height="490" style="position:absolute;inset:0" viewBox="0 0 330 490">
+          ${[75, 245, 415].map((y) => `<path d="M0 ${y} C 60 ${y}, 70 245, 115 245" fill="none" stroke="#c9c9c9" stroke-width="2" stroke-dasharray="4 6"/><path d="M330 ${y} C 270 ${y}, 260 245, 215 245" fill="none" stroke="#c9c9c9" stroke-width="2" stroke-dasharray="4 6"/>`).join("")}
+        </svg>
+        <div style="position:relative;width:200px;height:400px;border-radius:44px;background:var(--ink);padding:10px">
+          <div style="width:100%;height:100%;border-radius:36px;background:linear-gradient(160deg,#8fb2ff 0%,#c9d4ff 45%,#b9b1f7 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--ink)">
+            <span style="width:68px;height:68px;border-radius:22px;background:#fff;display:grid;place-items:center;color:var(--blue)">${icon("smartphone", 34)}</span>
+            <span style="font-family:'Instrument Serif',serif;font-size:34px">The app</span>
+            <span class="mono" style="font-size:14px;letter-spacing:.06em;opacity:.7">ALREADY DESIGNED</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+};
+
+/* 3. Wardgrid: one cell, three states */
+scenes.wardgrid = () => {
+  const states = [
+    ["Covered", "var(--blue)", "#fff", "check", "Someone fits and is booked", "Thu · Night · Daniel"],
+    ["Open", "var(--orange)", "#fff", "bell", "Needs cover: the only orange", "Thu · Night · open"],
+    ["In conflict", "var(--ink)", "#fff", "triangle-alert", "A rule broke: name it, offer a fix", "3rd night in a row"],
+  ];
+  const mini = (bg, label) => {
+    const row = (k) => Array.from({ length: 7 }, (_, d) => {
+      const hit = d === 3 && k === 1;
+      return `<span style="height:26px;border-radius:7px;background:${hit ? bg : "#efefef"}"></span>`;
+    }).join("");
+    return `<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">${row(0)}${row(1)}${row(2)}</div>`;
+  };
+  return `<div class="frame">
+    ${head("[ System ]", "One cell, <em>three</em> states", "A rota is a grid of cells. Give the cell a few clear states, and they read the same everywhere.")}
+    <div style="position:absolute;left:80px;right:80px;top:300px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      ${states.map(([name, bg, fg, ic, note, msg]) => `
+        <div class="card" style="padding:28px;height:628px;display:flex;flex-direction:column;gap:22px">
+          <div style="display:flex;align-items:center;gap:22px">
+            <span style="width:112px;height:112px;border-radius:30px;background:${bg};color:${fg};display:grid;place-items:center;flex:none;${name === "In conflict" ? "background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.14) 0 8px,transparent 8px 16px)" : ""}">${icon(ic, 46)}</span>
+            <div><div style="font-family:'Instrument Serif',serif;font-size:44px;line-height:1">${name}</div><div style="font-size:19px;color:var(--grey);margin-top:10px;line-height:1.3">${note}</div></div>
+          </div>
+          <div style="border-top:1px solid var(--line);padding-top:18px">
+            <div class="mono" style="font-size:15px;color:var(--grey-2);letter-spacing:.06em;margin-bottom:12px">IN THE GRID</div>
+            ${mini(bg)}
+          </div>
+          <div style="border-top:1px solid var(--line);padding-top:18px">
+            <div class="mono" style="font-size:15px;color:var(--grey-2);letter-spacing:.06em;margin-bottom:12px">ON THE PHONE</div>
+            <div style="display:flex;align-items:center;gap:14px;background:var(--ground);border-radius:18px;padding:14px 16px">
+              <span style="width:38px;height:38px;border-radius:11px;background:${bg};color:#fff;display:grid;place-items:center">${icon(ic, 20)}</span>
+              <span style="font-size:19px">${msg}</span>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--line);padding-top:18px">
+            <div class="mono" style="font-size:15px;color:var(--grey-2);letter-spacing:.06em;margin-bottom:12px">IN A MESSAGE</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:18px;color:var(--grey)"><span style="width:12px;height:12px;border-radius:50%;background:${bg}"></span>The same colour, the same words</div>
+          </div>
+        </div>`).join("")}
+    </div>
+  </div>`;
+};
+
+/* 4. Ringproof: one idea, every surface */
+scenes.ringproof = () => {
+  // a ring of waveform bars
+  const bars = Array.from({ length: 28 }, (_, i) => {
+    const a = (i / 28) * Math.PI * 2;
+    const len = 10 + Math.abs(Math.sin(i * 1.7)) * 16;
+    const r = 30;
+    const x1 = 50 + Math.cos(a) * r, y1 = 50 + Math.sin(a) * r;
+    const x2 = 50 + Math.cos(a) * (r + len * 0.55), y2 = 50 + Math.sin(a) * (r + len * 0.55);
+    return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>`;
+  }).join("");
+  // dot-matrix digits 8.4
+  const glyph = { 8: ["01110", "10001", "10001", "01110", "10001", "10001", "01110"], 4: ["00010", "00110", "01010", "10010", "11111", "00010", "00010"], ".": ["0", "0", "0", "0", "0", "0", "1"] };
+  const dots = (s) => {
+    let x = 0, out = "";
+    for (const ch of s) {
+      const g = glyph[ch];
+      g.forEach((row, y) => [...row].forEach((v, cx) => { out += `<circle cx="${x + cx * 9 + 4}" cy="${y * 9 + 4}" r="3.3" fill="currentColor" opacity="${v === "1" ? 1 : 0.12}"/>`; }));
+      x += g[0].length * 9 + 9;
+    }
+    return `<svg width="${x}" height="64" viewBox="0 0 ${x} 64">${out}</svg>`;
+  };
+  const wave = `<svg width="100%" height="96" viewBox="0 0 300 96" preserveAspectRatio="none">${[0, 1, 2, 3].map((k) => `<path d="M0 ${48} ${Array.from({ length: 31 }, (_, i) => `L${i * 10} ${48 + Math.sin(i * 0.55 + k * 0.9) * (12 + k * 7)}`).join(" ")}" fill="none" stroke="currentColor" stroke-width="2" opacity="${0.25 + k * 0.2}"/>`).join("")}</svg>`;
+  const surfaces = [
+    ["The mark", `<svg width="110" height="110" viewBox="0 0 100 100" style="color:var(--ink)">${bars}</svg>`, "A ring of waveform bars"],
+    ["The numbers", `<div style="color:var(--ink)">${dots("8.4")}</div>`, "Dots, like a call display"],
+    ["The pictures", `<div style="width:100%;color:var(--blue)">${wave}</div>`, "Waves, never stock agents"],
+    ["The deck", `<span style="width:64px;height:64px;border-radius:20px;background:var(--ground);display:grid;place-items:center">${icon("presentation", 32)}</span>`, "One story for one buyer"],
+    ["The product", `<div style="display:flex;gap:10px;align-items:center"><span class="chip" style="background:#e3f6ea;color:var(--green)">Pass</span><span class="chip" style="background:#fde5e6;color:var(--red)">Fail</span></div>`, "Green and red mean one thing"],
+  ];
+  return `<div class="frame">
+    ${head("[ Brand system ]", "One idea, <em>every</em> surface")}
+    <div style="position:absolute;left:80px;top:300px;width:470px;height:628px;border-radius:28px;background:var(--ink);color:#fff;padding:40px;display:flex;flex-direction:column;justify-content:space-between">
+      <span class="label" style="color:rgba(255,255,255,.5)">[ The idea ]</span>
+      <div style="font-family:'Instrument Serif',serif;font-size:84px;line-height:.95">Sound,<br/>made<br/><em style="color:#9fa4ff">visible.</em></div>
+      <div style="font-size:20px;line-height:1.4;color:rgba(255,255,255,.6)">One sentence that comes from what the product does: it makes phone calls.</div>
+    </div>
+    <svg style="position:absolute;left:550px;top:300px" width="70" height="628" viewBox="0 0 70 628">
+      ${[56, 182, 308, 434, 560].map((y) => `<path d="M0 314 C 35 314, 35 ${y}, 70 ${y}" fill="none" stroke="#bdbdbd" stroke-width="2"/>`).join("")}
+    </svg>
+    <div style="position:absolute;left:620px;right:80px;top:300px;display:grid;grid-template-rows:repeat(5,112px);gap:14px">
+      ${surfaces.map(([t, art, s]) => `
+        <div class="card" style="display:grid;grid-template-columns:260px 1fr 240px;align-items:center;padding:0 30px;gap:24px;border-radius:24px">
+          <div><div style="font-family:'Instrument Serif',serif;font-size:36px;line-height:1">${t}</div><div style="font-size:17px;color:var(--grey);margin-top:8px">${s}</div></div>
+          <div></div>
+          <div style="display:flex;justify-content:flex-end;align-items:center;height:112px;overflow:hidden">${art}</div>
+        </div>`).join("")}
+    </div>
+  </div>`;
+};
+
+/* 5. Sales Driver: AIDA landing map */
+scenes.salesdriver = () => {
+  const block = (h, inner, tint) => `<div style="border-radius:18px;background:${tint || "var(--ground)"};height:${h}px;padding:18px 20px;display:flex;flex-direction:column;justify-content:center;gap:10px">${inner}</div>`;
+  const bar = (w, h = 14, c = "#d0d0d0") => `<span style="display:block;width:${w};height:${h}px;border-radius:6px;background:${c}"></span>`;
+  const button = `<span style="display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 18px;border-radius:20px;background:var(--blue);color:#fff;font-size:16px;width:max-content">${icon("mouse-pointer-click", 18)} The one action</span>`;
+  const page = [
+    ["A", 150, block(150, `${bar("70%", 22, "#9a9a9a")}${bar("46%")}${button}`)],
+    ["I", 120, block(120, `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">${[1, 2, 3].map((n) => `<div style="background:#fff;border-radius:12px;height:62px;padding:10px 12px"><span class="mono" style="font-size:14px;color:var(--grey)">0${n}</span>${bar("80%", 10)}</div>`).join("")}</div>`)],
+    ["D", 150, block(150, `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">${["Proof", "Feature", "Feature"].map((t, n) => `<div style="background:#fff;border-radius:12px;height:96px;padding:12px;display:flex;flex-direction:column;justify-content:space-between"><span class="mono" style="font-size:14px;color:${n ? "var(--grey)" : "var(--blue)"}">${t.toUpperCase()}</span>${bar(n ? "60%" : "75%", n ? 12 : 26, n ? "#d0d0d0" : "#9a9a9a")}${bar("85%", 10)}</div>`).join("")}</div>`)],
+    ["A", 104, block(104, `<div style="display:flex;justify-content:space-between;align-items:center">${bar("40%", 20, "#9a9a9a")}${button}</div>`, "var(--blue-soft)")],
+  ];
+  const meaning = [
+    ["Attention", "Is this for me?", "Name the result. Show the action."],
+    ["Interest", "How does it work?", "Three short steps, before any proof."],
+    ["Desire", "Why is it worth it?", "Proof, and the two or three features that answer the worry."],
+    ["Action", "What do I do now?", "The same promise, the same button."],
+  ];
+  let y = 0;
+  const tops = page.map(([, h]) => { const t = y; y += h + 16; return t; });
+  return `<div class="frame">
+    ${head("[ Landing page ]", "Every block serves <em>one</em> step", "")}
+    <div style="position:absolute;left:80px;top:300px;width:640px;height:640px;border-radius:28px;background:#fff;padding:20px 22px 22px">
+      <div style="display:flex;gap:8px;margin-bottom:16px">${[1, 2, 3].map(() => `<span style="width:12px;height:12px;border-radius:50%;background:#dcdcdc"></span>`).join("")}</div>
+      <div style="display:flex;flex-direction:column;gap:16px">${page.map(([, , html]) => html).join("")}</div>
+    </div>
+    ${page.map(([l], i) => {
+      const top = 300 + 48 + tops[i];
+      const h = page[i][1];
+      const [name, q, a] = meaning[i];
+      return `
+      <svg style="position:absolute;left:720px;top:${top}px" width="90" height="${h}" viewBox="0 0 90 ${h}"><path d="M8 4 H22 V${h - 4} H8" fill="none" stroke="#bdbdbd" stroke-width="2"/><path d="M22 ${h / 2} H90" stroke="#bdbdbd" stroke-width="2"/></svg>
+      <div style="position:absolute;left:810px;right:80px;top:${top + h / 2 - 50}px;height:100px;display:flex;align-items:center;gap:26px">
+        <span style="width:84px;height:84px;border-radius:24px;background:${i === 3 ? "var(--blue)" : "var(--ink)"};color:#fff;display:grid;place-items:center;font-family:'Instrument Serif',serif;font-size:52px;flex:none">${l}</span>
+        <div><div style="display:flex;gap:14px;align-items:baseline"><span style="font-family:'Instrument Serif',serif;font-size:38px">${name}</span><span class="mono" style="font-size:18px;color:var(--grey)">“${q}”</span></div><div style="font-size:19px;color:var(--grey);margin-top:6px">${a}</div></div>
+      </div>`;
+    }).join("")}
+  </div>`;
+};
+
+/* 6. Nodity: three levels of control */
+scenes.nodity = () => {
+  const node = (w, title, body, accent) => `<div style="width:${w}px;border-radius:18px;background:#fff;border:2px solid ${accent ? "var(--blue)" : "#e1e1e1"};padding:14px 16px;box-shadow:0 10px 24px rgba(0,0,0,.06)">
+      <div style="display:flex;align-items:center;gap:8px;font-size:15px;color:var(--grey)"><span style="width:9px;height:9px;border-radius:50%;background:${accent ? "var(--blue)" : "#bdbdbd"}"></span>${title}</div>${body}</div>`;
+  const prompt = `<div style="margin-top:10px;background:var(--ground);border-radius:10px;padding:10px 12px;font-size:15px;color:var(--grey)">an old red train in autumn…</div><div style="margin-top:10px;height:76px;border-radius:10px;background:linear-gradient(135deg,#f0a35e,#b5552a 60%,#6c2f1d)"></div>`;
+  const slider = (w) => `<div style="display:flex;align-items:center;gap:10px;margin-top:12px"><span style="flex:1;height:6px;border-radius:3px;background:linear-gradient(90deg,var(--blue) ${w}%,#e3e3e3 ${w}%)"></span><span class="mono" style="font-size:13px;color:var(--grey)">${w}</span></div>`;
+  const levels = [
+    ["01", "One node", "A prompt in, a result out.", `<div style="display:flex;justify-content:center">${node(220, "Image node", prompt, true)}</div>`],
+    ["02", "Side panel", "Every setting, when asked for.", `<div style="display:flex;gap:12px;justify-content:center;align-items:flex-start">${node(170, "Image node", prompt.replace("76px", "56px"), true)}<div style="width:170px;border-radius:18px;background:#fff;border:2px solid #e1e1e1;padding:14px 16px"><div style="display:flex;align-items:center;gap:8px;font-size:15px;color:var(--grey)">${icon("sliders-horizontal", 16)} Settings</div>${slider(70)}${slider(35)}${slider(55)}${slider(20)}</div></div>`],
+    ["03", "Connected nodes", "Whole workflows, wired by hand.", `<div style="position:relative;height:250px">
+        <svg style="position:absolute;inset:0" width="100%" height="250" viewBox="0 0 400 250"><path d="M130 62 C 180 62, 170 125, 220 125" fill="none" stroke="var(--blue)" stroke-width="2.5"/><path d="M130 190 C 180 190, 170 125, 220 125" fill="none" stroke="#bdbdbd" stroke-width="2.5"/></svg>
+        <div style="position:absolute;left:0;top:20px">${node(130, "Prompt", `<div style="margin-top:8px;height:22px;border-radius:7px;background:var(--ground)"></div>`)}</div>
+        <div style="position:absolute;left:0;top:148px">${node(130, "Depth", `<div style="margin-top:8px;height:22px;border-radius:7px;background:linear-gradient(90deg,#222,#bbb)"></div>`)}</div>
+        <div style="position:absolute;left:220px;top:72px">${node(160, "Video node", `<div style="margin-top:8px;height:44px;border-radius:8px;background:linear-gradient(135deg,#f0a35e,#6c2f1d)"></div>`, true)}</div>
+      </div>`],
+  ];
+  return `<div class="frame">
+    ${head("[ Progressive disclosure ]", "Three levels of <em>control</em>")}
+    <div style="position:absolute;left:80px;right:80px;top:470px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      ${levels.map(([n, t, s, art]) => `
+        <div class="card" style="height:458px;padding:28px;display:flex;flex-direction:column;justify-content:space-between">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><div><div style="font-family:'Instrument Serif',serif;font-size:42px;line-height:1">${t}</div><div style="font-size:19px;color:var(--grey);margin-top:10px">${s}</div></div><span class="mono" style="font-size:20px;color:var(--grey-2)">${n}</span></div>
+          <div style="background:var(--ground);border-radius:20px;padding:22px 18px;height:290px;display:flex;flex-direction:column;justify-content:center">${art}</div>
+        </div>`).join("")}
+    </div>
+    <svg style="position:absolute;left:80px;top:316px" width="1440" height="160" viewBox="0 0 1440 160">
+      <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--blue)"/></marker></defs>
+      <path d="M232 150 C 232 60, 1200 60, 1200 148" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-dasharray="6 7" marker-end="url(#arr)"/>
+    </svg>
+    <div style="position:absolute;left:0;right:0;top:300px;display:flex;justify-content:center;gap:14px">
+      <span class="chip blue" style="height:48px;font-size:19px;padding:0 20px">${icon("bot", 22)} An agent drafts the workflow</span>
+      <span class="chip" style="height:48px;font-size:19px;padding:0 20px;background:#fff">${icon("users", 22)} Or open one from the community</span>
+    </div>
+  </div>`;
+};
+
+root.innerHTML = scenes[which]();
+document.fonts.ready.then(() => document.body.setAttribute("data-ready", "1"));
+</script>
+</body>
+</html>

@@ -28,8 +28,8 @@ export function BlogPage({ onNavigate }) {
       <header className="blog-hero">
         <h1>Blog</h1>
         <p>
-          Notes on design systems, conversion, and complex product UX from Do Not Press design,
-          written from shipping work with startups and larger teams
+          Methods for founders and product teams: AI tools, B2B SaaS, brand systems, launches and
+          conversion, each with a case as the worked example
         </p>
       </header>
       <section className="blog-list" aria-label="Articles">
@@ -39,9 +39,11 @@ export function BlogPage({ onNavigate }) {
             <a
               className="blog-card"
               data-reveal
-              href={appHref(post.href)}
+              // An article with its text on the site opens here; an older one still lives on Medium.
+              {...(post.content
+                ? { href: appHref(`/blog/${post.slug}`), onClick: (event) => open(event, `/blog/${post.slug}`) }
+                : { href: post.href, rel: "noreferrer", target: "_blank" })}
               key={post.slug}
-              onClick={(event) => open(event, post.href)}
             >
               <div className="blog-card-media">
                 {post.cover ? <SoftImage src={post.cover} alt="" /> : null}
