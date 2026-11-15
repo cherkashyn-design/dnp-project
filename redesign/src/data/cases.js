@@ -82,7 +82,11 @@ const allCases = [
   },
 ];
 
-export const cases = allCases.filter((item) => !item.hidden);
+// The order in which cases are shown on the home page (the Cases page has the same list in CasesPage.jsx).
+const order = ["sales-driver-ads-tool", "nodity", "ringproof", "wardgrid", "draftlex", "one-gallon"];
+const place = (item) => (order.indexOf(item.slug) + 1 || order.length + 1);
+
+export const cases = allCases.filter((item) => !item.hidden).sort((a, b) => place(a) - place(b));
 
 export function getCase(slug) {
   return cases.find((item) => item.slug === slug) ?? null;

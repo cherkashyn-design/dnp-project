@@ -34,7 +34,6 @@ export const wardgridCase = {
         [live("1.1", "Logo on the brand backgrounds")],
         [still("1.2"), still("1.3")],
         [live("1.4", "Icons"), live("1.5", "Tone of voice")],
-        [live("1.6", "Business cards")],
         [live("1.7", "Staff badge"), still("1.8")],
         [live("1.12", "Picture editor", true)], // the visitor can use it
         [still("1.9"), still("1.10")],

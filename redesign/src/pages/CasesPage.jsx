@@ -4,14 +4,14 @@ import { cases } from "../data/cases.js";
 import { ContactSection } from "../components/ContactSection.jsx";
 
 const listingOrder = [
-  "draftlex",
-  "one-gallon",
-  "wardgrid",
-  "ringproof",
-  "drumkit-logistic-saas",
-  "yummo-food-guide-for-moms",
   "sales-driver-ads-tool",
   "nodity",
+  "ringproof",
+  "wardgrid",
+  "draftlex",
+  "one-gallon",
+  "drumkit-logistic-saas",
+  "yummo-food-guide-for-moms",
 ];
 
 export function CasesPage({ onNavigate }) {
