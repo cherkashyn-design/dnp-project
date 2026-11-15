@@ -1,5 +1,5 @@
 // Article that uses the One Gallon case (a concept) as its worked example.
-import cover from "../../../portfolio/OneGallon/Preview.webp";
+import cover from "../../assets/blog/onegallon/cover.webp";
 import builder from "../../../portfolio/OneGallon/1-4.webp";
 import voice from "../../../portfolio/OneGallon/1-6.webp";
 import screenshots from "../../../portfolio/OneGallon/1-7.webp";
@@ -18,7 +18,7 @@ export const oneGallonPost = {
   publishedLabel: "Nov 15, 2026",
   case: "one-gallon",
   cover,
-  coverAlt: "The One Gallon logo on soft blue ribbons of light",
+  coverAlt: "A phone with a water tracker, surrounded by the parts of a launch kit",
   content: [
     {
       text: "Many founders reach the same point. The app screens are done, the build is on its way, and launch is a few weeks out. Then someone asks for the App Store screenshots, the icon, the first posts and the website. None of it is ready, because so far the design was only the app.",

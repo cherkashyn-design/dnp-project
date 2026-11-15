@@ -1,6 +1,6 @@
 // Article that uses the Wardgrid case (a concept) as its worked example.
 // The numbers inside Wardgrid's deck slides are part of the design, so the article does not quote them.
-import cover from "../../../portfolio/Wardgrid/Preview.webp";
+import cover from "../../assets/blog/wardgrid/cover.webp";
 import week from "../../../portfolio/Wardgrid/4-1.webp";
 import openShift from "../../../portfolio/Wardgrid/4-2.webp";
 import conflict from "../../../portfolio/Wardgrid/4-3.webp";
@@ -18,7 +18,7 @@ export const wardgridPost = {
   publishedLabel: "Nov 15, 2026",
   case: "wardgrid",
   cover,
-  coverAlt: "An open night shift in the Wardgrid app, with the button Take this shift",
+  coverAlt: "A rota grid of blue cells with one open shift in orange and one broken rule",
   content: [
     {
       text: "Most B2B software is shown on a good day: the data is clean, everyone is free, every button works. It is judged on a bad one. For a ward manager in a hospital, a bad day looks like this: someone calls in sick at six in the morning, a night shift is open, and the rules about rest between shifts still have to hold.",

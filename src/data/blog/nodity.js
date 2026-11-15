@@ -1,6 +1,6 @@
 // Article that uses the Nodity case (client work) as its worked example.
 // Facts and numbers about the project come only from the published case (src/data/genie.js).
-import cover from "../../../portfolio/Genie/Preview.webp";
+import cover from "../../assets/blog/nodity/cover.webp";
 import panel from "../../../portfolio/Genie/Slide-1/p2.webp";
 import workflow from "../../../portfolio/Genie/Slide-2.webp";
 import agent from "../../../portfolio/Genie/Slide-4.webp";
@@ -19,7 +19,7 @@ export const nodityPost = {
   publishedLabel: "Nov 15, 2026",
   case: "nodity",
   cover,
-  coverAlt: "The Nodity node-based AI editor on a laptop",
+  coverAlt: "Nodes wired together on a dark canvas, leading to one result",
   content: [
     {
       text: "Node-based editors give people full control. Every model, setting and step is a box, and you wire the boxes together. That is why experts love tools like ComfyUI. It is also why many new users close them within minutes: an empty canvas and a long list of node types is not a starting point.",

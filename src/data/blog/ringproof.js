@@ -1,6 +1,6 @@
 // Article that uses the Ringproof case (a concept) as its worked example.
 // Quotes and figures inside Ringproof's slides are part of the design, so the article does not quote them.
-import cover from "../../../portfolio/Ringproof/Preview.webp";
+import cover from "../../assets/blog/ringproof/cover.webp";
 import numerals from "../../../portfolio/Ringproof/1-3.webp";
 import problem from "../../../portfolio/Ringproof/2-2.webp";
 import tiles from "../../../portfolio/Ringproof/4-5.webp";
@@ -19,7 +19,7 @@ export const ringproofPost = {
   publishedLabel: "Nov 15, 2026",
   case: "ringproof",
   cover,
-  coverAlt: "The Ringproof logo on a dark blue wave",
+  coverAlt: "A ring of sound bars around a dot-matrix score, with result tiles beside it",
   content: [
     {
       text: "Many B2B startups look like three companies. The logo was made by one freelancer, the sales deck by the founder late at night, and the product by the engineers from a component kit. A buyer meets all three in the same week and hears three different stories.",

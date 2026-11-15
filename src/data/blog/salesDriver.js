@@ -1,6 +1,6 @@
 // Article that uses the Sales Driver case (client work) as its worked example.
 // Facts about the project come only from the published case (src/data/salesDriver.js).
-import cover from "../../../portfolio/SalesDriver/Preview.webp";
+import cover from "../../assets/blog/sales-driver/cover.webp";
 import card from "../../../portfolio/SalesDriver/Slide-1.webp";
 import landing from "../../../portfolio/SalesDriver/Slide-4.webp";
 import mobile from "../../../portfolio/SalesDriver/Slide-6.webp";
@@ -18,7 +18,7 @@ export const salesDriverPost = {
   publishedLabel: "Nov 15, 2026",
   case: "sales-driver-ads-tool",
   cover,
-  coverAlt: "Sales Driver on a phone, with the green Get leads button",
+  coverAlt: "A landing page split into four blocks marked A, I, D and A, with one green button",
   content: [
     {
       text: "AIDA, short for attention, interest, desire and action, is an old model of how people move towards a purchase. It is still the most useful way to plan a landing page, because it forces one question for every block: which step does this block serve?",

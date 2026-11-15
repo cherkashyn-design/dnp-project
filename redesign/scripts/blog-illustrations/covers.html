@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>DNP blog covers</title>
+<!-- One cover per article: covers.html?i=<name>, 2000 x 1400. Same series as the older covers: a dark ground,
+     one object in the middle, a short white line. Keep the object inside the middle 1500 x 1100, the cards crop the edges. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Ubuntu:wght@300;400;500&family=Ubuntu+Mono&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    width: 2000px; height: 1400px; overflow: hidden; position: relative;
+    background: radial-gradient(ellipse 70% 60% at 50% 58%, #3b3b3b 0%, #1b1b1b 55%, #0b0b0b 100%);
+    color: #fff; font-family: "Ubuntu", sans-serif; letter-spacing: -0.02em;
+  }
+  .grain { position: absolute; inset: 0; opacity: 0.16; mix-blend-mode: overlay; pointer-events: none; }
+  .glow { position: absolute; border-radius: 50%; filter: blur(120px); pointer-events: none; }
+  h1 { position: absolute; left: 0; right: 0; top: 190px; margin: 0; text-align: center; font-weight: 300; font-size: 92px; line-height: 1.05; letter-spacing: -0.03em; }
+  .sub { position: absolute; left: 0; right: 0; top: 310px; text-align: center; font-size: 30px; color: rgba(255,255,255,.55); }
+  .stage { position: absolute; left: 0; right: 0; top: 430px; bottom: 150px; display: grid; place-items: center; }
+  .mono { font-family: "Ubuntu Mono", monospace; }
+  .serif { font-family: "Instrument Serif", serif; }
+  .ic { display: block; }
+  .glass { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); border-radius: 22px; backdrop-filter: blur(10px); }
+  .chip { display: inline-flex; align-items: center; gap: 12px; height: 60px; padding: 0 24px; border-radius: 18px; font-size: 26px; white-space: nowrap; }
+</style>
+</head>
+<body>
+<svg class="grain" width="2000" height="1400"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+<div id="root"></div>
+<script src="icons.js"></script>
+<script>
+const which = new URLSearchParams(location.search).get("i") || "draftlex";
+const glow = (x, y, w, h, c, o = 0.5) => `<div class="glow" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;background:${c};opacity:${o}"></div>`;
+const covers = {};
+
+/* Draftlex: a contract page; one clause written by AI, approved by a person */
+covers.draftlex = () => {
+  const line = (w, color = "rgba(15,15,15,.16)") => `<span style="display:block;height:12px;width:${w}%;border-radius:6px;background:${color}"></span>`;
+  return `${glow(700, 620, 600, 400, "#2440ff", 0.45)}
+  <h1>Review first, then write</h1>
+  <div class="sub">AI drafting a person can sign</div>
+  <div class="stage"><div style="position:relative;width:760px;height:760px">
+    <div style="position:absolute;left:80px;top:40px;width:600px;height:760px;background:#dedcd5;border-radius:6px;transform:rotate(-5deg);box-shadow:0 40px 80px rgba(0,0,0,.5);clip-path:polygon(0 0,calc(100% - 46px) 0,100% 46px,100% 100%,0 100%)"></div>
+    <div style="position:absolute;left:90px;top:30px;width:600px;height:780px;background:#fff;border-radius:6px;box-shadow:0 40px 90px rgba(0,0,0,.55);padding:64px 60px;color:#0f0f0f;clip-path:polygon(0 0,calc(100% - 46px) 0,100% 46px,100% 100%,0 100%)">
+      <div class="serif" style="font-size:40px;text-align:center">Lease Agreement</div>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-top:40px">${line(92)}${line(84)}${line(88)}</div>
+      <div class="serif" style="font-size:28px;margin-top:40px">3. Rent and deposit</div>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-top:20px">${line(90)}${line(70)}</div>
+      <div style="margin:26px -18px 0;padding:18px;border-radius:14px;background:#e6e9ff;display:flex;flex-direction:column;gap:14px">${line(94, "#2440ff")}${line(86, "#2440ff")}${line(60, "#2440ff")}</div>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-top:26px">${line(88)}${line(76)}</div>
+      <div class="serif" style="font-size:28px;margin-top:40px">4. Repairs</div>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-top:20px">${line(82)}</div>
+    </div>
+    <div class="chip" style="position:absolute;right:-150px;top:330px;background:#2440ff;color:#fff;box-shadow:0 20px 40px rgba(36,64,255,.4)">${icon("sparkles", 28)} Written by AI</div>
+    <div class="chip" style="position:absolute;right:-110px;top:410px;background:#fff;color:#0f0f0f;box-shadow:0 20px 40px rgba(0,0,0,.4)">${icon("check", 28)} Approved by you</div>
+  </div></div>`;
+};
+
+/* One Gallon: the app in the middle, the launch kit around it */
+covers.onegallon = () => {
+  const tile = (x, y, ic, t) => `<div class="glass chip" style="position:absolute;left:${x}px;top:${y}px;height:72px;font-size:27px">${icon(ic, 28)} ${t}</div>`;
+  return `${glow(650, 560, 700, 520, "#639ffd", 0.55)}${glow(1050, 760, 400, 300, "#b1acfc", 0.4)}
+  <h1>Ready for launch day</h1>
+  <div class="sub">Everything around a finished app</div>
+  <div class="stage"><div style="position:relative;width:1300px;height:760px">
+    <div style="position:absolute;left:510px;top:0;width:290px;height:600px;border-radius:56px;background:#0b0b0b;padding:12px;box-shadow:0 50px 90px rgba(0,0,0,.6),0 0 0 2px rgba(255,255,255,.12)">
+      <div style="width:100%;height:100%;border-radius:46px;background:linear-gradient(165deg,#9fc0ff 0%,#cdd9ff 40%,#b9b1f7 75%,#8fb2ff 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#0f0f0f">
+        <span class="mono" style="font-size:20px;opacity:.6">TODAY</span>
+        <span style="font-size:96px;font-weight:300;letter-spacing:-0.05em">100%</span>
+        <span class="mono" style="font-size:20px;opacity:.6">128 / 128 OZ</span>
+        <span style="margin-top:30px;height:56px;padding:0 26px;border-radius:28px;background:#0f0f0f;color:#fff;display:flex;align-items:center;gap:10px;font-size:22px">${icon("check", 22)} Add</span>
+      </div>
+    </div>
+    ${tile(60, 40, "shapes", "Icon and logo")}
+    ${tile(0, 250, "store", "Store screenshots")}
+    ${tile(90, 460, "message-square", "Tone of voice")}
+    ${tile(900, 40, "image", "Post templates")}
+    ${tile(960, 250, "globe", "Website")}
+    ${tile(880, 460, "blocks", "Icon set")}
+  </div></div>`;
+};
+
+/* Wardgrid: a rota of cells, one open shift, one conflict */
+covers.wardgrid = () => {
+  const rows = 6, cols = 9;
+  let cells = "";
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    const open = r === 2 && c === 5, conflict = r === 4 && c === 2;
+    const empty = (r * 7 + c * 3) % 5 === 0;
+    const bg = open ? "#ff6a2b" : conflict ? "#0b0b0b" : empty ? "rgba(255,255,255,.08)" : "rgba(73,81,251," + (0.55 + ((r + c) % 3) * 0.15) + ")";
+    const extra = open ? "box-shadow:0 0 0 6px rgba(255,106,43,.25),0 0 80px rgba(255,106,43,.7);" : conflict ? "border:2px solid rgba(255,255,255,.6);background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.16) 0 8px,transparent 8px 16px);" : "";
+    const inner = open ? icon("bell", 34) : conflict ? icon("triangle-alert", 34) : "";
+    cells += `<span style="width:104px;height:72px;border-radius:16px;background:${bg};display:grid;place-items:center;${extra}">${inner}</span>`;
+  }
+  return `${glow(600, 600, 800, 500, "#4951fb", 0.5)}${glow(1100, 640, 300, 260, "#ff6a2b", 0.35)}
+  <h1>Design for the worst day</h1>
+  <div class="sub">One night shift open, one rule broken</div>
+  <div class="stage"><div style="position:relative">
+    <div style="display:grid;grid-template-columns:repeat(${cols},104px);gap:14px;transform:perspective(1600px) rotateX(18deg);transform-origin:50% 100%">${cells}</div>
+    <div class="chip" style="position:absolute;left:640px;top:-70px;background:#fff;color:#0f0f0f;box-shadow:0 20px 40px rgba(0,0,0,.4)">${icon("bell", 26)} Thu night is open</div>
+    <div class="chip" style="position:absolute;left:-60px;top:520px;background:#0b0b0b;color:#fff;border:1px solid rgba(255,255,255,.25)">${icon("triangle-alert", 26)} Third night in a row</div>
+  </div></div>`;
+};
+
+/* Ringproof: one ring of sound bars, the same idea in numbers and tiles */
+covers.ringproof = () => {
+  const n = 44;
+  const bars = Array.from({ length: n }, (_, i) => {
+    const a = (i / n) * Math.PI * 2 - Math.PI / 2;
+    const len = 26 + Math.abs(Math.sin(i * 1.3) * Math.cos(i * 0.4)) * 70;
+    const r = 150;
+    return `<line x1="${300 + Math.cos(a) * r}" y1="${300 + Math.sin(a) * r}" x2="${300 + Math.cos(a) * (r + len)}" y2="${300 + Math.sin(a) * (r + len)}" stroke="url(#g)" stroke-width="11" stroke-linecap="round"/>`;
+  }).join("");
+  const glyph = { 8: ["01110", "10001", "10001", "01110", "10001", "10001", "01110"], 4: ["00010", "00110", "01010", "10010", "11111", "00010", "00010"], ".": ["0", "0", "0", "0", "0", "0", "1"] };
+  let x = 0, dots = "";
+  for (const ch of "8.4") { glyph[ch].forEach((row, y) => [...row].forEach((v, cx) => { dots += `<circle cx="${x + cx * 15 + 6}" cy="${y * 15 + 6}" r="5.5" fill="#fff" opacity="${v === "1" ? 1 : 0.12}"/>`; })); x += glyph[ch][0].length * 15 + 15; }
+  return `${glow(650, 520, 700, 600, "#7f93d6", 0.45)}
+  <h1>One idea, every surface</h1>
+  <div class="sub">Sound, made visible</div>
+  <div class="stage"><div style="position:relative;width:1300px;height:640px">
+    <svg style="position:absolute;left:350px;top:20px" width="600" height="600" viewBox="0 0 600 600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#9fb0e6"/></linearGradient></defs>${bars}</svg>
+    <svg style="position:absolute;left:${650 - x / 2}px;top:270px" width="${x}" height="110" viewBox="0 0 ${x} 110">${dots}</svg>
+    <div class="glass" style="position:absolute;left:0;top:120px;width:260px;padding:26px"><div class="mono" style="font-size:18px;opacity:.55">TASK OUTCOME</div><div class="mono" style="font-size:40px;margin-top:10px;letter-spacing:.08em">BLOCKED</div></div>
+    <div class="glass" style="position:absolute;left:30px;top:330px;width:230px;padding:26px"><div class="mono" style="font-size:18px;opacity:.55">CHECKS</div><div style="display:flex;gap:10px;margin-top:16px">${[1, 1, 1, 1, 1, 0].map((p) => `<span style="width:24px;height:24px;border-radius:50%;background:${p ? "#2fb565" : "#e5484d"}"></span>`).join("")}</div></div>
+    <div class="glass" style="position:absolute;right:0;top:160px;width:280px;padding:26px"><div class="mono" style="font-size:18px;opacity:.55">CALL</div><svg width="228" height="70" viewBox="0 0 228 70" style="margin-top:12px">${Array.from({ length: 38 }, (_, i) => { const h = 8 + Math.abs(Math.sin(i * 0.8) * Math.cos(i * 0.31)) * 58; return `<rect x="${i * 6}" y="${35 - h / 2}" width="3" height="${h}" rx="1.5" fill="#fff" opacity="${i > 24 ? 0.35 : 0.9}"/>`; }).join("")}</svg></div>
+  </div></div>`;
+};
+
+/* Sales Driver: one page, four blocks, one action */
+covers.salesdriver = () => {
+  const bar = (w, h, o = 0.25) => `<span style="display:block;width:${w};height:${h}px;border-radius:8px;background:rgba(255,255,255,${o})"></span>`;
+  const btn = (big) => `<span style="display:inline-flex;align-items:center;gap:10px;height:${big ? 64 : 52}px;padding:0 ${big ? 30 : 24}px;border-radius:32px;background:#75f94c;color:#0b0b0b;font-size:${big ? 26 : 22}px;font-weight:500;box-shadow:0 0 60px rgba(117,249,76,.45)">${icon("mouse-pointer-click", big ? 26 : 22)} Get leads</span>`;
+  const blocks = [
+    ["A", 160, `${bar("70%", 30, 0.5)}${bar("45%", 16)}<div style="margin-top:6px">${btn(true)}</div>`],
+    ["I", 104, `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">${[1, 2, 3].map(() => `<div style="height:76px;border-radius:14px;background:rgba(255,255,255,.08)"></div>`).join("")}</div>`],
+    ["D", 104, `<div style="display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:14px">${[0, 1, 2].map((k) => `<div style="height:76px;border-radius:14px;background:rgba(255,255,255,${k ? 0.08 : 0.14});padding:16px">${bar(k ? "50%" : "70%", k ? 12 : 22, k ? 0.3 : 0.55)}</div>`).join("")}</div>`],
+    ["A", 100, `<div style="display:flex;justify-content:space-between;align-items:center">${bar("36%", 22, 0.5)}${btn(false)}</div>`],
+  ];
+  return `${glow(700, 560, 600, 500, "#75f94c", 0.18)}
+  <h1>One page, one action</h1>
+  <div class="sub">AIDA, block by block</div>
+  <div class="stage" style="top:400px"><div style="position:relative;width:1000px">
+    <div class="glass" style="padding:30px 34px 34px;border-radius:30px;background:rgba(255,255,255,.05)">
+      <div style="display:flex;gap:10px;margin-bottom:24px">${[1, 2, 3].map(() => `<span style="width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.2)"></span>`).join("")}</div>
+      <div style="display:flex;flex-direction:column;gap:16px">${blocks.map(([l, h, inner]) => `
+        <div style="display:grid;grid-template-columns:70px 1fr;gap:22px;align-items:center">
+          <span class="serif" style="width:70px;height:70px;border-radius:20px;border:1px solid rgba(255,255,255,.3);display:grid;place-items:center;font-size:44px">${l}</span>
+          <div style="min-height:${h}px;border-radius:20px;background:rgba(255,255,255,.06);padding:22px 26px;display:flex;flex-direction:column;justify-content:center;gap:14px">${inner}</div>
+        </div>`).join("")}</div>
+    </div>
+  </div></div>`;
+};
+
+/* Nodity: a few nodes wired together, one result */
+covers.nodity = () => {
+  const node = (x, y, w, title, body, accent) => `<div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;border-radius:24px;background:${accent ? "#fff" : "rgba(255,255,255,.1)"};color:${accent ? "#0f0f0f" : "#fff"};border:1px solid rgba(255,255,255,.2);padding:20px 22px;box-shadow:0 30px 60px rgba(0,0,0,.45)"><div style="display:flex;align-items:center;gap:10px;font-size:22px;opacity:.75"><span style="width:12px;height:12px;border-radius:50%;background:${accent ? "#0f0f0f" : "#fff"}"></span>${title}</div>${body}</div>`;
+  const art = (h) => `<div style="margin-top:14px;height:${h}px;border-radius:14px;background:linear-gradient(135deg,#f3b06c 0%,#c4602d 45%,#6c2f1d 100%)"></div>`;
+  return `${glow(560, 600, 500, 420, "#c4602d", 0.4)}${glow(1050, 560, 420, 380, "#ffffff", 0.12)}
+  <h1>Full control, without the setup</h1>
+  <div class="sub">Designing a node-based editor</div>
+  <div class="stage"><div style="position:relative;width:1300px;height:640px">
+    <svg style="position:absolute;inset:0" width="1300" height="640" viewBox="0 0 1300 640">
+      <path d="M330 120 C 470 120, 450 300, 590 300" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="4"/>
+      <path d="M330 480 C 470 480, 450 300, 590 300" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="4"/>
+      <path d="M930 300 C 1000 300, 1000 200, 1060 200" fill="none" stroke="#f3b06c" stroke-width="4"/>
+      ${[[330, 120], [330, 480], [590, 300], [930, 300], [1060, 200]].map(([cx, cy]) => `<circle cx="${cx}" cy="${cy}" r="9" fill="#fff"/>`).join("")}
+    </svg>
+    ${node(40, 50, 290, "Prompt", `<div style="margin-top:14px;font-size:22px;line-height:1.35;opacity:.8">an old red train in an autumn valley</div>`)}
+    ${node(40, 410, 290, "Depth", `<div style="margin-top:14px;height:60px;border-radius:12px;background:linear-gradient(90deg,#111,#cfcfcf)"></div>`)}
+    ${node(590, 170, 340, "Video node", art(170), true)}
+    <div class="chip" style="position:absolute;left:1060px;top:170px;height:64px;background:#fff;color:#0f0f0f;box-shadow:0 20px 40px rgba(0,0,0,.4)">${icon("sparkles", 26)} Result</div>
+    <div class="glass chip" style="position:absolute;left:600px;top:520px">${icon("bot", 26)} Or let the agent build it</div>
+  </div></div>`;
+};
+
+document.getElementById("root").innerHTML = covers[which]();
+</script>
+</body>
+</html>

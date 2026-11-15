@@ -1,6 +1,6 @@
 // Article that uses the Draftlex case as its worked example.
 // Draftlex is a real product; the redesign was not ordered, so the article calls it a concept, as the case page does.
-import cover from "../../../portfolio/Draftlex/Preview.webp";
+import cover from "../../assets/blog/draftlex/cover.webp";
 import steps from "../../../portfolio/Draftlex/2-2.webp";
 import structure from "../../../portfolio/Draftlex/3-2.webp";
 import clause from "../../../portfolio/Draftlex/3-3.webp";
@@ -19,7 +19,7 @@ export const draftlexPost = {
   publishedLabel: "Nov 15, 2026",
   case: "draftlex",
   cover,
-  coverAlt: "The Draftlex seal: the name set letter by letter in a ring of drops",
+  coverAlt: "A contract page with one clause marked as written by AI and approved by a person",
   content: [
     {
       text: "Lawyers do not buy an AI tool because it writes fast. They buy it when they can check what it wrote, quickly, and put their name under it. So in legal AI the interface has one main job: make the work easy to check.",
