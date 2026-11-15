@@ -4,6 +4,7 @@ import { cases } from "../data/cases.js";
 import { ContactSection } from "../components/ContactSection.jsx";
 
 const listingOrder = [
+  "draftlex",
   "one-gallon",
   "wardgrid",
   "ringproof",

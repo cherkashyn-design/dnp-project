@@ -7,11 +7,12 @@ export function ProjectMedia({ project }) {
   if (project.cover === "ringproof") return <RingproofCover />;
   if (project.cover === "wardgrid") return <WardgridCover poster={project.image} />;
   if (project.cover === "onegallon") return <OneGallonCover poster={project.image} />;
+  if (project.cover === "draftlex") return <DraftlexCover poster={project.image} />;
   return <SoftImage src={project.image} alt="" />;
 }
 
 /**
- * One slide of a concept case, running live in a frame (the files in public/<folder>: ringproof, wardgrid, onegallon).
+ * One slide of a concept case, running live in a frame (the files in public/<folder>: ringproof, wardgrid, onegallon, draftlex).
  * The poster picture lies under the frame until it has loaded. Only interactive slides take the pointer.
  */
 export function LiveSlide({ slide, poster, label, interactive = false, folder = "ringproof" }) {
@@ -52,6 +53,21 @@ export function OneGallonCover({ poster }) {
     <span className="media-shell is-ready og-cover">
       {poster ? <img src={poster} alt="" loading="lazy" decoding="async" /> : null}
       <iframe src={`${BASE}/onegallon/case.html?only=0.1&embed&cover`} title="One Gallon logo on moving light" loading="lazy" tabIndex={-1} />
+    </span>
+  );
+}
+
+/**
+ * Animated cover of the Draftlex case: its seal, the name set letter by letter in a ring of drops, turning once in two
+ * minutes on the brand's blue (slide 0.1), filling the frame whatever its shape. The picture lies underneath until the
+ * frame has loaded. The ring turns only while it is on screen, comes round without a seam, and stands still for someone
+ * who asked for less motion.
+ */
+export function DraftlexCover({ poster }) {
+  return (
+    <span className="media-shell is-ready dl-cover">
+      {poster ? <img src={poster} alt="" loading="lazy" decoding="async" /> : null}
+      <iframe src={`${BASE}/draftlex/case.html?only=0.1&embed&cover`} title="The Draftlex seal turning slowly" loading="lazy" tabIndex={-1} />
     </span>
   );
 }

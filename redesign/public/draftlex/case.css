@@ -1,0 +1,33 @@
+/* The case page: sections of rows, each row one slide or two side by side.
+   A slide (.s) is always drawn 1600 x 1200 px and scaled to its frame by case.js, so every size inside a slide is in px. */
+* { box-sizing: border-box; margin: 0; }
+body { background: #f4f4f1; color: #111; font: 400 16px/1.4 system-ui, sans-serif; }
+/* The same limit as on the studio's site: content 1280 px wide at most, centred, 16 px from the sides.
+   (Only the case page: a single slide, ?only= and &embed, still fills its window.) */
+body > .page { max-width: 1280px; margin: 0 auto; }
+.page section { display: flex; flex-direction: column; gap: 8px; padding: 80px 16px; }
+.heading { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+.heading h2 { font-size: 82px; font-weight: 400; letter-spacing: -0.02em; line-height: 0.95; }
+.heading p { color: #55554f; }
+
+.row { display: grid; gap: 8px; }
+.row.two { grid-template-columns: 1fr 1fr; }
+.frame { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 16px; background: #000; }
+.s { position: absolute; left: 0; top: 0; width: 1600px; height: 1200px; overflow: hidden; transform-origin: 0 0; }
+/* The slide number, for feedback ("1.2: make the logo bigger"). It is on the draft page only, never on a single slide. */
+.num { position: absolute; left: 12px; top: 12px; z-index: 2; padding: 3px 8px; border-radius: 6px; background: rgba(0, 0, 0, 0.6); color: #fff; font: 500 12px ui-monospace, monospace; }
+/* A slide that is off screen pauses its animations (case.js sets .off). */
+.frame.off *, .frame.off *::before, .frame.off *::after { animation-play-state: paused !important; }
+
+/* ?only=1.2 shows one slide alone at its own size; &embed scales it to the window, for a frame on another site. */
+body.only { background: #000; overflow: hidden; }
+body.only .num { display: none; }
+body.only .frame { width: 100vw; height: 100vh; border-radius: 0; aspect-ratio: auto; }
+body.embed { background: none; }
+
+@media (max-width: 800px) {
+  .row.two { grid-template-columns: 1fr; }
+  .page section { padding: 48px 16px; }
+  .heading h2 { font-size: 48px; }
+}
+

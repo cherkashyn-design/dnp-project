@@ -5,9 +5,19 @@ import drumkit from "../assets/cases/drumkit.webp";
 import ringproof from "../../../portfolio/Ringproof/Preview.webp";
 import wardgrid from "../../../portfolio/Wardgrid/Preview.webp";
 import oneGallon from "../../../portfolio/OneGallon/Preview.webp";
+import draftlex from "../../../portfolio/Draftlex/Preview.webp";
 
 // A case with hidden: true stays in the code but is not shown anywhere: no card, no page, no link.
 const allCases = [
+  {
+    slug: "draftlex",
+    name: "Draftlex - Contract templates drafted with AI",
+    title: "Draftlex",
+    tags: ["Concept", "Branding", "Landing", "SaaS"],
+    image: draftlex,
+    cover: "draftlex", // cards show the animated cover (ProjectMedia) instead of the picture
+    summary: "A new brand, website and platform for lawyers who draft contract templates with AI.",
+  },
   {
     slug: "one-gallon",
     name: "One Gallon - Water tracker that counts for you",

@@ -7,7 +7,7 @@ import { appHref } from "../base.js";
 import { ContactSection } from "../components/ContactSection.jsx";
 import { LottieFrame } from "../components/LottieFrame.jsx";
 import { LottieStrip } from "../components/LottieStrip.jsx";
-import { LiveSlide, OneGallonCover, ProjectMedia, WardgridCover } from "../components/ProjectMedia.jsx";
+import { DraftlexCover, LiveSlide, OneGallonCover, ProjectMedia, WardgridCover } from "../components/ProjectMedia.jsx";
 import { RingproofCover } from "../components/RingproofCover.jsx";
 import { SoftImage, SoftVideo } from "../components/SoftMedia.jsx";
 import { SidebarReel } from "../components/SidebarReel.jsx";
@@ -18,6 +18,7 @@ import { ringproofCase } from "../../../src/data/ringproof.js";
 import { salesDriverCase } from "../../../src/data/salesDriver.js";
 import { wardgridCase } from "../../../src/data/wardgrid.js";
 import { oneGallonCase } from "../../../src/data/onegallon.js";
+import { draftlexCase } from "../../../src/data/draftlex.js";
 import { yummoCase } from "../../../src/data/yummo.js";
 import {
   drumkitPreview,
@@ -39,6 +40,7 @@ const legacyCases = {
   ringproof: ringproofCase,
   wardgrid: wardgridCase,
   "one-gallon": oneGallonCase,
+  draftlex: draftlexCase,
   "yummo-food-guide-for-moms": yummoCase,
   nodity: genieCase,
   "sales-driver-ads-tool": salesDriverCase,
@@ -471,6 +473,8 @@ function LegacyCase({ project, data, onNavigate }) {
             <WardgridCover poster={data.heroImage} />
           ) : data.heroCover === "onegallon" ? (
             <OneGallonCover poster={data.heroImage} />
+          ) : data.heroCover === "draftlex" ? (
+            <DraftlexCover poster={data.heroImage} />
           ) : (
             <SoftImage src={data.heroImage} alt={data.heroAlt || ""} />
           )}
