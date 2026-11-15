@@ -3,7 +3,7 @@ export const SITE_NAME = "Do Not Press";
 export const DEFAULT_TITLE = "Do Not Press | Product Design Studio & Agency";
 export const DEFAULT_DESCRIPTION =
   "Do Not Press is a product design studio and agency for startups. Hire Do Not Press design for SaaS UI, brand identity, and websites that ship.";
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.gif`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-logo.png`;
 
 function upsertMeta(selector, attrs) {
   let node = document.head.querySelector(selector);
