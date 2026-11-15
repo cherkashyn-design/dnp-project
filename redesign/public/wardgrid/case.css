@@ -3,8 +3,8 @@
    Brand slides are styled in brand.css, deck slides in deck.css; this file holds the page and the slides of sections 2–4. */
 * { box-sizing: border-box; margin: 0; }
 body { background: #f1f2f6; color: #0a0c1c; font: 400 16px/1.4 "Instrument Sans", system-ui, sans-serif; }
-.page { max-width: 1800px; margin: 0 auto; }
-.page section { display: flex; flex-direction: column; gap: 8px; padding: 80px 32px; }
+.page { max-width: 1280px; margin: 0 auto; } /* the same content width as the DNP site */
+.page section { display: flex; flex-direction: column; gap: 8px; padding: 80px 16px; }
 .heading { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
 .heading h2 { font-size: 82px; font-weight: 400; letter-spacing: -0.02em; line-height: 0.95; }
 .heading p { color: #6b7088; }
@@ -32,7 +32,7 @@ body.frozen *, body.frozen *::before, body.frozen *::after { animation-play-stat
 }
 
 /* ---------- The top of the page: cover, title, tags, goal and idea ---------- */
-.intro { display: flex; gap: 32px; padding: 32px; }
+.intro { display: flex; gap: 32px; padding: 32px 16px; }
 .intro .frame { flex: 1; align-self: flex-start; }
 .about { flex: 0 0 464px; display: flex; flex-direction: column; gap: 28px; }
 .about h1 { font-size: 82px; font-weight: 400; letter-spacing: -0.02em; line-height: 0.95; white-space: nowrap; }
@@ -40,7 +40,7 @@ body.frozen *, body.frozen *::before, body.frozen *::after { animation-play-stat
 .about b { display: block; margin-bottom: 6px; font: 500 13px "JetBrains Mono", monospace; }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .tags span { padding: 6px 12px; border: 1px solid #c9cddd; border-radius: 999px; font-size: 13px; }
-@media (max-width: 800px) { .intro { flex-direction: column; padding: 16px; } .about { flex: none; } .about h1 { font-size: 48px; } }
+@media (max-width: 800px) { .intro { flex-direction: column; padding: 16px; } .intro .frame { flex: none; align-self: stretch; } .about { flex: none; } .about h1 { font-size: 48px; } }
 
 /* ---------- 2 · Deck slides on case slides ---------- */
 .dk { position: absolute; left: 80px; top: 195px; width: 1600px; height: 900px; transform: scale(0.9); transform-origin: 0 0; }
@@ -94,3 +94,7 @@ body.frozen *, body.frozen *::before, body.frozen *::after { animation-play-stat
 @keyframes cov-tap { 0%, 29% { transform: scale(0); opacity: 1; } 40% { transform: scale(1); opacity: 0; } 100% { transform: scale(1); opacity: 0; } }
 @keyframes cov-press { 0%, 28% { transform: none; } 31% { transform: scale(0.965); } 36%, 100% { transform: none; } }
 @media (prefers-reduced-motion: reduce) { .cov * { animation: none !important; } .cov .t2, .cov .b2, .cov-week u, .cov .tap { opacity: 0; } }
+
+/* 4.2, 4.3: the panel of the product alone, 356 x 760 px, enlarged and centred. */
+.solo { position: absolute; left: 541.9px; top: 49px; width: 356px; height: 760px; border-radius: 22px; overflow: hidden; transform: scale(1.45); transform-origin: 0 0; background: #fff; }
+.solo iframe { display: block; width: 356px; height: 760px; border: 0; pointer-events: none; }

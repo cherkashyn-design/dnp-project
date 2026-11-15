@@ -4,6 +4,8 @@
 //   WG.ic(name)              a Lucide icon placeholder; WG.icons() turns placeholders into SVGs
 //   <canvas class="pic" data-set="blue" data-field="blobs" data-cell="24" data-live></canvas>
 //                            a brand picture made of roster cells; WG.pictures() starts every one on the page
+//   data-clear=".selector"    elements (inside the canvas's parent) that the cells must keep clear of, so that
+//                            text laid over a picture stays readable; data-hole="x,y,w,h" does the same by numbers
 // Pictures loop without a seam (every phase turns whole circles in LOOP seconds) and stand still when
 // their slide is off screen, when the page is frozen (?at=) or when the visitor asked for less motion.
 (() => {
@@ -63,16 +65,49 @@
     const gap = Math.max(1, cell * 0.09), side = cell - gap * 2, round = side * 0.3;
     ctx.lineWidth = Math.max(1, cell * 0.085);
     // data-hole="x,y,w,h" (px): a zone left empty, so a logo placed there stays readable.
-    const hole = canvas.dataset.hole ? canvas.dataset.hole.split(",").map(Number) : null;
+    const holes = canvas.dataset.hole ? [canvas.dataset.hole.split(",").map(Number)] : [];
+    if (canvas.dataset.clear) {
+      // Where those elements are, in the canvas's own pixels (a slide may be scaled, so measure and divide).
+      const box = canvas.getBoundingClientRect(), k = box.width / w || 1, pad = Number(canvas.dataset.clearPad || 22);
+      canvas.parentElement.querySelectorAll(canvas.dataset.clear).forEach((item) => { const r = item.getBoundingClientRect(); if (r.width) holes.push([(r.left - box.left) / k - pad, (r.top - box.top) / k - pad, r.width / k + pad * 2, r.height / k + pad * 2]); });
+    }
     for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
       const value = field(((c + 0.5) * cell) / h, ((r + 0.5) * cell) / h, phase, aspect) + (hash(c, r, seed) - 0.5) * 0.2;
       const x = c * cell + gap, y = r * cell + gap;
-      if (hole && x + side > hole[0] && x < hole[0] + hole[2] && y + side > hole[1] && y < hole[1] + hole[3]) continue;
+      if (holes.some((hole) => x + side > hole[0] && x < hole[0] + hole[2] && y + side > hole[1] && y < hole[1] + hole[3])) continue;
       if (value > level + 0.1) { ctx.fillStyle = set.fg; ctx.beginPath(); ctx.roundRect(x, y, side, side, round); ctx.fill(); }          // covered
       else if (value > level) { ctx.strokeStyle = set.fg; ctx.beginPath(); ctx.roundRect(x + ctx.lineWidth / 2, y + ctx.lineWidth / 2, side - ctx.lineWidth, side - ctx.lineWidth, round); ctx.stroke(); } // open
       else if (value > level - 0.07) { ctx.strokeStyle = set.soft; ctx.beginPath(); const m = side * 0.3; ctx.moveTo(x + m, y + m); ctx.lineTo(x + side - m, y + side - m); ctx.moveTo(x + side - m, y + m); ctx.lineTo(x + m, y + side - m); ctx.stroke(); } // conflict
       else if (canvas.dataset.dots !== "off") { ctx.fillStyle = set.soft; ctx.globalAlpha = 0.45; ctx.beginPath(); ctx.arc(x + side / 2, y + side / 2, Math.max(0.8, cell * 0.05), 0, 7); ctx.fill(); ctx.globalAlpha = 1; }
     }
+  }
+
+  // ---------- The mesh gradient: the brand's soft picture ----------
+  // Eight points of colour, each a soft light; every pixel is their blend, weighted by distance. Drawn small
+  // (200 x 150) and stretched, which is what keeps it smooth. With data-live the points drift in slow circles.
+  //   <canvas class="mesh" data-live></canvas>
+  const MESH = [ // [x, y, colour, strength, reach, circle it drifts in, turns per loop]
+    [0.12, 0.1, [112, 136, 255], 1.1, 0.28, 0.07, 1],
+    [0.9, 0.12, [6, 10, 70], 1.4, 0.3, 0.06, -1],
+    [0.02, 1.0, [241, 242, 246], 1.3, 0.26, 0.05, 1],
+    [0.5, 0.55, [29, 59, 227], 1.2, 0.34, 0.08, -1],
+    [1.0, 0.95, [203, 198, 255], 1.3, 0.28, 0.06, 2],
+    [0.42, 0.0, [29, 59, 227], 0.9, 0.26, 0.05, -2],
+    [0.74, 0.62, [10, 20, 120], 1.0, 0.22, 0.07, 1],
+    [0.3, 0.72, [72, 98, 250], 0.9, 0.22, 0.06, -1],
+  ];
+  function drawMesh(canvas, seconds) {
+    const W = 200, H = 150;
+    if (canvas.width !== W) { canvas.width = W; canvas.height = H; }
+    const ctx = canvas.getContext("2d"), image = ctx.createImageData(W, H), data = image.data, turn = (seconds / LOOP) * Math.PI * 2, aspect = W / H;
+    const points = MESH.map(([x, y, colour, strength, reach, circle, turns], i) => [(x + circle * Math.cos(turn * turns + i)) * aspect, y + circle * Math.sin(turn * turns + i), colour, strength, 1 / (2 * reach * reach)]);
+    for (let py = 0, at = 0; py < H; py++) for (let px = 0; px < W; px++, at += 4) {
+      const u = (px / W) * aspect, v = py / H;
+      let r = 0, g = 0, b = 0, sum = 0;
+      for (const [x, y, colour, strength, fall] of points) { const w = strength * Math.exp(-((u - x) ** 2 + (v - y) ** 2) * fall); r += colour[0] * w; g += colour[1] * w; b += colour[2] * w; sum += w; }
+      data[at] = r / sum; data[at + 1] = g / sum; data[at + 2] = b / sum; data[at + 3] = 255;
+    }
+    ctx.putImageData(image, 0, 0);
   }
 
   const query = new URLSearchParams(location.search);
@@ -83,13 +118,13 @@
   const tick = (now) => {
     if (now - last > 110 && !window.WG.paused && !document.hidden) { // about 9 pictures a second is plenty for cells that flip slowly
       last = now;
-      for (const canvas of live) if (canvas.isConnected && !canvas.closest(".off")) drawPicture(canvas, now / 1000 + Number(canvas.dataset.shift || 0));
+      for (const canvas of live) if (canvas.isConnected && !canvas.closest(".off")) (canvas.classList.contains("mesh") ? drawMesh : drawPicture)(canvas, now / 1000 + Number(canvas.dataset.shift || 0));
     }
     requestAnimationFrame(tick);
   };
   function pictures(root = document) {
-    root.querySelectorAll("canvas.pic").forEach((canvas) => {
-      drawPicture(canvas, (frozenAt ?? 0) + Number(canvas.dataset.shift || 0));
+    root.querySelectorAll("canvas.pic, canvas.mesh").forEach((canvas) => {
+      (canvas.classList.contains("mesh") ? drawMesh : drawPicture)(canvas, (frozenAt ?? 0) + Number(canvas.dataset.shift || 0));
       if (canvas.hasAttribute("data-live") && frozenAt === null && !calm) live.add(canvas);
     });
     if (live.size && !running) { running = true; requestAnimationFrame(tick); }

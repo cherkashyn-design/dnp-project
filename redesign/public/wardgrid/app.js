@@ -2,6 +2,8 @@
 //   app.html?screen=rota        one screen, so it can be photographed (the list is in SCREENS below)
 //   app.html?screen=open&play   the loop for the case: an open night shift is asked for, accepted and covered
 //   ...&at=8.5                  the loop frozen at that second
+//   app.html?panel=open&play    only the right-hand panel, as a loop: an open shift is asked for and covered
+//   app.html?panel=conflict&play  only the panel: a rule conflict is fixed by a swap
 // Screens whose name starts with "m-" are the phone app (390 px wide) of a nurse.
 (() => {
   const { logo, mark, ic } = WG;
@@ -159,10 +161,10 @@
   const PHONE = {
     "m-week": () => `${phoneTop("My week")}<div class="m-body"><div class="m-offer"><span class="p-tag hot">Open shift · Ward 4B</span><b>Tonight, 21:00–07:30</b><span>Hannah is off sick. Can you take it?</span><div><button class="m-btn">See shift</button><button class="m-btn ghost">Not this time</button></div></div>
       <div class="lbl">16–22 November · 32 h</div>${myWeek.map(([day, kind], i) => `<div class="m-day ${i === 3 ? "today" : ""}"><b>${day}</b>${kind === "-" ? `<span class="off">Off</span>` : `<i class="c ${kind}"><b>${KIND[kind][0]}</b></i><span>${KIND[kind][1]}</span>`}</div>`).join("")}</div>${tabs(0)}`,
-    "m-offer": () => `${phoneTop("Open shift", true)}<div class="m-body"><div class="m-hero"><canvas class="pic" data-set="night" data-field="rise" data-cell="15" data-seed="8" data-level="0.7" data-dots="off"></canvas><div><span>Night · Ward 4B Cardiology</span><b>Thu 19 Nov<br />21:00–07:30</b></div></div>
+    "m-offer": () => `${phoneTop("Open shift", true)}<div class="m-body"><div class="m-hero"><canvas class="pic" data-set="night" data-field="rise" data-cell="15" data-seed="8" data-level="0.6" data-dots="off" data-clear="div" data-clear-pad="14"></canvas><div><span>Night · Ward 4B Cardiology</span><b>Thu 19 Nov<br />21:00–07:30</b></div></div>
       <div class="lbl">If you take it</div>${offerFacts.map(([icon, what, why]) => `<div class="opt">${ic(icon, 20)}<div><b>${what}</b><span>${why}</span></div>${ic("check", 18)}</div>`).join("")}
       <div class="m-ask"><span>Asked by Claire Donovan at 14:14</span><button class="m-btn big">Take this shift</button><button class="m-btn ghost big">I can't</button></div></div>`,
-    "m-taken": () => `${status}<div class="m-full"><canvas class="pic" data-set="blue" data-field="rise" data-cell="15" data-seed="3" data-level="0.66"></canvas><div class="m-done">${mark(64)}<b>It's yours.</b><span>Thursday night, Ward 4B.<br />Claire has been told.</span></div><div class="m-ask"><button class="m-btn light big">Add to my calendar</button><button class="m-btn clear big">Back to my week</button></div></div>`,
+    "m-taken": () => `${status}<div class="m-full"><canvas class="pic" data-set="blue" data-field="rise" data-cell="15" data-seed="3" data-level="0.6" data-dots="off" data-clear=".m-done, .m-ask" data-clear-pad="16"></canvas><div class="m-done">${mark(64)}<b>It's yours.</b><span>Thursday night, Ward 4B.<br />Claire has been told.</span></div><div class="m-ask"><button class="m-btn light big">Add to my calendar</button><button class="m-btn clear big">Back to my week</button></div></div>`,
     "m-swap": () => `${phoneTop("Swap a shift", true)}<div class="m-body"><div class="lbl">You give</div><div class="m-day today"><b>Sat 21</b><i class="c E"><b>Early</b></i><span>07:00–15:00</span></div>
       <div class="lbl">Who can take it · rules checked</div>${[["Tomasz Zielinski", "gives Sun 22 · Early", true], ["Sofia Marin", "gives Sun 22 · Late", false], ["Amara Okafor", "gives Mon 23 · Early", false]].map(([name, gives, on]) => `<div class="cand ${on ? "pick" : ""}">${avatar(name, 40)}<div><b>${name}</b><span>${gives}</span></div><i class="radio"></i></div>`).join("")}
       <div class="cand no">${avatar("Leila Haddad", 40)}<div><b>Leila Haddad</b><span>Finishes a night that morning</span></div>${ic("ban", 16)}</div>
@@ -174,25 +176,54 @@
   const draw = (html) => { root.innerHTML = html; WG.icons(); WG.pictures(root); };
   if (PHONE[screen]) { document.body.classList.add("phone"); draw(PHONE[screen]()); return; }
 
+// Two more states of the panel, used only by the conflict loop.
+  const leilaWeek = (letters) => `<div class="mini">${[...letters].map((kind, d) => `<i class="${kind === "-" ? "" : kind === "!" ? "bad" : kind}"><b>${DAYS[d][0][0]}</b></i>`).join("")}</div>`;
+  PANELS.offered = () => `<div class="p-tag hot">Rule conflict</div><h2>Night · Fri 20 Nov</h2><p class="p-meta">Leila Haddad · 21:00–07:30</p>
+    <div class="p-note">${ic("repeat", 16)}<span><b>Swap offered to Tomasz.</b><br />His Early on Sunday for this Night. Sent 14:20.</span></div>
+    <div class="lbl">Waiting for his answer</div>${cand(["Tomasz Zielinski", "24 h this week · 24 h rest before"], ["wait", "Seen"])}
+    <div class="lbl">Leila, if he says yes</div>${leilaWeek("E-NN--E")}<div class="lbl">Tomasz, if he says yes</div>${leilaWeek("--LLN--")}
+    <div class="p-foot"><button class="ghost">Cancel the offer</button></div>`;
+  PANELS.fixed = () => `<div class="p-tag ok">Rules pass</div><h2>Night · Fri 20 Nov</h2><p class="p-meta">Tomasz Zielinski · 21:00–07:30</p>
+    <div class="done"><b>Tomasz took Friday night.</b><span>Leila works Sunday Early instead. Both were told at 14:26.</span></div>
+    <div class="lbl">Checked against ward rules</div>
+    ${[["Leila: 2 nights in a row", "max 2"], ["Tomasz: 24 h rest before", "min 11 h"], ["Tomasz: 34.5 h this week", "max 48 h"], ["Cardiac monitoring on both shifts", "2 nurses"]].map(([what, rule]) => `<div class="check">${ic("check", 16)}<span>${what}</span><em>${rule}</em></div>`).join("")}
+    <div class="lbl">Leila this week</div>${leilaWeek("E-NN--E")}
+    <div class="p-foot">${split("Done", "full")}<button class="ghost">Undo</button></div>`;
+
+  // A loop is a list of [second it begins, what to draw]; it is redrawn only when the stage changes.
+  const frozen = query.get("at");
+  const play = (stages, length) => {
+    let shown = -1;
+    const step = () => {
+      if (WG.paused) return;
+      const t = frozen === null ? (performance.now() / 1000) % length : Number(frozen) % length, now = stages.reduce((found, stage, i) => (t >= stage[0] ? i : found), 0);
+      if (now !== shown) { shown = now; document.body.classList.toggle("playing", frozen === null); draw(stages[now][1]()); }
+    };
+    step();
+    if (frozen === null) setInterval(step, 100);
+  };
+  const asking = [
+    [0, () => PANELS.open()],
+    [2.2, () => PANELS.asked([["wait", "Sent"], ["wait", "Sent"], ["wait", "Sent"]], "Asked 3 people · just now")],
+    [3.8, () => PANELS.asked([["wait", "Seen"], ["wait", "Sent"], ["wait", "Seen"]], "Asked 3 people · 1 min ago")],
+    [5.2, () => PANELS.asked([["no", "Declined"], ["wait", "Seen"], ["wait", "Seen"]], "Asked 3 people · 2 min ago")],
+    [6.8, () => PANELS.asked([["no", "Declined"], ["yes", "Accepted"], ["wait", "Seen"]], "Asked 3 people · 4 min ago")],
+    [7.8, () => PANELS.covered()],
+  ];
+
+  // Only the panel (slides 4.2 and 4.3 of the case).
+  const solo = query.get("panel");
+  if (solo) {
+    document.body.classList.add("solo");
+    const only = (inner, more = "") => `<aside class="panel ${more}">${inner}</aside>`;
+    if (solo === "conflict") play([[0, () => only(PANELS.conflict())], [2.6, () => only(PANELS.conflict(), "pressing")], [3.3, () => only(PANELS.offered())], [6.6, () => only(PANELS.fixed())]], 12);
+    else play(asking.map(([second, inner], i) => [second, () => only(inner(), i === 0 ? "" : "")]), 14);
+    return;
+  }
+
   if (!query.has("play")) { draw((SCREENS[screen] || SCREENS.rota)()); return; }
 
-  // The loop: 14 seconds from "open" to "covered" and round again. Each stage is a whole screen, drawn when it begins.
-  const STAGES = [
-    [0, () => rotaView(99, 5, { selected: "open:3" }, PANELS.open())],
-    [2.2, () => rotaView(99, 5, { selected: "open:3" }, PANELS.asked([["wait", "Sent"], ["wait", "Sent"], ["wait", "Sent"]], "Asked 3 people · just now"))],
-    [3.8, () => rotaView(99, 5, { selected: "open:3" }, PANELS.asked([["wait", "Seen"], ["wait", "Sent"], ["wait", "Seen"]], "Asked 3 people · 1 min ago"))],
-    [5.2, () => rotaView(99, 5, { selected: "open:3" }, PANELS.asked([["no", "Declined"], ["wait", "Seen"], ["wait", "Seen"]], "Asked 3 people · 2 min ago"))],
-    [6.8, () => rotaView(99, 5, { selected: "open:3" }, PANELS.asked([["no", "Declined"], ["yes", "Accepted"], ["wait", "Seen"]], "Asked 3 people · 4 min ago"))],
-    [7.8, () => rotaView(100, 4, { coveredBy: "Daniel Reyes" }, PANELS.covered())],
-  ];
-  const LOOP = 14, frozen = query.get("at");
-  const stageAt = (t) => STAGES.reduce((found, stage, i) => (t >= stage[0] ? i : found), 0);
-  let shown = -1;
-  const step = () => {
-    if (WG.paused) return;
-    const t = frozen === null ? (performance.now() / 1000) % LOOP : Number(frozen) % LOOP, now = stageAt(t);
-    if (now !== shown) { shown = now; document.body.classList.toggle("playing", frozen === null); draw(STAGES[now][1]()); }
-  };
-  step();
-  if (frozen === null) setInterval(step, 100);
+  // The whole screen: 14 seconds from "open" to "covered" and round again.
+  const grids = [[99, 5, { selected: "open:3" }], [99, 5, { selected: "open:3" }], [99, 5, { selected: "open:3" }], [99, 5, { selected: "open:3" }], [99, 5, { selected: "open:3" }], [100, 4, { coveredBy: "Daniel Reyes" }]];
+  play(asking.map(([second, inner], i) => [second, () => rotaView(...grids[i], inner())]), 14);
 })();

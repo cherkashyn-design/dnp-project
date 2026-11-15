@@ -6,17 +6,18 @@
   const pic = (set, field, cell, more = "") => `<canvas class="pic" data-set="${set}" data-field="${field}" data-cell="${cell}" ${more}></canvas>`;
   const S = (window.SLIDES = window.SLIDES || {});
 
-  // 1.1 The logo on six backgrounds, one every half second. Every layer holds the same logo in the same place.
+  // 1.1 The logo on the brand backgrounds, one every half second. Every layer holds the same logo in the same place.
+  // To add a background, add a line to LOGO_ON: the cycle and its keyframes follow the number of lines.
+  const LOGO_ON = [
+    ["color:#f1f2f6", pic("blue", "blobs", 40, `data-level="0.62" data-dots="off" data-clear=".wg-logo" data-clear-pad="70"`)],
+    ["background:#cbc6ff;color:#0a0c1c", ""],
+    ["color:#f1f2f6", `<div class="photo-bg"><i style="background-image:url(photo/corridor.jpg)"></i></div>`], // see photo/SOURCES.md
+    ["color:#f1f2f6", `<div class="meshbox"><canvas class="mesh"></canvas></div>`],
+  ];
   S["1.1"] = () => {
-    const layers = [
-      ["background:#1d3be3;color:#f1f2f6", ""],
-      ["background:#000;color:#f1f2f6", ""],
-      ["background:#f1f2f6;color:#1d3be3", ""],
-      ["color:#f1f2f6", pic("blue", "blobs", 40, `data-level="0.62" data-dots="off" data-hole="300,440,1000,320"`)],
-      ["background:#cbc6ff;color:#0a0c1c", ""],
-      ["color:#f1f2f6", `<div class="grain" style="position:absolute;inset:0"></div>`],
-    ];
-    return slide("s11", "#1d3be3", layers.map(([style, back], i) => `<div class="l" style="--i:${i};${style}">${back}${logo(150)}</div>`).join(""));
+    const count = LOGO_ON.length, cycle = count * 0.5;
+    return slide("s11", "#1d3be3", `<style>@keyframes s11 { 0% { opacity: 1; } ${(100 / count).toFixed(3)}% { opacity: 0; } 100% { opacity: 0; } }</style>` +
+      LOGO_ON.map(([style, back], i) => `<div class="l" style="animation-duration:${cycle}s;animation-delay:calc(${i * 0.5 - cycle}s - var(--at, 0s));${style}">${back}${logo(150)}</div>`).join(""));
   };
 
   // 1.2 Colour: five colours, each with its name and value.
@@ -48,16 +49,21 @@
       ${say("send", "Next week is ready. Publish the rota?")}
     </div>`);
 
-  // 1.6 Business cards: four designs in two rows that drift opposite ways. The light stands still at --lx,
-  // so each card's edge highlight and the emboss of its mark shift as the card passes under it.
+  // 1.6 Business cards: flat print on four papers, six people of the ward and of Wardgrid, in two rows that drift opposite ways.
+  const person = (tone, name, title, mail, phone) => `<div class="bcard kb ${tone} mat">${logo(30)}<div><b class="n">${name}</b><span>${title}<br />${mail}<br />${phone}</span></div></div>`;
   const CARDS = {
-    a: () => `<div class="bcard ka mat" style="--cx:%CX%">${mark(190)}</div>`,
-    b: () => `<div class="bcard kb mat" style="--cx:%CX%">${logo(30)}<div><b class="n">Claire Donovan</b><span>Ward Manager · 4B Cardiology<br />claire.donovan@northmere.example<br />+44 20 7946 0142</span></div></div>`,
-    c: () => `<div class="bcard kc mat" style="--cx:%CX%">${pic("lilac", "blobs", 22, `data-seed="4" data-level="0.52"`)}${logo(28)}</div>`,
-    d: () => `<div class="bcard kd mat" style="--cx:%CX%">${mark(430)}<span>wardgrid.example</span></div>`,
+    mark: () => `<div class="bcard ka mat">${mark(150)}</div>`,
+    picture: () => `<div class="bcard kc mat">${pic("lilac", "blobs", 22, `data-seed="4" data-level="0.52" data-clear=".wg-logo" data-clear-pad="14"`)}${logo(28)}</div>`,
+    back: () => `<div class="bcard kd mat">${logo(44)}<span>wardgrid.example</span></div>`,
+    claire: () => person("", "Claire Donovan", "Ward Manager · 4B Cardiology", "claire.donovan@northmere.example", "+44 20 7946 0142"),
+    ellen: () => person("ink", "Dr Ellen Park", "Cardiology Registrar", "ellen.park@northmere.example", "+44 20 7946 0177"),
+    imogen: () => person("blue", "Imogen Hale", "Customer Lead · Wardgrid", "imogen@wardgrid.example", "+44 20 7946 0108"),
+    daniel: () => person("lilac", "Daniel Reyes", "Staff Nurse · 4B Cardiology", "daniel.reyes@northmere.example", "+44 20 7946 0153"),
+    priya: () => person("", "Priya Nair", "Senior Staff Nurse · Mentor", "priya.nair@northmere.example", "+44 20 7946 0161"),
+    marcus: () => person("ink", "Marcus Bell", "Rota Coordinator · Nursing", "marcus.bell@northmere.example", "+44 20 7946 0119"),
   };
-  const cardRow = (order, top, back) => `<div class="rowc ${back ? "back" : ""}" style="top:${top}px">${[...order, ...order].map((key, i) => CARDS[key]().replace("%CX%", i * 568 + 260)).join("")}</div>`;
-  S["1.6"] = () => slide("s16", "#000", cardRow("abcd", 240, false) + cardRow("cdab", 630, true));
+  const cardRow = (keys, top, back) => `<div class="rowc ${back ? "back" : ""}" style="top:${top}px">${[...keys, ...keys].map((key) => CARDS[key]()).join("")}</div>`;
+  S["1.6"] = () => slide("s16", "#000", cardRow(["mark", "claire", "picture", "ellen", "back", "imogen"], 240, false) + cardRow(["daniel", "back", "priya", "mark", "marcus", "picture"], 630, true));
 
   // 1.7 A staff badge.
   S["1.7"] = () => slide("s17", "#000", `<div class="badge mat"><span class="slot"></span>

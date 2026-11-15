@@ -15,7 +15,7 @@ const frozen = at === null ? "" : `&at=${Number(at)}`;
 // ---------- 0.1 · The cover of the case: an open shift is taken ----------
 // A ten-second loop in CSS (see .cov in case.css): the button is pressed, Thursday's open cell fills, the card says "Covered".
 const covWeek = [["Mon", "L"], ["Tue", "L"], ["Wed", "E"], ["Thu", "o"], ["Fri", ""], ["Sat", "E"], ["Sun", ""]];
-SLIDES["0.1"] = () => `<div class="s cov" style="background:#1d3be3"><canvas class="pic" data-set="blue" data-field="blobs" data-cell="40" data-level="0.6" data-dots="off" data-live data-hole="440,210,720,780"></canvas>
+SLIDES["0.1"] = () => `<div class="s cov" style="background:#1d3be3"><canvas class="pic" data-set="blue" data-field="blobs" data-cell="40" data-level="0.6" data-dots="off" data-live data-clear=".cov-card" data-clear-pad="40"></canvas>
   <div class="cov-card"><div class="cov-tags"><span class="t1">Open shift</span><span class="t2">Covered</span></div>
     <b>Night · Thu 19 Nov</b><em>21:00–07:30 · Ward 4B Cardiology</em>
     <div class="cov-week">${covWeek.map(([day, kind]) => `<div><i class="${kind}">${kind === "o" ? `<u></u>` : ""}</i><span>${day}</span></div>`).join("")}</div>
@@ -43,8 +43,10 @@ SLIDES["3.5"] = () => black("s3", phone(`site.html?tour${frozen}`, 300, 102, 1.1
 
 const appWin = (screen) => () => black("s4", win("app.wardgrid.example/ward-4b", `app.html?screen=${screen}`));
 SLIDES["4.1"] = appWin("rota");
-SLIDES["4.2"] = appWin("open");
-SLIDES["4.3"] = appWin("conflict");
+// 4.2 and 4.3: the panel alone, large, as a loop (the whole screen is on 4.1 and 4.4).
+const panelOn = (name) => () => black("s4", `<div class="solo"><iframe src="app.html?panel=${name}&play${frozen}" title="Wardgrid: the ${name} panel" tabindex="-1" loading="lazy"></iframe></div>`);
+SLIDES["4.2"] = panelOn("open");
+SLIDES["4.3"] = panelOn("conflict");
 SLIDES["4.4"] = () => black("s4", win("app.wardgrid.example/ward-4b", `app.html?screen=open&play${frozen}`));
 SLIDES["4.5"] = appWin("swaps");
 SLIDES["4.6"] = appWin("profile");

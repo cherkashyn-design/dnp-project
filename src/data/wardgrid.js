@@ -59,7 +59,7 @@ export const wardgridCase = {
       description: "The week of one ward on one screen, and the hard moments: an open shift, a broken rule, nobody free.",
       mediaRows: [
         [still("4.1")],
-        [still("4.2"), still("4.3")],
+        [live("4.2", "The open-shift panel: asked, accepted, covered"), live("4.3", "The conflict panel: a broken rule fixed by a swap")],
         [live("4.4", "An open shift is asked for and covered")],
         [still("4.5"), still("4.6")],
         [still("4.7")],

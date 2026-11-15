@@ -9,7 +9,10 @@
 .wg-mark { display: block; flex: none; overflow: visible; }
 .wg-logo { display: inline-flex; align-items: center; gap: 0.3em; font-family: var(--sans); font-weight: 600; letter-spacing: -0.04em; line-height: 1; white-space: nowrap; } /* the name never breaks */
 .wg-logo b { font-weight: 600; }
-canvas.pic { display: block; width: 100%; height: 100%; }
+canvas.pic, canvas.mesh { display: block; width: 100%; height: 100%; }
+/* The mesh gradient with film grain over it. */
+.meshbox { position: absolute; inset: 0; overflow: hidden; }
+.meshbox::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.12; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 2.6 -1'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E"); }
 [data-lucide] { flex: none; }
 
 /* The soft, grainy blue picture: three lights on blue, with film grain over it. */
@@ -32,10 +35,15 @@ canvas.pic { display: block; width: 100%; height: 100%; }
 .s .mono { font-family: var(--mono); letter-spacing: 0.02em; }
 
 /* ---------- 1.1 The logo on every brand background; the logo itself never moves ---------- */
-.s11 .l { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; animation: s11 3s step-end infinite; animation-delay: calc(var(--i) * 0.5s - 3s - var(--at, 0s)); }
+/* Each background shows for half a second; the length of the cycle and the keyframes are written by brand.js for the number of backgrounds. */
+.s11 .l { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; animation: s11 step-end infinite; }
 .s11 .l canvas { position: absolute; inset: 0; }
 .s11 .l .wg-logo { position: relative; z-index: 1; }
-@keyframes s11 { 0% { opacity: 1; } 16.666% { opacity: 0; } 100% { opacity: 0; } }
+
+/* A photograph as a brand background: black and white, under a wash of Ward Blue that is deeper at the edges. */
+.photo-bg { position: absolute; inset: 0; }
+.photo-bg i { position: absolute; inset: 0; background-size: cover; background-position: center; filter: grayscale(1) contrast(1.15) brightness(1.2); } /* the filter is on the picture only, so the wash keeps its colour */
+.photo-bg::after { content: ""; position: absolute; inset: 0; background: radial-gradient(90% 80% at 50% 45%, rgba(29, 59, 227, 0.66), rgba(10, 20, 99, 0.88)); }
 
 /* ---------- 1.2 Colour ---------- */
 .s12 .sw { position: absolute; border-radius: 28px; padding: 36px 40px; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; }
@@ -74,29 +82,28 @@ canvas.pic { display: block; width: 100%; height: 100%; }
 .say.blue .neck { fill: var(--blue); }
 .say.blue i.dot svg { color: var(--paper); }
 
-/* ---------- 1.6 Business cards drifting under one light ---------- */
-@property --ox { syntax: "<number>"; inherits: true; initial-value: 0; }
-.s16 { --lx: 800; }
-.s16 .rowc { position: absolute; left: 0; display: flex; gap: 48px; will-change: transform; animation: s16 70s linear infinite, s16light 70s steps(140) infinite; animation-delay: calc(-12s - var(--at, 0s)); }
+/* ---------- 1.6 Business cards: flat print, drifting in two rows ---------- */
+.s16 .rowc { position: absolute; left: 0; display: flex; gap: 48px; will-change: transform; animation: s16 105s linear infinite; animation-delay: calc(-12s - var(--at, 0s)); }
 .s16 .rowc.back { animation-direction: reverse; }
-@keyframes s16 { to { transform: translateX(-2272px); } }
-@keyframes s16light { from { --ox: 0; } to { --ox: -2272; } }
-.bcard { position: relative; flex: none; width: 520px; height: 330px; border-radius: 22px; overflow: hidden; padding: 34px 36px; display: flex; flex-direction: column; justify-content: space-between;
-  --dx: clamp(-2.5, (var(--cx) + var(--ox) - var(--lx)) / 300, 2.5);
-  box-shadow: inset calc(var(--dx) * -1px) 1.5px 0 rgba(255, 255, 255, 0.28), inset calc(var(--dx) * 1px) -1.5px 0 rgba(0, 0, 0, 0.3); }
-.bcard.ka { background: var(--blue); align-items: center; justify-content: center; color: #2648f2; }
-.bcard.ka .wg-mark, .bcard.kd .wg-mark { filter: drop-shadow(calc(var(--dx) * -1px) -1.5px 0 rgba(255, 255, 255, 0.34)) drop-shadow(calc(var(--dx) * 1px) 2px 1px rgba(0, 0, 20, 0.5)); }
+@keyframes s16 { to { transform: translateX(-3408px); } } /* six cards of 520 px and their gaps */
+.bcard { position: relative; flex: none; width: 520px; height: 330px; border-radius: 22px; overflow: hidden; padding: 34px 36px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: none; }
+.bcard.ka { background: var(--blue); color: #fff; align-items: center; justify-content: center; }
 .bcard.kb { background: var(--paper); color: var(--ink); }
 .bcard.kb .wg-logo { color: var(--blue); }
-.bcard.kb b.n { display: block; font-size: 34px; font-weight: 600; letter-spacing: -0.03em; }
-.bcard.kb div span { display: block; font: 400 17px/1.6 var(--mono); color: var(--mute); }
+.bcard.kb b.n { display: block; font-size: 34px; font-weight: 600; letter-spacing: -0.03em; white-space: nowrap; }
+.bcard.kb div span { display: block; margin-top: 4px; font: 400 17px/1.6 var(--mono); color: var(--mute); white-space: nowrap; }
+.bcard.kb.ink { background: #0b0d1d; color: #fff; }
+.bcard.kb.ink .wg-logo { color: #fff; }
+.bcard.kb.ink div span { color: #8d94b8; }
+.bcard.kb.blue { background: var(--blue); color: #fff; }
+.bcard.kb.blue .wg-logo { color: #fff; }
+.bcard.kb.blue div span { color: #c9d1ff; }
+.bcard.kb.lilac { background: var(--lilac); }
+.bcard.kb.lilac div span { color: #4b507c; }
 .bcard.kc { padding: 0; }
-/* On a card the light of the surface follows the one lamp of the scene (--dx). */
-.bcard.mat::before { background: radial-gradient(80% 90% at calc(50% - var(--dx) * 16%) 0%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 60%), linear-gradient(180deg, rgba(0, 0, 30, 0) 50%, rgba(0, 0, 30, 0.24)); }
-.bcard.kc .wg-logo { position: absolute; left: 36px; bottom: 34px; color: var(--blue); background: var(--lilac); padding: 6px 12px 6px 8px; border-radius: 12px; }
-.bcard.kd { background: #0b0d1d; color: #12152b; align-items: flex-end; justify-content: flex-end; }
-.bcard.kd .wg-mark { position: absolute; left: -40px; top: -50px; }
-.bcard.kd span { font: 400 17px var(--mono); color: var(--paper); }
+.bcard.kc .wg-logo { position: absolute; left: 36px; bottom: 34px; color: var(--blue); }
+.bcard.kd { background: #0b0d1d; color: #fff; }
+.bcard.kd > span { font: 400 17px var(--mono); color: #8d94b8; }
 
 /* ---------- 1.7 Badge, 1.8 Letterhead and envelope ---------- */
 .s17 .badge { position: absolute; left: 520px; top: 180px; width: 560px; height: 840px; border-radius: 40px; overflow: hidden; background: var(--paper); color: var(--ink); animation: s17 11s ease-in-out infinite alternate; animation-delay: calc(-3s - var(--at, 0s)); }

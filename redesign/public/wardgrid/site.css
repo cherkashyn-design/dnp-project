@@ -40,7 +40,7 @@ section { position: relative; padding: 120px 32px; }
 
 /* ---------- Hero ---------- */
 .hero { padding-top: 150px; padding-bottom: 60px; }
-.hero h1 { font-size: 212px; letter-spacing: -0.06em; line-height: 0.86; margin-left: -8px; white-space: nowrap; }
+.hero h1 { font-size: 106px; letter-spacing: -0.05em; line-height: 0.92; margin-left: -4px; white-space: nowrap; }
 .hero-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; margin-top: 44px; }
 .hero-row p { max-width: 560px; font-size: 22px; line-height: 1.35; letter-spacing: -0.015em; }
 .btns { display: flex; gap: 10px; }
@@ -123,6 +123,7 @@ section { position: relative; padding: 120px 32px; }
 .numrow span { font: 500 12px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); }
 .numrow b { display: block; margin: 26px 0 8px; font-size: 128px; font-weight: 600; letter-spacing: -0.06em; line-height: 0.9; color: var(--blue); white-space: nowrap; }
 .numrow em { font-style: normal; color: #3a3f58; }
+.numrow span, .numrow em { display: block; white-space: nowrap; }
 
 /* ---------- Quote ---------- */
 .quote { margin: 0 12px; border-radius: 36px; overflow: hidden; padding: 130px 48px; color: #fff; }
@@ -176,7 +177,7 @@ section { position: relative; padding: 120px 32px; }
   .fixed-cta span { flex: 1; justify-content: center; border-radius: 20px 6px 6px 20px; font-size: 17px; }
   .fixed-cta svg { width: 60px; height: 60px; padding: 19px; border-radius: 6px 20px 20px 6px; }
   .hero { padding-top: 104px; padding-bottom: 40px; }
-  .hero h1 { font-size: 78px; margin-left: -3px; }
+  .hero h1 { font-size: 60px; margin-left: -2px; }
   .hero-row { flex-direction: column; align-items: flex-start; gap: 24px; margin-top: 24px; }
   .hero-row p { font-size: 19px; }
   .hero-row .split { display: none; }
