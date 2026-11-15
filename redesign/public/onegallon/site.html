@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>One Gallon — the water tracker that counts for you</title>
+<link rel="stylesheet" href="site.css" />
+</head>
+<body>
+<!-- The marketing website of One Gallon (a concept). One screen split in two: the words scroll on the left; on the right
+     stands one illustration at a time — the brand's moving picture with pieces of the app on it — and it changes when the
+     next section comes into view. At the last section the whole screen turns into the brand's picture.
+     On a phone there is no split: each section carries its own illustration above its words.
+       site.html          the site
+       site.html?tour     the page scrolls itself from section to section (for the live slide of the case)
+       site.html?still    everything visible at once, nothing moving (for pictures)
+     The words are in this file; the illustrations (one for every section with data-pic) and all behaviour are in site.js. -->
+
+<header class="top">
+  <a class="brand" href="#hero" aria-label="One Gallon"></a>
+  <nav><a href="#features">Features</a><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a></nav>
+  <a class="cta" href="#get">Get the app</a>
+</header>
+
+<main class="words">
+  <section id="hero" data-pic="hero">
+    <h1 class="rv">Hit one gallon of water daily.</h1>
+    <p class="lead rv">Photograph your drink. One Gallon reads the glass, works out the ounces and logs them. No typing, no guessing.</p>
+    <p class="actions rv"><a class="button dark" href="#get" data-icon="download">Download for iPhone</a><a class="button" href="#how">See how it works</a></p>
+  </section>
+
+  <section id="features" data-pic="features">
+    <p class="tag rv">Features</p>
+    <h2 class="rv">Your glass is the button.</h2>
+    <ul class="list">
+      <li class="rv" data-icon="scan-line"><b>Snap to log</b><span>Point the camera at a drink. It is in your day two seconds later.</span></li>
+      <li class="rv" data-icon="glass-water"><b>It knows the glass</b><span>Tumblers, mugs and bottles, full or half empty, measured to the half ounce.</span></li>
+      <li class="rv" data-icon="plus"><b>Quick add</b><span>8, 12, 16, 20 or 32 oz in one tap, for the drinks you have every day.</span></li>
+      <li class="rv" data-icon="flame"><b>Streaks</b><span>Every day you reach your goal adds to the run. Five days in, you will not want to break it.</span></li>
+      <li class="rv" data-icon="bell"><b>Quiet reminders</b><span>One nudge, and only when you are behind. Never at night.</span></li>
+    </ul>
+  </section>
+
+  <section id="how" data-pic="how">
+    <p class="tag rv">How it works</p>
+    <h2 class="rv">Snap it. Sip it. Done.</h2>
+    <ol class="steps">
+      <li class="rv"><i>01</i><b>Frame your drink</b><span>Open the scan and fit the glass inside the corners.</span></li>
+      <li class="rv"><i>02</i><b>Check the amount</b><span>One Gallon suggests the ounces. Nudge it with plus and minus if you like.</span></li>
+      <li class="rv"><i>03</i><b>Watch the day fill</b><span>Tap Add. The wave rises, and the app tells you what is left.</span></li>
+    </ol>
+  </section>
+
+  <section id="numbers" data-pic="numbers">
+    <p class="tag rv">In numbers</p>
+    <div class="figures">
+      <p class="rv"><b>128<i>oz</i></b><span>One gallon, the daily goal the app starts you on</span></p>
+      <p class="rv"><b>2<i>sec</i></b><span>From camera to logged</span></p>
+      <p class="rv"><b>4.8</b><span>Average of 12.4K ratings on the App Store</span></p>
+    </div>
+  </section>
+
+  <section id="pricing" data-pic="pricing">
+    <p class="tag rv">Pricing</p>
+    <h2 class="rv">Free to drink. Plus for the detail.</h2>
+    <div class="plans">
+      <div class="plan rv"><b>Free</b><p class="price">$0</p><ul><li>Scan and quick add</li><li>Daily goal and streaks</li><li>One reminder a day</li></ul></div>
+      <div class="plan plus rv"><b>Plus</b><p class="price">$2.99<i>a month</i></p><ul><li>Everything in Free</li><li>History, weeks and months</li><li>Apple Health and Apple Watch</li><li>$19.99 if you pay for a year</li></ul></div>
+    </div>
+  </section>
+
+  <section id="faq" data-pic="faq">
+    <p class="tag rv">FAQ</p>
+    <h2 class="rv">Good questions.</h2>
+    <div class="faq">
+      <details class="rv" open><summary>How does it know how much is in the glass?</summary><p>The scan finds the glass, estimates its size from its shape and reads the water line. You always see the amount before it is added.</p></details>
+      <details class="rv"><summary>Does it count coffee, tea or juice?</summary><p>Yes. Anything you drink is logged; you choose in settings whether it counts in full towards the goal.</p></details>
+      <details class="rv"><summary>Is a gallon right for me?</summary><p>It is where the app starts, not a rule. Set any goal from 40 to 200 oz, in ounces or millilitres.</p></details>
+      <details class="rv"><summary>What happens to my photos?</summary><p>They are read on your phone and thrown away. Only the number of ounces is kept.</p></details>
+    </div>
+  </section>
+
+  <section id="get">
+    <div class="middle"><h2 class="rv">Pour the first one.</h2>
+    <p class="actions rv"><a class="button dark" href="#get" data-icon="download">Download for iPhone</a></p></div>
+    <footer class="rv"><span>© 2026 One Gallon Labs</span><span>hello@onegallon.example</span><span>Privacy</span><span>Terms</span></footer>
+  </section>
+</main>
+
+<aside class="media" aria-hidden="true"><div class="stage"></div></aside>
+<div class="finale frame off" aria-hidden="true"></div>
+<a class="cta fixed" href="#get">Get the app</a>
+
+<script src="icons.js"></script>
+<script src="flow.js"></script>
+<script src="caustics.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

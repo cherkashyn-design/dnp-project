@@ -1,0 +1,29 @@
+/* Section 3 (the app), slide 1.7 (App Store screenshots) and the plain browser window of the website slides. Every size is in px of a 1600 x 1200 slide (see case.css). */
+.s .full { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* A plain phone body around a flat screen (402 x 874, with the screen's own rounded corners). */
+.phone { position: relative; flex: none; }
+.phone > div { position: absolute; left: 0; top: 0; width: 422px; height: 894px; padding: 10px; border-radius: 72px; background: #0b0b0d; box-shadow: inset 0 0 0 1px #2c2c30; transform-origin: 0 0; }
+.phone img { display: block; width: 402px; height: 874px; border-radius: 62px; }
+
+/* ---------- 3.4 and 1.7: a row that drifts sideways ---------- */
+/* The row holds its items twice and moves left by exactly half its length (the padding stands for the gap after the last
+   item), so the picture at the end of the loop is the picture at its start. --at (from &at=) freezes it for export. */
+.lane { position: absolute; left: -210px; display: flex; gap: 24px; padding-right: 24px; animation: lane var(--t, 70s) linear infinite; animation-delay: calc(-1 * var(--at, 0s)); }
+@keyframes lane { to { transform: translateX(-50%); } }
+
+/* ---------- App Store screenshots ---------- */
+.shot-box { position: relative; flex: none; }
+.shot { position: absolute; left: 0; top: 0; width: 430px; height: 932px; overflow: hidden; border-radius: 44px; transform-origin: 0 0; background: linear-gradient(199deg, #CAEFF9 4%, #639FFD 61%, #B1ACFC 94%); }
+.shot.b { background: linear-gradient(199deg, #E6E0FF 4%, #A0A8FF 55%, #86BAFC 96%); }
+.shot.c { background: linear-gradient(199deg, #C8F4F4 4%, #29ABED 60%, #77ABFF 96%); }
+.shot.d { background: linear-gradient(199deg, #0B3DFF 4%, #0012DC 60%, #0700B4 96%); color: #fff; }
+.shot.e { background: linear-gradient(199deg, #F7F9FC 4%, #C9D9F8 60%, #D5CFFB 96%); }
+.shot p { position: absolute; left: 44px; right: 44px; top: 56px; height: 96px; display: grid; place-items: center; text-align: center; font-size: 44px; line-height: 1.05; letter-spacing: -0.01em; text-transform: uppercase; text-wrap: balance; }
+.shot .phone { position: absolute; left: 33.5px; top: 196px; }
+
+/* ---------- A plain browser window (the website on slide 2.1) ---------- */
+.window { position: absolute; left: 80px; top: 80px; width: 1440px; height: 1040px; overflow: hidden; border-radius: 20px; background: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16); }
+.window .bar { position: relative; display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; background: #f1f1f3; border-bottom: 1px solid #e2e2e6; }
+.window .bar i { width: 12px; height: 12px; border-radius: 50%; background: #c9c9ce; }
+.window .bar span { position: absolute; left: 0; right: 0; text-align: center; font: 400 14px/1 "DM Mono", monospace; letter-spacing: -0.02em; color: #77777d; }

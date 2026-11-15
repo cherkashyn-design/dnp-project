@@ -4,9 +4,19 @@ import salesDriver from "../assets/cases/sales-driver.webp";
 import drumkit from "../assets/cases/drumkit.webp";
 import ringproof from "../../../portfolio/Ringproof/Preview.webp";
 import wardgrid from "../../../portfolio/Wardgrid/Preview.webp";
+import oneGallon from "../../../portfolio/OneGallon/Preview.webp";
 
 // A case with hidden: true stays in the code but is not shown anywhere: no card, no page, no link.
 const allCases = [
+  {
+    slug: "one-gallon",
+    name: "One Gallon - Water tracker that counts for you",
+    title: "One Gallon",
+    tags: ["Concept", "Branding", "Landing", "Mobile app"],
+    image: oneGallon,
+    cover: "onegallon", // cards show the animated cover (ProjectMedia) instead of the picture
+    summary: "Brand, website and app for a water tracker that logs a drink from a photo of your glass.",
+  },
   {
     slug: "wardgrid",
     name: "Wardgrid - Shift cover for hospital wards",

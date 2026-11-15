@@ -1,0 +1,52 @@
+/* The case page: sections of rows, each row one slide or two side by side.
+   A slide (.s) is always drawn 1600 x 1200 px and scaled to its frame by case.js, so every size inside a slide is in px. */
+* { box-sizing: border-box; margin: 0; }
+body { background: #f4f4f1; color: #111; font: 400 16px/1.4 "Helvetica Now Display", system-ui, sans-serif; }
+/* The content is as wide as on the studio site: 1280 px at most, centred, 16 px at the sides. */
+.page { max-width: 1280px; margin: 0 auto; }
+.page section { display: flex; flex-direction: column; gap: 8px; padding: 80px 16px; }
+.heading { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+.heading h2 { font-size: 82px; font-weight: 400; letter-spacing: -0.02em; line-height: 0.95; }
+.heading p { color: #55554f; }
+
+/* The top of the page: cover, name, one sentence, tags, Goal and Idea. */
+.intro { display: flex; flex-direction: column; gap: 24px; padding: 32px 16px 0; }
+.intro h1 { margin-top: 40px; font-size: 120px; font-weight: 500; letter-spacing: -0.03em; line-height: 0.95; white-space: nowrap; }
+.intro .one { max-width: 30em; font-size: 28px; line-height: 1.25; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; list-style: none; }
+.tags li { padding: 8px 16px; border-radius: 20px; background: #fff; font-weight: 500; font-size: 14px; text-transform: uppercase; }
+.intro .two { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 1100px; margin-top: 24px; }
+.intro h3 { margin-bottom: 10px; font-weight: 500; font-size: 14px; text-transform: uppercase; color: #77776f; }
+.intro .two p { font-size: 18px; line-height: 1.45; color: #33332f; }
+@media (max-width: 800px) { .intro { padding: 16px 16px 0; } .intro h1 { font-size: 64px; } .intro .one { font-size: 22px; } .intro .two { grid-template-columns: 1fr; } }
+
+.row { display: grid; gap: 8px; }
+.row.two { grid-template-columns: 1fr 1fr; }
+.frame { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 16px; background: #000; }
+.s { position: absolute; left: 0; top: 0; width: 1600px; height: 1200px; overflow: hidden; transform-origin: 0 0; }
+/* The slide number, for feedback ("1.2: make the logo bigger"). It is on the draft page only, never on a single slide. */
+.num { position: absolute; left: 12px; top: 12px; z-index: 2; padding: 3px 8px; border-radius: 6px; background: rgba(0, 0, 0, 0.6); color: #fff; font: 500 12px ui-monospace, monospace; }
+/* A slide that is off screen pauses its animations (case.js sets .off). */
+.frame.off *, .frame.off *::before, .frame.off *::after { animation-play-state: paused !important; }
+
+/* ?only=1.2 shows one slide alone at its own size; &embed scales it to the window, for a frame on another site. */
+body.only { background: #000; overflow: hidden; }
+body.only .num { display: none; }
+body.only .frame { width: 100vw; height: 100vh; border-radius: 0; aspect-ratio: auto; }
+body.embed { background: none; }
+
+@media (max-width: 800px) {
+  .row.two { grid-template-columns: 1fr; }
+  .page section { padding: 48px 16px; }
+  .heading h2 { font-size: 48px; }
+}
+
+body.frozen * { animation-play-state: paused !important; }
+
+/* ---------- Section 2: the website framed on slides (the window itself is in app.css) ---------- */
+.s iframe { display: block; border: 0; pointer-events: none; background: #EDF0F5; }
+/* A plain phone body around the 390 x 844 page, shown 1.2 times larger. The inner corner (64) is the outer one (76) less
+   the 12 px body, and it clips a window of the scaled size, so the corners of body and page run parallel. */
+.handset { width: 492px; height: 1037px; padding: 12px; border-radius: 76px; background: #0b0b0d; box-shadow: inset 0 0 0 1px #2c2c30, 0 40px 90px rgba(0, 20, 120, 0.35); }
+.handset .glass { width: 468px; height: 1013px; overflow: hidden; border-radius: 64px; }
+.handset iframe { transform: scale(1.2); transform-origin: 0 0; }

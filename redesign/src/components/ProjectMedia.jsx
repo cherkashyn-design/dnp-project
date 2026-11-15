@@ -6,11 +6,12 @@ import { SoftImage } from "./SoftMedia.jsx";
 export function ProjectMedia({ project }) {
   if (project.cover === "ringproof") return <RingproofCover />;
   if (project.cover === "wardgrid") return <WardgridCover poster={project.image} />;
+  if (project.cover === "onegallon") return <OneGallonCover poster={project.image} />;
   return <SoftImage src={project.image} alt="" />;
 }
 
 /**
- * One slide of a concept case, running live in a frame (the files in public/<folder>: ringproof, wardgrid).
+ * One slide of a concept case, running live in a frame (the files in public/<folder>: ringproof, wardgrid, onegallon).
  * The poster picture lies under the frame until it has loaded. Only interactive slides take the pointer.
  */
 export function LiveSlide({ slide, poster, label, interactive = false, folder = "ringproof" }) {
@@ -37,6 +38,20 @@ export function WardgridCover({ poster }) {
     <span className="media-shell is-ready wg-cover">
       {poster ? <img src={poster} alt="" loading="lazy" decoding="async" /> : null}
       <iframe src={`${BASE}/wardgrid/case.html?only=0.1&embed&cover`} title="Wardgrid: an open shift is taken" loading="lazy" tabIndex={-1} />
+    </span>
+  );
+}
+
+/**
+ * Animated cover of the One Gallon case: its logo on the brand's ribbons of light (slide 0.1), running live and filling
+ * the frame, whatever the frame's shape. The picture lies underneath until the frame has loaded. The slide draws only
+ * while it is on screen, loops without a seam, and stands still for someone who asked for less motion.
+ */
+export function OneGallonCover({ poster }) {
+  return (
+    <span className="media-shell is-ready og-cover">
+      {poster ? <img src={poster} alt="" loading="lazy" decoding="async" /> : null}
+      <iframe src={`${BASE}/onegallon/case.html?only=0.1&embed&cover`} title="One Gallon logo on moving light" loading="lazy" tabIndex={-1} />
     </span>
   );
 }
