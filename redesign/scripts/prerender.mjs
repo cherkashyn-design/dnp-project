@@ -192,7 +192,9 @@ function makeAssetUrl() {
     if (!src || /^(https?:|data:)/.test(src)) return src;
     if (cache.has(src)) return cache.get(src);
     const clean = decodeURI(src.split("?")[0]);
-    const file = clean.startsWith("/@fs/") ? clean.slice("/@fs/".length) : path.join(root, clean);
+    // /@fs/C:/x on Windows, /@fs/home/x on Linux (Vercel): keep the leading slash except before a drive letter.
+    const fsPath = clean.slice("/@fs".length);
+    const file = clean.startsWith("/@fs/") ? fsPath.replace(/^\/(?=[A-Za-z]:\/)/, "") : path.join(root, clean);
     let found = src;
     if (existsSync(file)) {
       const bytes = readFileSync(file);
