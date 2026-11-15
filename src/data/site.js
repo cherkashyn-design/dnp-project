@@ -7,7 +7,7 @@ import yummoPreviewLq from "../../portfolio/Yummo/Preview.lq.jpg";
 import geniePreview from "../../portfolio/Genie/Preview.webp";
 import geniePreviewLq from "../../portfolio/Genie/Preview.lq.jpg";
 
-export const email = "contact@donotpress.com";
+export const email = "contact@donotpress.studio";
 
 export const cases = [
   {
