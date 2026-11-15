@@ -1,12 +1,11 @@
 /* Section 1: the branding slides of One Gallon. Every size is in px of a 1600 x 1200 slide (see case.css).
-   Type follows the app in Figma: Helvetica Now Display in capitals for words, DM Mono for amounts, DM Sans for the logo. */
-@font-face { font-family: "Helvetica Now Display"; src: url("fonts/HelveticaNowDisplay-Regular.woff2") format("woff2"); font-weight: 400; font-display: block; }
-@font-face { font-family: "Helvetica Now Display"; src: url("fonts/HelveticaNowDisplay-Medium.woff2") format("woff2"); font-weight: 500; font-display: block; }
-@font-face { font-family: "Helvetica Now Display"; src: url("fonts/HelveticaNowDisplay-Bold.woff2") format("woff2"); font-weight: 700; font-display: block; }
+   Type follows the app in Figma: Helvetica Now Display in capitals for words, DM Mono for amounts, DM Sans for the logo.
+   On the website the Helvetica files are not served (they are a paid font): the name stays first for visitors who
+   have it installed, and everyone else gets Arimo, a free face with the same widths, loaded by the pages. */
 @font-face { font-family: "DM Sans"; src: url("fonts/DMSans-Medium.woff2") format("woff2"); font-weight: 500; font-display: block; }
 @font-face { font-family: "DM Mono"; src: url("fonts/DMMono-Regular.woff2") format("woff2"); font-weight: 400; font-display: block; }
 
-.s { font-family: "Helvetica Now Display", "Helvetica Neue", Arial, sans-serif; font-weight: 500; color: #000; --ink: #000; }
+.s { font-family: "Helvetica Now Display", "Arimo", "Helvetica Neue", Arial, sans-serif; font-weight: 500; color: #000; --ink: #000; }
 .s p { margin: 0; }
 .s canvas { display: block; }
 .s .bg { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -75,7 +74,7 @@
 .tool input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; margin-top: -9px; border-radius: 50%; background: #fff; }
 .tool input[type="range"]::-moz-range-track { height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.2); }
 .tool input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; border: 0; border-radius: 50%; background: #fff; }
-.tool .panel > button, .tool .row button, .tool .seg button { display: flex; align-items: center; justify-content: center; gap: 10px; height: 72px; border: 0; border-radius: 30px; background: rgba(255, 255, 255, 0.12); color: #fff; font: 500 18px/1 "Helvetica Now Display", sans-serif; text-transform: uppercase; cursor: pointer; }
+.tool .panel > button, .tool .row button, .tool .seg button { display: flex; align-items: center; justify-content: center; gap: 10px; height: 72px; border: 0; border-radius: 30px; background: rgba(255, 255, 255, 0.12); color: #fff; font: 500 18px/1 "Helvetica Now Display", "Arimo", sans-serif; text-transform: uppercase; cursor: pointer; }
 .tool .row, .tool .seg { display: flex; gap: 8px; }
 .tool .row button, .tool .seg button { flex: 1; }
 .tool .seg button.on { background: #fff; color: #000; }

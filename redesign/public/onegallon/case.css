@@ -1,7 +1,7 @@
 /* The case page: sections of rows, each row one slide or two side by side.
    A slide (.s) is always drawn 1600 x 1200 px and scaled to its frame by case.js, so every size inside a slide is in px. */
 * { box-sizing: border-box; margin: 0; }
-body { background: #f4f4f1; color: #111; font: 400 16px/1.4 "Helvetica Now Display", system-ui, sans-serif; }
+body { background: #f4f4f1; color: #111; font: 400 16px/1.4 "Helvetica Now Display", "Arimo", system-ui, sans-serif; }
 /* The content is as wide as on the studio site: 1280 px at most, centred, 16 px at the sides. */
 .page { max-width: 1280px; margin: 0 auto; }
 .page section { display: flex; flex-direction: column; gap: 8px; padding: 80px 16px; }

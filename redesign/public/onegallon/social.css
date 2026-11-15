@@ -12,7 +12,7 @@
 .story .line.mid { top: 620px; bottom: auto; }
 .post .small { position: absolute; left: 64px; right: 64px; bottom: 64px; font-size: 40px; line-height: 1; text-transform: uppercase; }
 .post .fig, .story .fig { position: absolute; left: 56px; bottom: 150px; font: 400 400px/0.85 "DM Mono", monospace; letter-spacing: -0.08em; white-space: nowrap; }
-.post .fig i, .story .fig i { font: 500 72px/1 "Helvetica Now Display", sans-serif; font-style: normal; letter-spacing: 0; text-transform: uppercase; margin-left: 28px; }
+.post .fig i, .story .fig i { font: 500 72px/1 "Helvetica Now Display", "Arimo", sans-serif; font-style: normal; letter-spacing: 0; text-transform: uppercase; margin-left: 28px; }
 .story .fig { bottom: 200px; }
 .story .when { position: absolute; left: 64px; top: 500px; font: 400 44px/1 "DM Mono", monospace; letter-spacing: -0.02em; }
 .post .pill, .story .pill { position: absolute; left: 64px; bottom: 64px; display: flex; align-items: center; gap: 18px; height: 112px; padding: 0 44px; border-radius: 56px;

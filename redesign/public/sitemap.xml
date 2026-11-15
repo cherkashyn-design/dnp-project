@@ -16,6 +16,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.donotpress.studio/cases/one-gallon</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.donotpress.studio/cases/wardgrid</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

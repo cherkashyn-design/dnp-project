@@ -20,7 +20,6 @@ const allCases = [
   },
   {
     slug: "one-gallon",
-    hidden: true, // held back until the font question is settled: the Helvetica Now Display files are not in public/onegallon/fonts
     name: "One Gallon - Water tracker that counts for you",
     title: "One Gallon",
     tags: ["Concept", "Branding", "Landing", "Mobile app"],
