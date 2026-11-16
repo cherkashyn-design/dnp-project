@@ -13,6 +13,7 @@ const allCases = [
     slug: "draftlex",
     name: "Draftlex - Contract templates drafted with AI",
     title: "Draftlex",
+    hidden: true, // removed from the site on 16 Nov 2026 at the designer's request
     tags: ["Concept", "Branding", "Landing", "SaaS"],
     image: draftlex,
     cover: "draftlex", // cards show the animated cover (ProjectMedia) instead of the picture

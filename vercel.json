@@ -14,6 +14,21 @@
       "permanent": false
     },
     {
+      "source": "/cases/draftlex",
+      "destination": "/cases",
+      "permanent": false
+    },
+    {
+      "source": "/blog/how-to-design-ai-drafting-tool-lawyers-trust",
+      "destination": "/blog",
+      "permanent": false
+    },
+    {
+      "source": "/draftlex/:path*",
+      "destination": "/cases",
+      "permanent": false
+    },
+    {
       "source": "/cases/nodify",
       "destination": "/cases/nodity",
       "permanent": true
