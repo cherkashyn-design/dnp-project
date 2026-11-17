@@ -14,7 +14,8 @@ if (!window.location.hash) {
 }
 
 startFaviconCycle();
-inject();
+// The Vercel visit counter only works on Vercel; the Cloudflare build (scripts/build-cloudflare.mjs) leaves it out.
+if (import.meta.env.VITE_HOST !== "cloudflare") inject();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
