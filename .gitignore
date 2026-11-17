@@ -13,3 +13,5 @@ redesign/dist
 .cursor/
 .tmp-*
 .tmp-*/
+
+.wrangler/
